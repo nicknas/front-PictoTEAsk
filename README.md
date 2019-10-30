@@ -1,2 +1,6 @@
-# Running in development
-To run in development, just use "npm start" and you will get the web app window in localhost:3000
+# Installation
+In root folder:
+  1. npm install popper.js
+  2. npm install jquery
+  3. npm install --save bootstrap
+  4. npm install --save reactstrap react react-dom react-scripts
