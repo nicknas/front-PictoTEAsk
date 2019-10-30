@@ -1,5 +1,5 @@
 # Installation
-In root folder:
+In root folder (terminal or powershell):
   1. npm install popper.js
   2. npm install jquery
   3. npm install --save bootstrap
