@@ -4,4 +4,4 @@ In root folder:
   2. npm install popper.js
   3. npm install jquery
   4. npm install --save bootstrap
-  5. npm install --save reactstrap react react-dom react-scripts
+  5. npm install --save reactstrap react react-dom
