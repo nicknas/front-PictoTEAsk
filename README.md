@@ -1,5 +1,3 @@
-# front-tea
-
 # Installation
 In root folder:
   1. npm install popper.js
