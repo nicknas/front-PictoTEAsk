@@ -4,3 +4,4 @@ In root folder (terminal or powershell):
   2. npm install jquery
   3. npm install --save bootstrap
   4. npm install --save reactstrap react react-dom react-scripts
+  5. npm install --save react-icons
