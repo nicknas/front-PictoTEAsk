@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchPictogram from './SearchPictogram'
-import {Container, Row, Col} from 'reactstrap'
+import {Container, Row} from 'reactstrap'
 import SelectPictogram from './SelectPictogram';
 
 class Pictogram extends React.Component {
@@ -11,10 +11,6 @@ class Pictogram extends React.Component {
 
     getImageList(listPaths) {
         this.setState({imageList: listPaths});
-    }
-
-    showImagePaths() {
-        return this.state.imageList;
     }
 
     render() {

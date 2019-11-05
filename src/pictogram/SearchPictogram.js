@@ -11,7 +11,7 @@ class SearchPictogram extends React.Component {
         this.setState({isSearched: !this.state.isSearched});
         let listElements = [];
         for (let i = 0; i < this.state.searchValue.length; i++) {
-            listElements.push("./public/logo512.png");
+            listElements.push("logo512.png");
         }
         this.props.images(listElements);
     }
