@@ -1,28 +1,21 @@
 import React from 'react'
-import {Container, Row, Col, Card, CardImg, CardBody, CardTitle} from 'reactstrap'
+import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Fade} from 'reactstrap'
  
 class SelectPictogram extends React.Component {
-    constructor(props) {
-        super(props);
-        this.createImageCards = this.createImageCards.bind(this);
-        this.state = {imageList: []}
-    }
-    componentWillReceiveProps(nextProps) {
-        this.createImageCards(nextProps);
-    }
-    createImageCards(nextProps) {
-        let mtxImages = nextProps.images;
-        mtxImages = this.listToMatrix(mtxImages, 3);
+
+    createImageCards(listPaths) {
+        listPaths = this.listToMatrix(listPaths, 3);
         let listImageRows = [];
-        mtxImages.forEach((row) => {
+        listPaths.forEach((row) => {
             let listImageCols = [];
             row.forEach((col) => {
-                listImageCols.push(<Col xs="3" sm="3" md="3" lg="3" xl="3"><Card><CardImg top width="100%" src={col}/><CardBody><CardTitle>ABC</CardTitle></CardBody></Card></Col>);
+                listImageCols.push(<Col xs="4" sm="4" md="4" lg="4" xl="4"><Card><CardImg top width="100%" src={col}/><CardBody><CardTitle>ABC</CardTitle></CardBody></Card></Col>);
             });
             listImageRows.push(<Row>{listImageCols}</Row>);
         });
-        this.setState({imageList: listImageRows});
+        return listImageRows;
     }
+
     listToMatrix(list, elementsPerSubArray) {
         var matrix = [], i, k;
     
@@ -36,12 +29,15 @@ class SelectPictogram extends React.Component {
         }
     
         return matrix;
-    }
+    }   
     render() {
+        const imageCards = this.createImageCards(this.props.images);
         return (
-            <Container className="overflow-auto">
-                {this.state.imageList}
-            </Container>
+            <Fade in={this.props.fadeSelect}>
+                <Container>
+                    {imageCards}
+                </Container>
+            </Fade>
         );
     }
 }

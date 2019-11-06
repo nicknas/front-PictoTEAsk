@@ -17,7 +17,7 @@ class Pictogram extends React.Component {
         return (
             <Container>
                 <Row><SearchPictogram images={this.getImageList.bind(this)}/></Row>
-                <Row><SelectPictogram images={this.state.imageList}/></Row>
+                <Row className="overflow-auto"><SelectPictogram images={this.state.imageList} fadeSelect={this.state.imageList.length === 0 ? false : true}/></Row>
             </Container> 
         );    
     }
