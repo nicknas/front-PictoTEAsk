@@ -16,6 +16,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-icons": "^3.8.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
     "reactstrap": "^8.1.1"
   },
@@ -26,7 +27,7 @@
     "eject": "react-scripts eject",
     "static": "rm -rf dist && cp -R public dist",
     "index:patch:0": "sed -i 's/%PUBLIC_URL%//g' dist/index.html",
-    "index:patch:1": "sed -i 's/<\\\/body>/<script src=\"bundle.js\"><\\\/script><\\\/body>/' dist/index.html",
+    "index:patch:1": "sed -i 's/<\\/body>/<script src=\"bundle.js\"><\\/script><\\/body>/' dist/index.html",
     "index:patch": "npm run index:patch:0 && npm run index:patch:1",
     "browserify": "browserify -g browserify-css src/index.js -o dist/bundle.js",
     "bundle": "npm run static && npm run index:patch && npm run browserify",
