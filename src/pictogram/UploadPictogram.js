@@ -6,7 +6,9 @@ class UploadPictogram extends React.Component {
     render() {
         return (
             <Container>
-                <Row>ABD</Row>
+                <Row>
+                    
+                </Row>
             </Container>
         );
     }
