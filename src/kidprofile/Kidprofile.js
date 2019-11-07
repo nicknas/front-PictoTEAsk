@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container,Button} from 'reactstrap'
-import Associatebutton from '/Associatebutton'
+import Associatebutton from './Associatebutton'
 class Kidprofile extends React.Component{
 	//constructor(props){
 		//super(props);

@@ -7,16 +7,16 @@ class Associatebutton extends React.Component {
 	    }
 	buttonType(){
 		if (this.state.isAssociated)
-			"Desasociar"
+			return "Desasociar";
 		else
-			"Asociar"
+			return "Asociar";
 	}
 	onClickButton(){
 		this.setState({isAssociated: !this.state.isAssociated});
 	}
 	render() {
         return (
-            <Button onClick={this.onClickButton.bind(this)} color="primary">{buttonType.bind(this)}</Button>
+            <Button onClick={this.onClickButton.bind(this)} color="primary">{this.buttonType.bind(this)}</Button>
         );
     }
 }
