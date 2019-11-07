@@ -1,7 +1,14 @@
 {
   "name": "front-tea",
   "version": "0.1.0",
-  "private": true,
+  "devDependencies": {
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.7",
+    "browserify": "^16.5.0",
+    "browserify-css": "^0.15.0"
+  },
   "dependencies": {
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
@@ -16,7 +23,33 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "static": "rm -rf dist && cp -R public dist",
+    "index:patch:0": "sed -i 's/%PUBLIC_URL%//g' dist/index.html",
+    "index:patch:1": "sed -i 's/<\\\/body>/<script src=\"bundle.js\"><\\\/script><\\\/body>/' dist/index.html",
+    "index:patch": "npm run index:patch:0 && npm run index:patch:1",
+    "browserify": "browserify -g browserify-css src/index.js -o dist/bundle.js",
+    "bundle": "npm run static && npm run index:patch && npm run browserify",
+    "start:static": "browser-sync start --no-open --no-notify --server dist",
+    "clean": "rm -rf dist"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+          ]
+        }
+      ]
+    ]
+  },
+  "browserify-css": {
+    "autoInject": true,
+    "minify": true,
+    "rootDir": "dist"
   },
   "eslintConfig": {
     "extends": "react-app"
