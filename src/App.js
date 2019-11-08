@@ -8,6 +8,7 @@ import {
 
 import {fakeAuth as auth} from './auth'
 import LoginPage from './components/auth/LoginPage'
+import RegisterPage from './components/auth/RegisterPage'
 import Pictogram from './components/pictogram/Pictogram'
 
 function PrivateRoute({ children, ...rest}) {
@@ -35,6 +36,9 @@ export default () => (
 		<Switch>
 			<Route path="/login">
 				<LoginPage />
+			</Route>
+			<Route path="/signup">
+				<RegisterPage />
 			</Route>
 			<PrivateRoute path="/">
 				<Pictogram />

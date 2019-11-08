@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {
 	Col,
 	Button,
@@ -7,6 +8,7 @@ import {
 	Label,
 	Input
 } from 'reactstrap'
+
 
 // TODO: change auth with backend
 import {fakeAuth as auth} from '../../auth'
@@ -79,7 +81,7 @@ class LoginForm extends React.Component {
 					</div>
 				</Col>
 				<FormGroup>
-					<div className="text-center">Don't  have account? <div>Sign up here</div></div>
+					<div className="text-center">Don't  have account? <Link to="/signup">Sign up here</Link></div>
 				</FormGroup>
 			</Form>
 		)
