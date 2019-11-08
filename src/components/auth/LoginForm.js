@@ -8,6 +8,7 @@ import {
 	Input
 } from 'reactstrap'
 
+// TODO: change auth with backend
 import {fakeAuth as auth} from '../../auth'
 
 
