@@ -64,21 +64,21 @@ class LoginForm extends React.Component {
 					</div>
 				</Col>
 				<Col md={12} className="mb-3">
-					<p className="text-center">
+					<div className="text-center">
 						<div className="social btn mybtn">
 							<i className="fa fa-google-plus"></i> Signup using Google
 						</div>
-					</p>
+					</div>
 				</Col>
 				<Col md={12} className="mb-3">
-					<p className="text-center">
+					<div className="text-center">
 						<div className="social btn mybtn">
 							<i className="fa fa-facebook-f"></i> Signup using Facebook
 						</div>
-					</p>
+					</div>
 				</Col>
 				<FormGroup>
-					<p className="text-center">Don't  have account? <div>Sign up here</div></p>
+					<div className="text-center">Don't  have account? <div>Sign up here</div></div>
 				</FormGroup>
 			</Form>
 		)
