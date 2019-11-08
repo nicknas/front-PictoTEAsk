@@ -51,7 +51,7 @@ class LoginForm extends React.Component {
 					<Label>Password</Label>
 					<Input
 						ref="pass" required={true}
-						type="password" placeholder="password" />
+						type="password" placeholder="Enter Password" />
 				</FormGroup>
 				<Col md={12} className="text-center">
 					<Button type="submit" color="primary"
