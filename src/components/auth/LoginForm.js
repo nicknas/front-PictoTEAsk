@@ -1,6 +1,15 @@
 import React from 'react'
+import {
+	Col,
+	Button,
+	Form,
+	FormGroup,
+	Label,
+	Input
+} from 'reactstrap'
 
 import {fakeAuth as auth} from '../../auth'
+
 
 class LoginForm extends React.Component {
 
@@ -31,25 +40,47 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit}>
-				<input
-					ref="email" required={true}
-					type="email" placeholder="email"
-					className="form-control no-border-radius"/>
-
-				<input
-					ref="pass" required={true}
-					type="password" placeholder="password"
-					className="form-control no-border-radius"/>
-					{
-						this.state.error &&
-						<div
-							className="alert alert-danger no-border-radius"
-							role="alert">Error email or password.
+			<Form onSubmit={this.handleSubmit}>
+				<FormGroup>
+					<Label>Email adress</Label>
+					<Input
+						ref="email" required={true}
+						type="email" placeholder="Enter Email" />
+				</FormGroup>
+				<FormGroup>
+					<Label>Password</Label>
+					<Input
+						ref="pass" required={true}
+						type="password" placeholder="password" />
+				</FormGroup>
+				<Col md={12} className="text-center">
+					<Button type="submit" color="primary"
+						className="btn-block mybtn tx-tfm">Login</Button>
+				</Col>
+				<Col md={12}>
+					<div className="login-or">
+						<hr className="hr-or" />
+						<span className="span-or">or</span>
+					</div>
+				</Col>
+				<Col md={12} className="mb-3">
+					<p className="text-center">
+						<div className="social btn mybtn">
+							<i className="fa fa-google-plus"></i> Signup using Google
 						</div>
-					}
-				<button type="submit"className="btn btn-warning no-border-radius">Login</button>
-			</form>
+					</p>
+				</Col>
+				<Col md={12} className="mb-3">
+					<p className="text-center">
+						<div className="social btn mybtn">
+							<i className="fa fa-facebook-f"></i> Signup using Facebook
+						</div>
+					</p>
+				</Col>
+				<FormGroup>
+					<p className="text-center">Don't  have account? <div>Sign up here</div></p>
+				</FormGroup>
+			</Form>
 		)
 	}
 }
