@@ -25,7 +25,7 @@ function LoginPage() {
 				<Col md={5} className="mx-auto">
 					<div id="first">
 						<picture>
-							<img alt="Logo Largo" width="100%" src="logolargo.png" />
+							<img alt="Logo Largo" width="100%" src="images/logolargo.png" />
 						</picture>
 						<div className="myform form">
 							<div className="logo mb-3">
