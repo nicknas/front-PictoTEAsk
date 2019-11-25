@@ -1,49 +1,63 @@
 import React from 'react'
-import SearchPictogram from './SearchPictogram'
 import {Container, Row, Col, Fade, Button, Badge} from 'reactstrap'
-import SelectPictogram from './SelectPictogram'
-import UploadPictogram from './UploadPictogram'
+import PictogramDirectories from './PictogramDirectories';
+import PictogramDirectory from './PictogramDirectory';
 
 class Pictogram extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {imageList: [], fadeSelectExistent: false, fadeSelectNew: false, imageSelected: {}};
-        this.handleFadeSelectExistent = this.handleFadeSelectExistent.bind(this);
-        this.handleFadeSelectNew = this.handleFadeSelectNew.bind(this);
+        this.state = {
+            listDirectories: [{name: "acciones", pictos: []}, 
+                              {name: "animales", pictos: [{name: "animal_5", img: "images/pictos/animal_5.jpg"}, {name: "animal_9", img: "images/pictos/animal_9.jpg"}, {name: "animal_10", img: "images/pictos/animal_10.jpg"}]},
+                              {name: "colegio", pictos: []},
+                              {name: "comida", pictos: []},
+                              {name: "días de la semana", pictos: []},
+                              {name: "familia", pictos: []}
+                             ], 
+            viewDirectories: true, 
+            imageSelected: {}, 
+            directorySelected: {name: "", pictos: []}
+        };
         this.getImageSelected = this.getImageSelected.bind(this);
-        this.getImageList = this.getImageList.bind(this);
-    }
-
-    getImageList(listPaths) {
-        this.setState({imageList: listPaths});
-    }
-
-    handleFadeSelectExistent() {
-        this.setState({fadeSelectExistent: true, fadeSelectNew: false});
-    }
-
-    handleFadeSelectNew() {
-        this.setState({fadeSelectExistent: false, fadeSelectNew: true});
+        this.addNewPicto = this.addNewPicto.bind(this);
+        this.selectDirectory = this.selectDirectory.bind(this);
+        this.goBackToDirectories = this.goBackToDirectories.bind(this);
     }
 
     getImageSelected(imageSelected) {
         this.setState({imageSelected: imageSelected});
     }
 
+    addNewPicto(picto) {
+        let directorySelected = this.state.directorySelected;
+        directorySelected.pictos.push(picto);
+        let listDirectories = this.state.listDirectories;
+        listDirectories[listDirectories.findIndex((directory) => {return directory.name === directorySelected.name})] = directorySelected;
+        this.setState({listDirectories: listDirectories, directorySelected: directorySelected});
+    }
+
+    goBackToDirectories() {
+        this.setState({viewDirectories: true});
+    }
+
+    selectDirectory(nameDirectory) {
+        let directory = this.state.listDirectories.find((directory) => {return directory.name === nameDirectory});
+        this.setState({viewDirectories: false, directorySelected: directory});
+    }
+
     render() {
+        let view;
+        if (this.state.viewDirectories) {
+            view = <PictogramDirectories listDirectories={this.state.listDirectories} selectDirectory={this.selectDirectory}/>;
+        }
+        else {
+            view = <PictogramDirectory newPicto={this.addNewPicto} goBack={this.goBackToDirectories} imageSelected={this.getImageSelected} nameDirectory={this.state.directorySelected.name} images={this.state.directorySelected.pictos}/>;
+        }
         return (
-            <Container>
-                <Row>
-                    <Col xs="5" sm="5" md="5" lg="5" xl="5"><Button color="primary" onClick={this.handleFadeSelectExistent}>Choose an existing pictogram</Button></Col><Col xs="2" sm="2" md="2" lg="2" xl="2"><Badge className="text-center" color="dark">Or</Badge></Col><Col xs="5" sm="5" md="5" lg="5" xl="5"><Button onClick={this.handleFadeSelectNew}>Upload a new pictogram</Button></Col>
-                </Row>
-                <Fade in={this.state.fadeSelectExistent && !this.state.fadeSelectNew}>
-                    <Row><SearchPictogram images={this.getImageList}/></Row>
-                    <Row className="overflow-auto"><SelectPictogram images={this.state.imageList} fadeSelect={this.state.imageList.length === 0 ? false : true} imageSelected={this.getImageSelected}/></Row>
-                </Fade>
-                <Fade in={!this.state.fadeSelectExistent && this.state.fadeSelectNew}>
-                    <Row>{this.state.imageSelected.name + this.state.imageSelected.img}</Row>
-                </Fade>
-            </Container> 
+            <Container className="contenedor">
+                {view}
+            </Container>
+
         );    
     }
 }

@@ -1,5 +1,6 @@
-import React from 'react'
-import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Collapse} from 'reactstrap'
+import React from 'react';
+import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Collapse} from 'reactstrap';
+import './pictogram.css';
  
 class SelectPictogram extends React.Component {
     constructor(props) {
@@ -9,13 +10,16 @@ class SelectPictogram extends React.Component {
     }
 
     createImageCards(listPaths) {
+        if (listPaths.length === 0) {
+            return [];
+        }
         listPaths = this.listToMatrix(listPaths, 3);
         let listImageRows = [];
         listPaths.forEach((row) => {
             let listImageCols = [];
             row.forEach((col) => {
-                listImageCols.push(<Col xs="4" sm="4" md="4" lg="4" xl="4"><Card onClick={this.selectImageCard}><CardImg top width="100%" src={col.img}/><CardBody><CardTitle>{col.name}</CardTitle></CardBody></Card></Col>);
-            });
+                listImageCols.push(<div className="col- columna"><Card onClick={this.selectImageCard} style={{width: "175px"}}><CardImg top src={col.img}/><CardBody><h5><CardTitle>{col.name}</CardTitle></h5></CardBody></Card></div>);
+            }); 
             listImageRows.push(<Row>{listImageCols}</Row>);
         });
         return listImageRows;
@@ -28,9 +32,12 @@ class SelectPictogram extends React.Component {
                 currentSelect.className = "card";
             }
             e.currentTarget.className = "card border border-primary";
-            let imageSelected = {name: e.currentTarget.childNodes[1].children[0].innerHTML, img: e.currentTarget.childNodes[0].src};
-            this.props.imageSelected(imageSelected);
             this.setState({currentSelected: e.currentTarget});
+        }
+        else {
+            let imageSelected = {name: e.currentTarget.childNodes[1].childNodes[0].childNodes[0].innerHTML, img: e.currentTarget.childNodes[0].src};
+            this.props.goBack();
+            this.props.imageSelected(imageSelected);
         }
     }
 
@@ -51,7 +58,7 @@ class SelectPictogram extends React.Component {
     render() {
         const imageCards = this.createImageCards(this.props.images);
         return (
-            <Container>
+            <Container className="contenedor">
                 <Collapse isOpen={this.props.fadeSelect}>
                     {imageCards}
                 </Collapse>

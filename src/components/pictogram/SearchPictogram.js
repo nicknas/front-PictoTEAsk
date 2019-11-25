@@ -1,6 +1,7 @@
 import React from 'react'
-import {InputGroup, InputGroupAddon, Input, Button, Container, Row} from 'reactstrap';
-import {FaSearch} from 'react-icons/fa'
+import {Input, Button, Container, Form, Label} from 'reactstrap';
+import {FaArrowLeft} from 'react-icons/fa';
+import './pictogram.css';
 
 class SearchPictogram extends React.Component {
     constructor(props) {
@@ -9,12 +10,18 @@ class SearchPictogram extends React.Component {
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleSearchKeyPress = this.handleSearchKeyPress.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
+        this.returnToDirectory = this.returnToDirectory.bind(this);
+    }
+    returnToDirectory() {
+        this.props.goBack();
     }
     handleSearchClick() {
         this.setState({isSearched: !this.state.isSearched});
         let listElements = [];
-        for (let i = 0; i < this.state.searchValue.length; i++) {
-            listElements.push({name: "pipiolo", img: "logo.svg"});
+        if (this.state.searchValue.includes("a")) {
+            listElements.push({name: "animal_11", img: "images/pictos/animal_11.jpg"});
+            listElements.push({name: "animal_12", img: "images/pictos/animal_12.jpg"});
+            listElements.push({name: "animal_13", img: "images/pictos/animal_13.jpg"});
         }
         this.props.images(listElements);
     }
@@ -28,13 +35,15 @@ class SearchPictogram extends React.Component {
     }
     render() {
         return (
-            <Container>
-                <Row>
-                    <InputGroup>
-                        <Input value={this.state.searchValue} onChange={this.updateSearchValue} onKeyPress={this.handleSearchKeyPress} placeholder="search for a pictogram" />
-                        <InputGroupAddon addonType="prepend"><Button onClick={this.handleSearchClick} color="primary"><FaSearch/></Button></InputGroupAddon>
-                    </InputGroup>
-                </Row>
+            <Container className="contenedor">
+                <Form inline>
+                    <span onClick={this.returnToDirectory} class="btn btn-outline-primary"><FaArrowLeft/></span>
+                    <Input id="cajaBuscar" className="mr-sm-2" type="search" value={this.state.searchValue} onChange={this.updateSearchValue} onKeyPress={this.handleSearchKeyPress} placeholder="Escribe para buscar" aria-label="Search" />
+                    <Button className="my-2 my-sm-0 botonBuscar" onClick={this.handleSearchClick} color="outline-primary">Buscar</Button>
+                    <Label className="btn btn-outline-secondary my-2 my-sm-0 cardNew botonBuscar">
+                        Importar <Input type="file" className="btn btn-outline-secondary my-2 my-sm-0 cardNew"/>
+                    </Label>
+                </Form>
             </Container>
         );
     }
