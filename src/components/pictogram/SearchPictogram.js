@@ -15,6 +15,16 @@ class SearchPictogram extends React.Component {
     returnToDirectory() {
         this.props.goBack();
     }
+
+    handleChangeFile = (file) => {
+        let fileData = new FileReader();
+        fileData.onload = function(e) {
+            const content = e.target.result;
+            console.log(content)
+        }
+        fileData.readAsDataURL(file);
+    }
+
     handleSearchClick() {
         this.setState({isSearched: !this.state.isSearched});
         let listElements = [];
@@ -37,11 +47,11 @@ class SearchPictogram extends React.Component {
         return (
             <Container className="contenedor">
                 <Form inline>
-                    <span onClick={this.returnToDirectory} class="btn btn-outline-primary"><FaArrowLeft/></span>
+                    <span onClick={this.returnToDirectory} className="btn btn-outline-primary"><FaArrowLeft/></span>
                     <Input id="cajaBuscar" className="mr-sm-2" type="search" value={this.state.searchValue} onChange={this.updateSearchValue} onKeyPress={this.handleSearchKeyPress} placeholder="Escribe para buscar" aria-label="Search" />
                     <Button className="my-2 my-sm-0 botonBuscar" onClick={this.handleSearchClick} color="outline-primary">Buscar</Button>
                     <Label className="btn btn-outline-secondary my-2 my-sm-0 cardNew botonBuscar">
-                        Importar <Input type="file" className="btn btn-outline-secondary my-2 my-sm-0 cardNew"/>
+                        Importar <Input type="file" className="btn btn-outline-secondary my-2 my-sm-0 cardNew" onChange={(e) => this.handleChangeFile(e.target.files[0])}/>
                     </Label>
                 </Form>
             </Container>

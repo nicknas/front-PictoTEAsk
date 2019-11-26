@@ -22,6 +22,8 @@ class Pictogram extends React.Component {
         this.addNewPicto = this.addNewPicto.bind(this);
         this.selectDirectory = this.selectDirectory.bind(this);
         this.goBackToDirectories = this.goBackToDirectories.bind(this);
+        this.addNewDirectory = this.addNewDirectory.bind(this);
+        this.deleteDirectory = this.deleteDirectory.bind(this);
     }
 
     getImageSelected(imageSelected) {
@@ -36,6 +38,18 @@ class Pictogram extends React.Component {
         this.setState({listDirectories: listDirectories, directorySelected: directorySelected});
     }
 
+    addNewDirectory(nameDirectory) {
+        let listDirectories = this.state.listDirectories;
+        listDirectories.push({name: nameDirectory, pictos: []});
+        this.setState({listDirectories: listDirectories});
+    }
+
+    deleteDirectory(nameDirectory) {
+        let listDirectories = this.state.listDirectories;
+        listDirectories = listDirectories.filter((directory) => {return directory.name !== nameDirectory});
+        this.setState({listDirectories: listDirectories});
+    }
+
     goBackToDirectories() {
         this.setState({viewDirectories: true});
     }
@@ -48,7 +62,7 @@ class Pictogram extends React.Component {
     render() {
         let view;
         if (this.state.viewDirectories) {
-            view = <PictogramDirectories listDirectories={this.state.listDirectories} selectDirectory={this.selectDirectory}/>;
+            view = <PictogramDirectories listDirectories={this.state.listDirectories} selectDirectory={this.selectDirectory} addDirectory={this.addNewDirectory} deleteDirectory={this.deleteDirectory}/>;
         }
         else {
             view = <PictogramDirectory newPicto={this.addNewPicto} goBack={this.goBackToDirectories} imageSelected={this.getImageSelected} nameDirectory={this.state.directorySelected.name} images={this.state.directorySelected.pictos}/>;
