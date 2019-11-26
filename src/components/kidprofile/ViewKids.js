@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateAssociateKid from './CreateAssociateKid';
+import CreateAssociateKid from './AssociateKid';
 import {
     useHistory,
     useLocation
@@ -54,10 +54,10 @@ class ViewKids extends React.Component {
                                         </p>
 
                                         <p className="card-text">
-                                            <a href="CreateAssociateKid.js" style="text-decoration: none;">
+                                            <div href="CreateAssociateKid.js" style="text-decoration: none;">
                                                 <img src="images/botonNew.svg" width="50px" style="opacity: 0.6;" /> 
                                                 Añadir niño
-                                            </a>
+                                            </div>
                                         </p>
                                     </div>
                                 </div>
