@@ -1,0 +1,27 @@
+.btnblue{
+    border-radius:5px;
+    text-transform: none;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-radius: 0px 5px 5px 0px;
+}
+.btnwhite{
+    border-radius:5px;
+    background-color: #fff;
+    border-color:  #DCDCDC;
+    text-transform: none;
+    color: #808080;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.btncol{
+    padding-top: 20px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.group-list{
+    background-color: #fff;
+}
