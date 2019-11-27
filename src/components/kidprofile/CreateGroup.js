@@ -6,7 +6,10 @@ import {
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 class CreateGroup extends React.Component {
-
+    constructor(props) {
+        super(props);
+        
+    }
     render() {
         return (
             <Container>

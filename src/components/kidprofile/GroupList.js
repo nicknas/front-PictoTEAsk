@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, ButtonGroup, Media, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './groups.css'
 class GroupList extends React.Component {
@@ -61,14 +62,14 @@ class GroupList extends React.Component {
 
         this.state.groups.forEach((row) => {
             grouplist.push(
-                <Row>
-                    <Col md={10}>
+                <Row className="myrow">
+                    <Col md={10} >
                         <picture>
                             <img src="../images/defaultGroup.jpg" className="group-image" /> {row.name}
 
                         </picture>
                     </Col>
-                    <Col md={2}>
+                    <Col md={2} >
                         <picture onClick={this.openDeleteModal}>
                             <img src="../images/papelera.png" width="25px" />
                         </picture>
@@ -81,7 +82,16 @@ class GroupList extends React.Component {
                 </Row>
             );
         });
-        //grouplist.push(<li><Card onClick={this.createGroup} style={{ maxWidth: "600px", marginTop: "10px", marginBottom: "10px" }} className="cardNew"><Row className="no-gutters"><Col style={{ width: "100%" }}><CardImg className="imgNew" src="images/botonNew.svg" alt="..." /></Col><Col><CardBody><CardTitle><h5 className="nombreCarpeta">Crear grupo</h5></CardTitle></CardBody></Col></Row></Card></li>);
+        grouplist.push(
+            <Row>
+                <Col>
+                        <picture>
+                            <img src="../images/botonNew.svg" className="group-image" /> <Link to="/createGroup">Crear grupo</Link>
+                        </picture>
+                </Col>
+                
+            </Row>
+        );
         return grouplist;
     }
     render() {
