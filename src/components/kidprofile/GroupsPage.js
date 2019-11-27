@@ -9,27 +9,18 @@ import {
 	Col
 } from 'reactstrap'
 
-import Groups from './Groups'
 
-function GroupsPage() {
+import Group from './Group'
+
+function GroupPage() {
 
     let history = useHistory();
     let location = useLocation();
 
     let { from } = location.state || { from: { pathname: "/kidspage" } };
+
     return (
-        <Container>
-                <Row>
-                    <Col md={5} className="mx-auto">
-                        <Row>
-                            <picture>
-                                <img alt="Logo Largo" width="100%" src="images/logolargo.png" />
-                            </picture>
-                        </Row>
-                        <Groups from={from} history={history} />
-                    </Col>
-                </Row>
-            </Container>
+        <Group from={from} history={history} />
     );
 }
-export default GroupsPage;
+export default GroupPage;

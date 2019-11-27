@@ -20,8 +20,19 @@
     padding-top: 20px;
     padding-right: 0px;
     padding-left: 0px;
+    padding-bottom: 20px;
 }
 
 .group-list{
     background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-color:  #DCDCDC;
+    border-radius:5px;
 }
+
+.group-image {
+    height: 45px;
+    width: 45px;
+}
+
