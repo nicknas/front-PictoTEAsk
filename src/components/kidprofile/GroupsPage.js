@@ -10,18 +10,18 @@ import {
 } from 'reactstrap'
 
 
-import Group from './Group'
+import ViewGroup from './ViewGroup'
 
 function GroupPage() {
 
     let history = useHistory();
     let location = useLocation();
 
-    let from = "/kidspage";
+    let from = "/viewKids";
     let from2 = "/creategroup";
 
     return (
-        <Group from={from} from2={from2} history={history} />
+        <ViewGroup from={from} from2={from2} history={history} />
     );
 }
 export default GroupPage;
