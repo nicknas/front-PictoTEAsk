@@ -20,6 +20,7 @@ class GroupList extends React.Component {
         this.deleteGroup = this.deleteGroup.bind(this);
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
         this.gokids = this.gokids.bind(this);
+        this.goCreateGroup = this.goCreateGroup.bind(this);
     }
     gokids(event) {
 
@@ -31,6 +32,18 @@ class GroupList extends React.Component {
 
 
         history.replace(from);
+
+
+    }
+
+    goCreateGroup(event) {
+
+        event.preventDefault();
+
+        let { from2, history } = this.props;
+
+
+        history.replace(from2);
 
 
     }
@@ -86,7 +99,7 @@ class GroupList extends React.Component {
             <Row>
                 <Col>
                         <picture>
-                            <img src="../images/botonNew.svg" className="group-image" /> <Link to="/createGroup">Crear grupo</Link>
+                            <img src="../images/botonNew.svg" className="group-image" onClick={this.goCreateGroup} /> Crear grupo
                         </picture>
                 </Col>
                 

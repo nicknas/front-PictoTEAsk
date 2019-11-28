@@ -17,10 +17,11 @@ function GroupPage() {
     let history = useHistory();
     let location = useLocation();
 
-    let { from } = location.state || { from: { pathname: "/kidspage" } };
+    let from = "/kidspage";
+    let from2 = "/creategroup";
 
     return (
-        <Group from={from} history={history} />
+        <Group from={from} from2={from2} history={history} />
     );
 }
 export default GroupPage;

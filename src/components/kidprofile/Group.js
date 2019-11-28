@@ -23,7 +23,7 @@ class Group extends React.Component {
                                 <img alt="Logo Largo" width="100%" src="images/logolargo.png" />
                             </picture>
                         </Row>
-                        <GroupList from={this.props.from} history={this.props.history} />
+                        <GroupList from2={this.props.from2} from={this.props.from} history={this.props.history} />
                     </Col>
                 </Row>
             </Container>
