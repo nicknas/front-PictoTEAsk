@@ -17,7 +17,7 @@ function KidsPage() {
     let history = useHistory();
     let location = useLocation();
 
-    let from = "/viewKids";
+    let from = "/groups";
     let from2 = "/createKid";
 
     return (
