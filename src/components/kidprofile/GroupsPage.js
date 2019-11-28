@@ -3,12 +3,6 @@ import {
 	useHistory,
 	useLocation
 } from 'react-router-dom'
-import {
-	Container,
-	Row,
-	Col
-} from 'reactstrap'
-
 
 import ViewGroup from './ViewGroup'
 
@@ -17,7 +11,7 @@ function GroupPage() {
     let history = useHistory();
     let location = useLocation();
 
-    let from = "/viewKids";
+    let from = "/kidspage";
     let from2 = "/creategroup";
 
     return (

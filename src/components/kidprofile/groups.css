@@ -16,6 +16,25 @@
     border-radius: 5px 0px 0px 5px;
 }
 
+.btnbluek{
+    border-radius:5px;
+    text-transform: none;
+    
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-radius: 5px 0px 0px 5px;
+}
+.btnwhitek{
+    border-radius:5px;
+    text-transform: none;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-radius: 0px 5px 5px 0px;
+    background-color: #fff;
+    color: #808080;
+    border-color:  #DCDCDC;
+}
+
 .btncol{
     padding-top: 20px;
     padding-right: 0px;

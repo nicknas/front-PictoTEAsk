@@ -6,7 +6,7 @@ class ViewKids extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            kids: [{ name: "Harryotter86"},
+            kids: [{ name: "HarryPotter86"},
             { name: "HermioneGrangerSuper"},
             ],
             deleteModalOpened: false,
@@ -19,10 +19,10 @@ class ViewKids extends React.Component {
         this.openDeleteModal = this.openDeleteModal.bind(this);
         this.deleteKid = this.deleteKid.bind(this);
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
-        this.gokids = this.gokids.bind(this);
+        this.goGroups = this.goGroups.bind(this);
         this.goCreateKid = this.goCreateKid.bind(this);
     }
-    gokids(event) {
+    goGroups(event) {
 
         event.preventDefault();
 
@@ -89,7 +89,7 @@ class ViewKids extends React.Component {
                     </Col>
                     <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
                         <ModalHeader toggle={this.closeDeleteModal}>Añadir carpeta</ModalHeader>
-                        <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.kidToDelete}?</ModalBody>
+                        <ModalBody>¿Está seguro de que quiere desasociar el niño {this.state.kidToDelete}?</ModalBody>
                         <ModalFooter><Button color="danger" onClick={this.deleteKid}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                     </Modal>
                 </Row>
@@ -99,7 +99,7 @@ class ViewKids extends React.Component {
             <Row>
                 <Col>
                     <picture>
-                        <img src="../images/botonNew.svg" className="group-image" onClick={this.goCreateKid} /> Crear grupo
+                        <img src="../images/botonNew.svg" className="group-image" onClick={this.goCreateKid} /> Añadir niño
                         </picture>
                 </Col>
 
@@ -122,16 +122,16 @@ class ViewKids extends React.Component {
                             <Row class="mx-auto">
                                 <Col md={6} className="btncol">
                                     <Button type="submit" color="primary"
-                                        className="btn-block btnwhite tx-tfm" onClick={this.gokids}>Niños</Button>
+                                        className="btn-block btnbluek tx-tfm">Niños</Button>
                                 </Col>
                                 <Col md={6} className="btncol" >
                                     <Button type="submit" color="primary"
-                                        className="btn-block btnblue tx-tfm" >Grupos</Button>
+                                        className="btn-block btnwhitek tx-tfm" onClick={this.goGroups}>Grupos</Button>
                                 </Col>
                             </Row>
                             <Row>
                                 <Container className='group-list'>
-                                    <h5>Grupos</h5>
+                                    <h5>Niños</h5>
 
                                     {kid}
 
