@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, ButtonGroup, Media, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './groups.css'
-class GroupList extends React.Component {
+class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -149,4 +149,4 @@ class GroupList extends React.Component {
 
 }
 
-export default GroupList;
+export default ViewGroup;
