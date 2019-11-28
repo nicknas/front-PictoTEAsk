@@ -11,8 +11,11 @@ import LoginPage from './components/auth/LoginPage'
 import RegisterPage from './components/auth/RegisterPage'
 import Pictogram from './components/pictogram/Pictogram'
 import GroupsPage from './components/kidprofile/GroupsPage'
-import ViewKids from './components/kidprofile/ViewKids'
+import KidsPage from './components/kidprofile/KidsPage'
 import CreateGroup from './components/kidprofile/CreateGroup'
+import CreateKid from './components/kidprofile/CreateKid'
+import AssociateKid from './components/kidprofile/AssociateKid'
+
 
 function PrivateRoute({ children, ...rest}) {
 	return (
@@ -43,14 +46,22 @@ export default () => (
 			<Route path="/signup">
 				<RegisterPage />
 			</Route>
-			<Route path="/groups">
+			<Route path="/groupspage">
 				<GroupsPage />
 			</Route>
-			<Route path="/kidspage">
-				<ViewKids />
-			</Route>
-			<Route path="/createGroup">
+			<Route path="/creategroup">
 				<CreateGroup />
+			</Route>
+			<Route path="/createkid">
+				<CreateKid />
+			</Route>
+			<Route path="/associatekid">
+				<AssociateKid />
+			</Route>
+			
+
+			<Route path="/kidspage">
+				<KidsPage />
 			</Route>
 			<PrivateRoute path="/">
 				<Pictogram />
