@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, ButtonGroup, Media, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './groups.css'
+import CreateGroup from './CreateGroup';
 class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -72,6 +73,12 @@ class ViewGroup extends React.Component {
 
     createGroupList() {
         let grouplist = [];
+        let { from, history } = this.props;
+        let nombre = history.location.param;
+        if (typeof nombre != 'undefined') {
+            this.state.groups.push({ name: nombre, kids: [] });
+        }
+
 
         this.state.groups.forEach((row) => {
             grouplist.push(
@@ -95,6 +102,7 @@ class ViewGroup extends React.Component {
                 </Row>
             );
         });
+        
         grouplist.push(
             <Row>
                 <Col>
@@ -105,6 +113,8 @@ class ViewGroup extends React.Component {
 
             </Row>
         );
+
+        
         return grouplist;
     }
     render() {

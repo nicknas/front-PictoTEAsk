@@ -6,7 +6,7 @@ import {
 
 import ViewGroup from './ViewGroup'
 
-function GroupPage() {
+function GroupPage(props) {
 
     let history = useHistory();
     let location = useLocation();
@@ -15,7 +15,7 @@ function GroupPage() {
     let from2 = "/creategroup";
 
     return (
-        <ViewGroup from={from} from2={from2} history={history} />
+        <ViewGroup from={from} from2={from2} listGroups={props.listGroups} history={history} />
     );
 }
 export default GroupPage;
