@@ -15,7 +15,7 @@ import KidsPage from './components/kidprofile/KidsPage'
 import CreateGroup from './components/kidprofile/CreateGroup'
 import CreateKid from './components/kidprofile/CreateKid'
 import AssociateKid from './components/kidprofile/AssociateKid'
-
+import Story from './components/story/Story'
 
 function PrivateRoute({ children, ...rest}) {
 	return (
@@ -59,6 +59,9 @@ export default () => (
 				<AssociateKid />
 			</Route>
 			
+			<Route path="/stories">
+				<Story />
+			</Route>
 
 			<Route path="/kidspage">
 				<KidsPage />

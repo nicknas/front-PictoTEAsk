@@ -78,7 +78,7 @@ class PictogramDirectories extends React.Component {
                     <ModalFooter><Button color="success" onClick={this.saveNewDirectory}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
                 </Modal>
                 <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
-                    <ModalHeader toggle={this.closeDeleteModal}>Añadir carpeta</ModalHeader>
+                    <ModalHeader toggle={this.closeDeleteModal}>Borrar carpeta</ModalHeader>
                     <ModalBody>¿Está seguro de que quiere borrar la carpeta {this.state.directoryToDelete}?</ModalBody>
                     <ModalFooter><Button color="danger" onClick={this.deleteDirectory}>Borrar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
                 </Modal>

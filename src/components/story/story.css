@@ -1,0 +1,57 @@
+body {
+    background:rgba(188, 250, 255, 0.4);
+}
+#cajaBuscar {
+    border-radius: 50px;
+    width: 365px;
+}
+.botonBuscar {
+    border-radius: 50px;
+    margin-right: 10px;
+    width: 110px;	
+}
+.columna {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.contenedor {
+    margin-top: 20px;
+}
+.imgNew{
+    margin-left: 18px;
+    margin-top: 13px;
+    
+    width: 50px;
+}
+.cardNew{
+    opacity: 0.6;
+}
+input[type="file"] {
+    display: none;
+}
+.nombreCarpeta {
+    margin-left: -115px;
+}
+li {
+    list-style: none;
+}
+h2{
+    margin-bottom: 30px;
+    margin-left: 40px;
+}
+.imgPapelera {
+    width: 30px;
+    margin-top: 20px;
+    margin-left: 140px;
+    opacity: 0.6;
+}
+.imgCard {
+    text-align: left;
+}
+.imgCard {
+    margin-left: 10px;
+    margin-top: 15px;
+    width: 70px;
+}
