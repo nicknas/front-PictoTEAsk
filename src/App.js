@@ -66,7 +66,7 @@ export default () => (
 				<StoryContent/>
 			</Route>
 			<PrivateRoute path="/">
-				<Story />
+				<KidsPage/>
 			</PrivateRoute>
 		</Switch>
 	</Router>

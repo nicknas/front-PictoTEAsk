@@ -19,8 +19,8 @@ class StoryList extends React.Component {
     }
 
     openDeleteModal(e) {
-        let directoryName = e.currentTarget.parentNode.previousSibling.innerText;
-        this.setState({storyToDelete: directoryName, deleteModalOpened: true});
+        let storyName = e.currentTarget.parentNode.previousSibling.innerText;
+        this.setState({storyToDelete: storyName, deleteModalOpened: true});
         e.stopPropagation();
     }
 
@@ -53,7 +53,7 @@ class StoryList extends React.Component {
     createStories() {
         let cuentos = [];
         this.props.listStories.forEach((row) => {
-            cuentos.push(<li><Card onClick={this.goToStory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col><img onClick={this.openDeleteModal} className="imgPapelera" src="images/papelera.png" alt=""/></Col></Row></Card></li>);
+            cuentos.push(<li><Card onClick={this.goToStory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/APPICON.png" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col><img onClick={this.openDeleteModal} className="imgPapelera" src="images/papelera.png" alt=""/></Col></Row></Card></li>);
         });
         cuentos.push(<li><Card onClick={this.addStory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}} className="cardNew"><Row className="no-gutters"><Col style={{width: "100%"}}><CardImg className="imgNew" src="images/botonNew.svg" alt="..."/></Col><Col><CardBody><CardTitle><h5 className="nombreCarpeta">Nuevo cuento</h5></CardTitle></CardBody></Col></Row></Card></li>);
         return cuentos;
@@ -61,7 +61,7 @@ class StoryList extends React.Component {
 
     goToStory(e) {
         let storyName = e.currentTarget.childNodes[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML;
-        
+        this.props.selectStory(storyName);
     }
 
     render() {

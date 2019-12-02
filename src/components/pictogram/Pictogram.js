@@ -28,6 +28,7 @@ class Pictogram extends React.Component {
 
     getImageSelected(imageSelected) {
         this.setState({imageSelected: imageSelected});
+        this.props.getImageSelected(imageSelected);
     }
 
     addNewPicto(picto) {

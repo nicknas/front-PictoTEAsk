@@ -32,7 +32,7 @@ input[type="file"] {
     display: none;
 }
 .nombreCarpeta {
-    margin-left: -115px;
+    margin-left: 0px;
 }
 li {
     list-style: none;

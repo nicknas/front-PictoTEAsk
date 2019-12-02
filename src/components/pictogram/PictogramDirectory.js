@@ -74,7 +74,7 @@ class PictogramDirectory extends React.Component {
                 currentSelect.className = "card";
             }
             e.currentTarget.className = "card border border-primary";
-            let imageSelected = {name: e.currentTarget.childNodes[1].children[0].innerHTML, img: e.currentTarget.childNodes[0].src};
+            let imageSelected = {name: e.currentTarget.childNodes[1].children[0].innerText, img: e.currentTarget.childNodes[0].src};
             this.props.imageSelected(imageSelected);
             this.setState({currentSelected: e.currentTarget});
         }

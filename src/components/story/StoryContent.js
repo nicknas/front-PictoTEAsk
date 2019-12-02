@@ -1,40 +1,44 @@
 import React from 'react';
-import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Fade, Modal} from 'reactstrap';
+import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Fade, Modal, ModalBody, ModalFooter, ModalHeader, Button} from 'reactstrap';
 import './story.css';
-import Pictogram from '../pictogram/Pictogram.js';
 import {FaArrowLeft} from 'react-icons/fa';
+import Pictogram from '../pictogram/Pictogram';
 
 class StoryContent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {currentSelected: {}, addNewPictoView: false, imagesSearched: []};
+        this.state = {currentSelected: {}, addNewPictoView: false};
         this.selectImageCard = this.selectImageCard.bind(this);
         this.createNewPictogram = this.createNewPictogram.bind(this);
-        this.returnToDirectory = this.returnToDirectory.bind(this);
-        this.getImagesSearched = this.getImagesSearched.bind(this);
-        this.returnToDirectories = this.returnToDirectories.bind(this);
+        this.returnToStories = this.returnToStories.bind(this);
         this.addNewPicto = this.addNewPicto.bind(this);
+        this.closeAddModal = this.closeAddModal.bind(this);
+        this.getImageSelected = this.getImageSelected.bind(this);
     }
 
-    addNewPicto(pictogram) {
-        this.props.newPicto(pictogram);
+    addNewPicto() {
+        this.props.newPicto(this.state.currentSelected);
         this.setState({addNewPictoView: false});
+    }
+
+    getImageSelected(imageSelected) {
+        this.setState({currentSelected: imageSelected});
+    }
+
+    closeAddModal() {
+        this.setState({currentSelected: {}, addNewPictoView: false });
     }
 
     createNewPictogram() {
         this.setState({addNewPictoView: true});
     }
 
-    returnToDirectory() {
-        this.setState({imagesSearched: []});
-        this.setState({addNewPictoView: false});
-    }
 
     getImagesSearched(listImages) {
         this.setState({imagesSearched: listImages});
     }
 
-    returnToDirectories() {
+    returnToStories() {
         this.props.goBack();
     }
 
@@ -95,15 +99,19 @@ class StoryContent extends React.Component {
     }   
     render() {
         const imageCards = this.createImageCards(this.props.images);
-
-        return (<Fade in={true}>
-                    <h2><span onClick={this.returnToDirectories} className="btn btn-outline-primary"><FaArrowLeft/></span>{this.props.nameDirectory}</h2>
-                    {imageCards}
-                    <Modal>
-                        <Pictogram/>
-                    </Modal>
-                </Fade>);
+        let view;
+            view = (<Fade in={true}>
+                        <h2><span onClick={this.returnToStories} className="btn btn-outline-primary"><FaArrowLeft/></span>{this.props.nameStory}</h2>
+                        {imageCards}
+                        <Modal isOpen={this.state.addNewPictoView} toggle={this.closeAddModal}>
+                            <ModalHeader toggle={this.closeAddModal}>Añadir pictograma</ModalHeader>
+                            <ModalBody><Pictogram getImageSelected={this.getImageSelected}/></ModalBody>
+                            <ModalFooter><Button color="success" onClick={this.addNewPicto}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
+                        </Modal>
+                    </Fade>
+                    );
         
+        return view;
     }
 }
 export default StoryContent;
