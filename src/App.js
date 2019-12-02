@@ -9,13 +9,13 @@ import {
 import {fakeAuth as auth} from './auth'
 import LoginPage from './components/auth/LoginPage'
 import RegisterPage from './components/auth/RegisterPage'
-import Pictogram from './components/pictogram/Pictogram'
 import GroupsPage from './components/kidprofile/GroupsPage'
 import KidsPage from './components/kidprofile/KidsPage'
 import CreateGroup from './components/kidprofile/CreateGroup'
 import CreateKid from './components/kidprofile/CreateKid'
 import AssociateKid from './components/kidprofile/AssociateKid'
 import Story from './components/story/Story'
+import StoryContent from './components/story/StoryContent'
 
 function PrivateRoute({ children, ...rest}) {
 	return (
@@ -62,12 +62,11 @@ export default () => (
 			<Route path="/stories">
 				<Story />
 			</Route>
-
-			<Route path="/kidspage">
-				<KidsPage />
+			<Route path="/stories/:storyName">
+				<StoryContent/>
 			</Route>
 			<PrivateRoute path="/">
-				<Pictogram />
+				<Story />
 			</PrivateRoute>
 		</Switch>
 	</Router>

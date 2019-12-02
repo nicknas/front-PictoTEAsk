@@ -1,7 +1,7 @@
 import React from 'react';
-import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Fade} from 'reactstrap';
-import './pictogram.css';
-import Pictogram from '../pictogram/Pictogram';
+import {Container, Row, Col, Card, CardImg, CardBody, CardTitle, Fade, Modal} from 'reactstrap';
+import './story.css';
+import Pictogram from '../pictogram/Pictogram.js';
 import {FaArrowLeft} from 'react-icons/fa';
 
 class StoryContent extends React.Component {
@@ -95,24 +95,15 @@ class StoryContent extends React.Component {
     }   
     render() {
         const imageCards = this.createImageCards(this.props.images);
-        let view;
-        if (!this.state.addNewPictoView) {
-            view = (<Fade in={true}>
-                        <h2><span onClick={this.returnToDirectories} className="btn btn-outline-primary"><FaArrowLeft/></span>{this.props.nameDirectory}</h2>
-                        {imageCards}
-                    </Fade>);
-        }
-        else {
-            view = (<Fade in={true}>
-                        <Row>
-                            <SearchPictogram images={this.getImagesSearched} addNewPicto={this.createNewPictogram} goBack={this.returnToDirectory}/>
-                        </Row>
-                        <Row>
-                            <SelectPictogram fadeSelect={this.state.imagesSearched.length === 0 ? false : true} imageSelected={this.addNewPicto} images={this.state.imagesSearched} goBack={this.returnToDirectory}/>
-                        </Row>
-                    </Fade>);
-        }
-        return view;
+
+        return (<Fade in={true}>
+                    <h2><span onClick={this.returnToDirectories} className="btn btn-outline-primary"><FaArrowLeft/></span>{this.props.nameDirectory}</h2>
+                    {imageCards}
+                    <Modal>
+                        <Pictogram/>
+                    </Modal>
+                </Fade>);
+        
     }
 }
 export default StoryContent;
