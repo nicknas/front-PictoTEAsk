@@ -6,19 +6,27 @@ import {
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 class CreateKid extends React.Component {
-    
     constructor(props) {
-            super(props);
-            this.state = {error: false}
-
-            this.handleSubmit = this.handleSubmit.bind(this)
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.input = React.createRef();
     }
-
     handleSubmit(event) {
         event.preventDefault();
+        
+        let formDataKids = new FormData();
+        formDataKids.append("Tutor", 7);
+        formDataKids.append("Apellido", "Pepito");
+        formDataKids.append("Nombre", "Sánchez");
+        formDataKids.append("Nick", this.input.current.value);
 
-        const nick = this.refs.nick.value;
-
+        fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
+            method: "POST",
+            body: formDataKids
+          }).then(response => response.json())
+          .catch(error => console.error('Error:', error))
+          .then(response => console.log('Success:', response));
+          
     }
     render() {
         return (
@@ -40,9 +48,8 @@ class CreateKid extends React.Component {
                                 <Form onSubmit={this.handleSubmit}>
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
-                                        <Input
-                                            ref="nick" required={true}
-                                            type="text" placeholder="Introduce el nick" />
+                                        <Input innerRef={this.input} type="text" name="name" placeholder="Introduce el nick" />
+
                                     </FormGroup>
 
                                     <Col md={12} className="text-center">
