@@ -1,6 +1,6 @@
 {
   "name": "front-tea",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
@@ -20,7 +20,8 @@
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
-    "reactstrap": "^8.1.1"
+    "reactstrap": "^8.1.1",
+    "request": "^2.88.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,10 +43,10 @@
           "presets": [
             "@babel/preset-env",
             "@babel/preset-react"
-          ] ,
+          ],
           "plugins": [
             "@babel/plugin-proposal-class-properties"
-	  ]
+          ]
         }
       ]
     ]

@@ -11,7 +11,7 @@ import {
 
 
 // TODO: change auth with backend
-import {fakeAuth as auth} from '../../auth'
+import {auth} from '../../auth'
 
 
 class LoginForm extends React.Component {
@@ -41,18 +41,19 @@ class LoginForm extends React.Component {
 		})
 	}
 
+
 	render() {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<FormGroup>
 					<Label>Correo</Label>
-					<Input
+					<input className="form-control"
 						ref="email" required={true}
 						type="email" placeholder="Correo" />
 				</FormGroup>
 				<FormGroup>
 					<Label>Contraseña</Label>
-					<Input
+					<input className="form-control"
 						ref="pass" required={true}
 						type="password" placeholder="Contraseña" />
 				</FormGroup>

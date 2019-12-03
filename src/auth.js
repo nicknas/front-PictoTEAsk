@@ -1,16 +1,18 @@
+var $ = require('request');
+
 const auth = {
 	isAuthenticated: false,
 	request(email, password, cb) {
 
-		fetch("https://pictoteask.000webhostapp.com/loginTutor.php", {
-			method: 'POST',
-			body: JSON.stringify({email, password}),
-			headers:{
-				'Content-Type': 'application/json'
-			}
-		}).then(res => res.json())
-		.catch(error => console.error('Error:', error))
-		.then(response => console.log('Success:', response));
+		$.post({
+			url:'https://pictoteask.000webhostapp.com/loginTutor.php',
+			form: {email, password}
+		}, function(err, httpResponse, body){
+			console.log('LOG BACK RESPONSE')
+			console.log(err)
+			console.log(httpResponse)
+			console.log(body)
+		})
 
 	},
 	login(email, password, cb) {
