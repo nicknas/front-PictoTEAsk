@@ -1,19 +1,22 @@
 import React from 'react'
 import {
     useHistory,
-    useLocation
+    useLocation,
+    withRouter
 } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 class CreateKid extends React.Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.createKid = this.createKid.bind(this);
         this.input = React.createRef();
     }
-    handleSubmit(event) {
+
+    createKid(event) {
         event.preventDefault();
-        
+
+
         let formDataKids = new FormData();
         formDataKids.append("Tutor", 7);
         formDataKids.append("Apellido", "Pepito");
@@ -23,44 +26,48 @@ class CreateKid extends React.Component {
         fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
             method: "POST",
             body: formDataKids
-          }).then(response => response.json())
-          .catch(error => console.error('Error:', error))
-          .then(response => console.log('Success:', response));
-          
+        }).then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+        this.props.history.push({ pathname: '/groupspage', param: this.input.current.value });
+
+        this.props.history.push({ pathname: '/kidspage', param: this.input.current.value });
     }
     render() {
         return (
             <Container>
-                <Row>
-                    <Col md={5} className="mx-auto">
-                        <div id="first">
-                            <picture>
-                                <img alt="Logo Largo" width="100%" src="images/logolargo.png" />
-                            </picture>
 
-                            <div className="myform form ">
-                                <div className="logo mb-3">
-                                    <Col md={12} className="text-center">
-                                        <h1>Crear niño</h1>
-                                    </Col>
-                                </div>
+                <Col md={5} className="mx-auto">
+                    <Row className="myrow">
 
-                                <Form onSubmit={this.handleSubmit}>
-                                    <FormGroup>
-                                        <Label>Nickname del niño</Label>
-                                        <Input innerRef={this.input} type="text" name="name" placeholder="Introduce el nick" />
-
-                                    </FormGroup>
-
-                                    <Col md={12} className="text-center">
-                                        <Button type="submit" color="primary"
-                                            className="btn-block mybtn tx-tfm">Crear niño</Button>
-                                    </Col>
-                                </Form>
+                        <picture>
+                            <img alt="Logo Largo" width="100%" src="images/logolargo.png" />
+                        </picture>
+                    </Row>
+                    <Row >
+                        <div className="myform form">
+                            <div className="logo mb-3">
+                                <Col md={12} className="text-center">
+                                    <h1>Registrar un niño</h1>
+                                </Col>
                             </div>
+
+                            <Form onSubmit={this.createKid}>
+                                <FormGroup>
+                                    <Label >Nombre del niño*</Label>
+                                    <Input innerRef={this.input} required={true} type="text" name="name" placeholder="Nombre" />
+                                </FormGroup>
+                                <Button type="submit" color="primary"  >Submit</Button>
+                            </Form>
+
+
+
+
+
                         </div>
-                    </Col>
-                </Row>
+                    </Row>
+                </Col>
+
             </Container>
         );
     }
@@ -68,4 +75,4 @@ class CreateKid extends React.Component {
 
 }
 
-export default CreateKid;
+export default withRouter(CreateKid);
