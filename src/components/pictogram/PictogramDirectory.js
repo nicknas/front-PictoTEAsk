@@ -15,6 +15,7 @@ class PictogramDirectory extends React.Component {
         this.getImagesSearched = this.getImagesSearched.bind(this);
         this.returnToDirectories = this.returnToDirectories.bind(this);
         this.addNewPicto = this.addNewPicto.bind(this);
+        this.createImageCards = this.createImageCards.bind(this);
     }
 
     addNewPicto(pictogram) {
@@ -41,13 +42,16 @@ class PictogramDirectory extends React.Component {
 
     createImageCards(listPaths) {
         if (this.props.nameDirectory === "común") {
-            listPaths = [];
             let formDataFolders = new FormData();
             formDataFolders.append("idTutors", 7);
             let foldersRequest = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: 'POST', body: formDataFolders});
-            fetch(foldersRequest).then(response => response.json()).then(response => {
+            let listPaths = [];
+            fetch(foldersRequest)
+            .then(response => {if (response.ok) return response.json();})
+            .then((data) => {
+                
                 for (let i = 0; i < 10; i++) {
-                    listPaths.push({name: response.sources[i].nombre, img: 'https://pictoteask.000webhostapp.com/' + response.sources[i].path});
+                    listPaths.push({name: data.sources[i].nombre, img: 'https://pictoteask.000webhostapp.com/' + data.sources[i].path});
                 }
                 listPaths = this.listToMatrix(listPaths, 3);
                 let listImageRows = [];
@@ -70,36 +74,39 @@ class PictogramDirectory extends React.Component {
                     }
                     
                 });
-                return listImageRows;
+                this.setState({imageCards: listImageRows});
+                
             });            
 
         }
-        if (listPaths.length === 0) {
-            let columnaAdd = <div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
-            return [<Row>{columnaAdd}</Row>];
-        }
-        listPaths = this.listToMatrix(listPaths, 3);
-        let listImageRows = [];
-        listPaths.forEach((row, i) => {
-            let listImageCols = [];
-            row.forEach((col) => {
-                listImageCols.push(<div className="col- columna"><Card onClick={this.selectImageCard} style={{width: "175px"}}><CardImg top src={col.img}/><CardBody><h5><CardTitle>{col.name}</CardTitle></h5></CardBody></Card></div>);
-            });
-            if (i === (listPaths.length - 1) && listImageCols.length < 3) {
-                listImageCols.push(<div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>);
-                listImageRows.push(<Row>{listImageCols}</Row>);
-            }
-            else if (i === (listPaths.length - 1) && listImageCols.length === 3) {
-                listImageRows.push(<Row>{listImageCols}</Row>);
+        else {
+            if (listPaths.length === 0) {
                 let columnaAdd = <div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
-                listImageRows.push(<Row>{columnaAdd}</Row>);
+                this.setState({imageCards: [<Row>{columnaAdd}</Row>]})
             }
-            else {
-                listImageRows.push(<Row>{listImageCols}</Row>);
-            }
-                
-        });
-        return listImageRows;
+            listPaths = this.listToMatrix(listPaths, 3);
+            let listImageRows = [];
+            listPaths.forEach((row, i) => {
+                let listImageCols = [];
+                row.forEach((col) => {
+                    listImageCols.push(<div className="col- columna"><Card onClick={this.selectImageCard} style={{width: "175px"}}><CardImg top src={col.img}/><CardBody><h5><CardTitle>{col.name}</CardTitle></h5></CardBody></Card></div>);
+                });
+                if (i === (listPaths.length - 1) && listImageCols.length < 3) {
+                    listImageCols.push(<div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>);
+                    listImageRows.push(<Row>{listImageCols}</Row>);
+                }
+                else if (i === (listPaths.length - 1) && listImageCols.length === 3) {
+                    listImageRows.push(<Row>{listImageCols}</Row>);
+                    let columnaAdd = <div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
+                    listImageRows.push(<Row>{columnaAdd}</Row>);
+                }
+                else {
+                    listImageRows.push(<Row>{listImageCols}</Row>);
+                }
+                    
+            });
+            this.setState({imageCards: listImageRows});
+        }
         
     }
 
@@ -130,16 +137,15 @@ class PictogramDirectory extends React.Component {
     
         return matrix;
     }   
+    componentDidMount() {
+        this.createImageCards(this.props.images);
+    }
     render() {
-        let imageCards = this.createImageCards(this.props.images);
-        if (this.props.nameDirectory === "común") {
-
-        }
         let view;
         if (!this.state.addNewPictoView) {
             view = (<Fade in={true}>
                         <h2><span onClick={this.returnToDirectories} className="btn btn-outline-primary"><FaArrowLeft/></span>{this.props.nameDirectory}</h2>
-                        {imageCards}
+                        {this.state.imageCards}
                     </Fade>);
         }
         else {

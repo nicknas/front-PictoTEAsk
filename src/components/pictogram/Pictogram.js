@@ -7,12 +7,7 @@ class Pictogram extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listDirectories: [{name: "común", pictos: []}, 
-                              {name: "animales", pictos: [{name: "animal_5", img: "images/pictos/animal_5.jpg"}, {name: "animal_9", img: "images/pictos/animal_9.jpg"}, {name: "animal_10", img: "images/pictos/animal_10.jpg"}]},
-                              {name: "colegio", pictos: []},
-                              {name: "comida", pictos: []},
-                              {name: "días de la semana", pictos: []},
-                              {name: "familia", pictos: []}
+            listDirectories: [{name: "común", pictos: []}
                              ], 
             viewDirectories: true, 
             imageSelected: {}, 
@@ -34,7 +29,7 @@ class Pictogram extends React.Component {
 
     addNewPicto(picto) {
         let directorySelected = this.state.directorySelected;
-        directorySelected.pictos.push(picto);
+        directorySelected.pictos.push(picto);   
         let listDirectories = this.state.listDirectories;
         listDirectories[listDirectories.findIndex((directory) => {return directory.name === directorySelected.name})] = directorySelected;
         this.setState({listDirectories: listDirectories, directorySelected: directorySelected});

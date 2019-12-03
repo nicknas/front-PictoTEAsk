@@ -36,8 +36,8 @@ class SelectPictogram extends React.Component {
         }
         else {
             let imageSelected = {name: e.currentTarget.childNodes[1].childNodes[0].childNodes[0].innerHTML, img: e.currentTarget.childNodes[0].src};
-            this.props.goBack();
             this.props.imageSelected(imageSelected);
+            this.props.goBack();
         }
     }
 
