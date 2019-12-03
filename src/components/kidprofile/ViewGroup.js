@@ -7,9 +7,7 @@ class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            groups: [{ name: "Primer ciclo primaria", kids: [] },
-            { name: "Segundo ciclo primaria", kids: [] },
-            ],
+            groups: this.props.listGroups,
             deleteModalOpened: false,
             addModalOpened: false,
             deleteModalOpened: false,

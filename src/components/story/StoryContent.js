@@ -44,7 +44,8 @@ class StoryContent extends React.Component {
 
     createImageCards(listPaths) {
         if (listPaths.length === 0) {
-            return [];
+            let columnaAdd = <div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
+            return [<Row>{columnaAdd}</Row>];
         }
         listPaths = this.listToMatrix(listPaths, 3);
         let listImageRows = [];

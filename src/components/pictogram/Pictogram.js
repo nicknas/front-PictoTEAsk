@@ -7,7 +7,7 @@ class Pictogram extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listDirectories: [{name: "acciones", pictos: []}, 
+            listDirectories: [{name: "común", pictos: []}, 
                               {name: "animales", pictos: [{name: "animal_5", img: "images/pictos/animal_5.jpg"}, {name: "animal_9", img: "images/pictos/animal_9.jpg"}, {name: "animal_10", img: "images/pictos/animal_10.jpg"}]},
                               {name: "colegio", pictos: []},
                               {name: "comida", pictos: []},
@@ -16,7 +16,8 @@ class Pictogram extends React.Component {
                              ], 
             viewDirectories: true, 
             imageSelected: {}, 
-            directorySelected: {name: "", pictos: []}
+            directorySelected: {name: "", pictos: []},
+            idTutor: 7
         };
         this.getImageSelected = this.getImageSelected.bind(this);
         this.addNewPicto = this.addNewPicto.bind(this);
@@ -63,10 +64,10 @@ class Pictogram extends React.Component {
     render() {
         let view;
         if (this.state.viewDirectories) {
-            view = <PictogramDirectories listDirectories={this.state.listDirectories} selectDirectory={this.selectDirectory} addDirectory={this.addNewDirectory} deleteDirectory={this.deleteDirectory}/>;
+            view = <PictogramDirectories idTutor={this.state.idTutor} listDirectories={this.state.listDirectories} selectDirectory={this.selectDirectory} addDirectory={this.addNewDirectory} deleteDirectory={this.deleteDirectory}/>;
         }
         else {
-            view = <PictogramDirectory newPicto={this.addNewPicto} goBack={this.goBackToDirectories} imageSelected={this.getImageSelected} nameDirectory={this.state.directorySelected.name} images={this.state.directorySelected.pictos}/>;
+            view = <PictogramDirectory idTutor={this.state.idTutor} newPicto={this.addNewPicto} goBack={this.goBackToDirectories} imageSelected={this.getImageSelected} nameDirectory={this.state.directorySelected.name} images={this.state.directorySelected.pictos}/>;
         }
         return (
             <Container className="contenedor">

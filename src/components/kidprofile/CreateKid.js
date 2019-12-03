@@ -17,7 +17,7 @@ class CreateKid extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const nick = this.refs.text.value;
+        const nick = this.refs.nick.value;
 
     }
     render() {
@@ -41,7 +41,7 @@ class CreateKid extends React.Component {
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
                                         <Input
-                                            ref="text" required={true}
+                                            ref="nick" required={true}
                                             type="text" placeholder="Introduce el nick" />
                                     </FormGroup>
 

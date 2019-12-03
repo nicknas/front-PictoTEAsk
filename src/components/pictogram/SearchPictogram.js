@@ -28,12 +28,16 @@ class SearchPictogram extends React.Component {
     handleSearchClick() {
         this.setState({isSearched: !this.state.isSearched});
         let listElements = [];
-        if (this.state.searchValue.includes("a")) {
-            listElements.push({name: "animal_11", img: "images/pictos/animal_11.jpg"});
-            listElements.push({name: "animal_12", img: "images/pictos/animal_12.jpg"});
-            listElements.push({name: "animal_13", img: "images/pictos/animal_13.jpg"});
-        }
-        this.props.images(listElements);
+        let formDataFolders = new FormData();
+        formDataFolders.append("palabra", this.state.searchValue);
+        let foldersRequest = new Request('https://pictoteask.000webhostapp.com/search.php', {method: 'POST', body: formDataFolders});
+        fetch(foldersRequest).then(response => response.json()).then(response => {
+            for (let i = 0; i < response.sources.length; i++) {
+                listElements.push({name: response.sources[i].nombre, img: 'https://pictoteask.000webhostapp.com/' + response.sources[i].path});
+            }
+            this.props.images(listElements);
+        });            
+        
     }
     handleSearchKeyPress(e) {
         if (e.key === "Enter") {

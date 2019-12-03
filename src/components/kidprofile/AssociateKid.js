@@ -16,7 +16,7 @@ class AssociateKid extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const email = this.refs.email.value;
+        const nick = this.refs.nick.value;
     }
 
     render() {
