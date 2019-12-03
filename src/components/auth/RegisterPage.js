@@ -26,7 +26,7 @@ function RegisterPage() {
 						<div className="myform form">
 							<div className="logo mb-3">
 								<Col md={12} className="text-center">
-									<h1>Signup</h1>
+									<h1>Registro</h1>
 								</Col>
 							</div>
 							<RegisterForm from={from} history={history} />

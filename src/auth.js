@@ -1,7 +1,17 @@
 const auth = {
 	isAuthenticated: false,
 	request(email, password, cb) {
-		//TODO: with backend
+
+		fetch("https://pictoteask.000webhostapp.com/loginTutor.php", {
+			method: 'POST',
+			body: JSON.stringify({email, password}),
+			headers:{
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json())
+		.catch(error => console.error('Error:', error))
+		.then(response => console.log('Success:', response));
+
 	},
 	login(email, password, cb) {
 		if (this.isAuthenticated) { // prevent doble login

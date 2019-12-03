@@ -45,43 +45,43 @@ class LoginForm extends React.Component {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<FormGroup>
-					<Label>Email adress</Label>
+					<Label>Correo</Label>
 					<Input
 						ref="email" required={true}
-						type="email" placeholder="Enter Email" />
+						type="email" placeholder="Correo" />
 				</FormGroup>
 				<FormGroup>
-					<Label>Password</Label>
+					<Label>Contraseña</Label>
 					<Input
 						ref="pass" required={true}
-						type="password" placeholder="Enter Password" />
+						type="password" placeholder="Contraseña" />
 				</FormGroup>
 				<Col md={12} className="text-center">
 					<Button type="submit" color="primary"
-						className="btn-block mybtn tx-tfm">Login</Button>
+						className="btn-block mybtn tx-tfm">INICIAR SESIÓN</Button>
 				</Col>
 				<Col md={12}>
 					<div className="login-or">
 						<hr className="hr-or" />
-						<span className="span-or">or</span>
+						<span className="span-or">o</span>
 					</div>
 				</Col>
 				<Col md={12} className="mb-3">
 					<div className="text-center">
 						<div className="social btn mybtn">
-							<i className="fa fa-google-plus"></i> Signup using Google
+							<i className="fa fa-google-plus"></i> inicia sesión con Google
 						</div>
 					</div>
 				</Col>
 				<Col md={12} className="mb-3">
 					<div className="text-center">
 						<div className="social btn mybtn">
-							<i className="fa fa-facebook-f"></i> Signup using Facebook
+							<i className="fa fa-facebook-f"></i> inicia sesión con  Facebook
 						</div>
 					</div>
 				</Col>
 				<FormGroup>
-					<div className="text-center">Don't  have account? <Link to="/signup">Sign up here</Link></div>
+					<div className="text-center">No tienes cuenta? <Link to="/signup">Regístrate</Link></div>
 				</FormGroup>
 			</Form>
 		)

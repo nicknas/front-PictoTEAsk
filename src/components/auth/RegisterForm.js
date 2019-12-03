@@ -31,41 +31,41 @@ class RegisterForm extends React.Component {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<FormGroup>
-					<Label>First Name</Label>
+					<Label>Primer Nombre</Label>
 					<Input
 						ref="firstname" required={true}
-						type="text" placeholder="Enter Firstname" />
+						type="text" placeholder="Primer Nombre" />
 				</FormGroup>
 				<FormGroup>
-					<Label>Last Name</Label>
+					<Label>Apellido</Label>
 					<Input
 						ref="lastname" required={true}
-						type="text" placeholder="Enter Lastname" />
+						type="text" placeholder="Apellido" />
 				</FormGroup>
 				<FormGroup>
-					<Label>Email adress</Label>
+					<Label>Correo</Label>
 					<Input
 						ref="email" required={true}
-						type="email" placeholder="Enter Email" />
+						type="email" placeholder="Correo" />
 				</FormGroup>
 				<FormGroup>
-					<Label>Password</Label>
+					<Label>Contraseña</Label>
 					<Input
 						ref="pass" required={true}
-						type="password" placeholder="Enter Password" />
+						type="password" placeholder="Contraseña" />
 				</FormGroup>
 				<FormGroup>
-					<Label>Valid Password</Label>
+					<Label>Validar Contraseña</Label>
 					<Input
 						ref="vpass" required={true}
-						type="password" placeholder="Enter Password" />
+						type="password" placeholder="Contraseña" />
 				</FormGroup>
 					<FormGroup tag="fieldset">
 					<legend>Rol</legend>
 					<FormGroup check>
 						<Label check>
 							<Input type="radio" name="radio1" />{' '}
-							Father
+							Padre
 						</Label>
 					</FormGroup>
 					<FormGroup check>
@@ -77,7 +77,7 @@ class RegisterForm extends React.Component {
 					<FormGroup check>
 						<Label check>
 							<Input type="radio" name="radio1" />{' '}
-							Carer
+							Cuidador
 						</Label>
 					</FormGroup>
 				</FormGroup>
@@ -85,18 +85,18 @@ class RegisterForm extends React.Component {
 					<FormGroup check>
 						<Label check>
 							<Input type="checkbox" />{' '}
-							I accept the Terms Of Use
+							Acepto los terminos y condiciones
 						</Label>
 					</FormGroup>
 				</FormGroup>
 				<Col md={12} className="text-center">
 					<Button type="submit" color="primary"
-						className="btn-block mybtn tx-tfm">Register</Button>
+						className="btn-block mybtn tx-tfm">REGISTRARSE</Button>
 				</Col>
 				<Col md={12}>
 					<FormGroup>
 						<div className="text-center">
-							<Link to="/login">Already have an account?</Link>
+							<Link to="/login">Ya tienes cuenta? inicia sesión</Link>
 						</div>
 					</FormGroup>
 				</Col>

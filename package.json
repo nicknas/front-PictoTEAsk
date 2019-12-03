@@ -2,8 +2,10 @@
   "name": "front-tea",
   "version": "0.1.0",
   "devDependencies": {
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/runtime": "^7.7.4",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
     "browserify": "^16.5.0",
@@ -40,7 +42,10 @@
           "presets": [
             "@babel/preset-env",
             "@babel/preset-react"
-          ]
+          ] ,
+          "plugins": [
+            "@babel/plugin-proposal-class-properties"
+	  ]
         }
       ]
     ]

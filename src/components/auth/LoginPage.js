@@ -30,7 +30,7 @@ function LoginPage() {
 						<div className="myform form">
 							<div className="logo mb-3">
 								<Col md={12} className="text-center">
-									<h1>Login</h1>
+									<h1>Inicio de sesión</h1>
 								</Col>
 							</div>
 							<LoginForm from={from} history={history} />
