@@ -10,13 +10,13 @@ class AssociateKid extends React.Component {
     constructor(props) {
         super(props);
         this.state = {error: false}
-
+        this.input = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     handleSubmit(event) {
         event.preventDefault();
-
-        const nick = this.refs.nick.value;
+        console.log(this.input.current.value); //Ahí está el valor introducido
+     
     }
 
     render() {
@@ -41,7 +41,7 @@ class AssociateKid extends React.Component {
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
                                         <Input
-                                            ref="nick" required={true}
+                                            innerRef={this.input} required={true}
                                             type="text" placeholder="Introduce el nickname" />
                                     </FormGroup>
 
