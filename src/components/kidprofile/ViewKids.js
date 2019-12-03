@@ -72,6 +72,11 @@ class ViewKids extends React.Component {
 
     createKidList() {
         let kidlist = [];
+        let { from, history } = this.props;
+        let nombre = history.location.param;
+        if (typeof nombre != 'undefined') {
+            this.state.kids.push({ name: nombre});
+        }
 
         this.state.kids.forEach((row) => {
             kidlist.push(
