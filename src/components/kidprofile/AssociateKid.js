@@ -9,14 +9,24 @@ import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button }
 class AssociateKid extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {error: false}
+        this.associateKid = this.associateKid.bind(this);
         this.input = React.createRef();
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
-    handleSubmit(event) {
+    associateKid(event) {
         event.preventDefault();
-        console.log(this.input.current.value); //Ahí está el valor introducido
-     
+
+        let formDataKidTutor = new FormData();
+        formDataKidTutor.append("id_tutor", 7);
+        formDataKidTutor.append("id_kid", this.input.current.value);
+
+        fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
+            method: "POST",
+            body: formDataGroup
+        }).then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+        
+        this.props.history.push({ pathname: '/associatekid', param: this.input.current.value });
     }
 
     render() {
@@ -37,7 +47,7 @@ class AssociateKid extends React.Component {
                                     </Col>
                                 </div>
 
-                                <Form onSubmit={this.handleSubmit}>
+                                <Form onSubmit={this.associateKid}>
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
                                         <Input

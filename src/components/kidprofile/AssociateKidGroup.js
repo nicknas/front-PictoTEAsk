@@ -6,7 +6,28 @@ import {
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 class AssociateKidGroup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.associateKidGroup = this.associateKidGroup.bind(this);
+        this.input = React.createRef();
+    }
+    associateKidGroup(event) {
+        event.preventDefault();
 
+        let formDataKidGroup = new FormData();
+        formDataKidGroup.append("id_tutor", 7);
+        formDataKidGroup.append("id_group", 7);
+        formDataKidGroup.append("id_kid", this.input.current.value);
+
+        fetch('https://pictoteask.000webhostapp.com/addKidToGroup.php', {
+            method: "POST",
+            body: formDataGroup
+        }).then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+        
+        this.props.history.push({ pathname: '/associatekidgroup', param: this.input.current.value });
+    }
     render() {
         return (
             <Container>
@@ -24,7 +45,7 @@ class AssociateKidGroup extends React.Component {
                                     </Col>
                                 </div>
 
-                                <Form onSubmit={this.handleSubmit}>
+                                <Form onSubmit={this.associateKidGroup}>
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
                                         <Input

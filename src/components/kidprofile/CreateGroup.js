@@ -15,7 +15,18 @@ class CreateGroup extends React.Component {
 
     createGroup(event) {
         event.preventDefault();
-        console.log(this.input.current.value);
+
+        let formDataGroup = new FormData();
+        formDataGroup.append("Tutor", 7);
+        formDataGroup.append("Nombre_grupo", this.input.current.value);
+
+        fetch('https://pictoteask.000webhostapp.com/addGroup.php', {
+            method: "POST",
+            body: formDataGroup
+        }).then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+        
         this.props.history.push({ pathname: '/groupspage', param: this.input.current.value });
     }
     render() {
@@ -41,18 +52,12 @@ class CreateGroup extends React.Component {
                                 <FormGroup>
                                     <Label >Nombre del grupo*</Label>
                                     <Input innerRef={this.input} type="text" name="name" placeholder="Nombre" />
-                        </FormGroup>
+                                </FormGroup>
                                 <Button type="submit" color="primary"  >Submit</Button>
                             </Form>
-
-
-
-
-
                         </div>
                     </Row>
                 </Col>
-
             </Container>
         );
     }
