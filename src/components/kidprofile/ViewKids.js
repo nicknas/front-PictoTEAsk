@@ -6,9 +6,6 @@ class ViewKids extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            kids: [{ name: "HarryPotter86"},
-            { name: "HermioneGrangerSuper"},
-            ],
             deleteModalOpened: false,
             addModalOpened: false,
             deleteModalOpened: false,
@@ -73,16 +70,12 @@ class ViewKids extends React.Component {
     createKidList() {
         let kidlist = [];
         let { from, history } = this.props;
-        let nombre = history.location.param;
-        if (typeof nombre != 'undefined') {
-            this.state.kids.push({ name: nombre});
-        }
 
-        this.state.kids.forEach((row) => {
+        this.props.listKids.forEach((row) => {
             kidlist.push(
                 <Row className="myrow">
                     <Col md={10} >
-                        <picture>
+                        <picture id={row.id}>
                             <img src="../images/defaultProfile.jpg" className="group-image" /> {row.name}
 
                         </picture>

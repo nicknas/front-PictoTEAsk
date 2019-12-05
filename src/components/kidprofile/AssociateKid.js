@@ -21,7 +21,7 @@ class AssociateKid extends React.Component {
 
         fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
             method: "POST",
-            body: formDataGroup
+            body: formDataKidTutor
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
