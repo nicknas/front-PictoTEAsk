@@ -117,7 +117,7 @@ class ViewKids extends React.Component {
                             </picture>
                         </Row>
                         <Container>
-                            <Row class="mx-auto">
+                            <Row className="mx-auto">
                                 <Col md={6} className="btncol">
                                     <Button type="submit" color="primary"
                                         className="btn-block btnbluek tx-tfm">Niños</Button>
