@@ -14,12 +14,22 @@ class ViewGroup extends React.Component {
         };
         this.createKidsList = this.createKidsList.bind(this);
         this.gokids = this.gokids.bind(this);
-        //this.goAddKid = this.goAddKid.bind(this);
+        this.goGroups = this.goGroups.bind(this);
+
+        this.addKid = this.addKid.bind(this);
+    }
+    addKid(){
+        
     }
     gokids(event) {
         event.preventDefault();
 
         this.props.history.push('/kidspage');
+    }
+    goGroups(event) {
+        event.preventDefault();
+
+        this.props.history.push('/groupspage');
     }
     createKidsList() {
         let grouplist = [];
@@ -79,7 +89,7 @@ class ViewGroup extends React.Component {
                                 </Col>
                                 <Col md={6} className="btncol" >
                                     <Button type="submit" color="primary"
-                                        className="btn-block btnblue tx-tfm" >Grupos</Button>
+                                        className="btn-block btnblue tx-tfm" onClick={this.goGroups} >Grupos</Button>
                                 </Col>
                             </Row>
                             <Row>
