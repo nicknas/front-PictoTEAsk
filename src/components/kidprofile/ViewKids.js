@@ -86,9 +86,9 @@ class ViewKids extends React.Component {
                         </picture>
                     </Col>
                     <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
-                        <ModalHeader toggle={this.closeDeleteModal}>Añadir niño</ModalHeader>
+                        <ModalHeader toggle={this.closeDeleteModal}>Desasociar niño</ModalHeader>
                         <ModalBody>¿Está seguro de que quiere desasociar el niño {this.state.kidToDelete}?</ModalBody>
-                        <ModalFooter><Button color="danger" onClick={this.deleteKid}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
+                        <ModalFooter><Button color="danger" onClick={this.deleteKid}>Desasociar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                     </Modal>
                 </Row>
             );

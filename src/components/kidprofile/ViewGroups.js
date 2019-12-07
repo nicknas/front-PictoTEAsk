@@ -20,12 +20,21 @@ class ViewGroups extends React.Component {
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
         this.gokids = this.gokids.bind(this);
         this.goCreateGroup = this.goCreateGroup.bind(this);
+        this.goGroup = this.goGroup.bind(this);
+
     }
+
+    goGroup(event){
+        event.preventDefault();
+
+        let { from3, history } = this.props;
+
+        history.replace(from3);
+    }
+
     gokids(event) {
 
         event.preventDefault();
-
-
 
         let { from, history } = this.props;
 
@@ -80,7 +89,7 @@ class ViewGroups extends React.Component {
 
         this.state.groups.forEach((row) => {
             grouplist.push(
-                <Row className="myrow">
+                <Row className="myrow" onClick={this.goGroup}>
                     <Col md={10} >
                         <picture>
                             <img src="../images/defaultGroup.jpg" className="group-image" /> {row.name}
@@ -93,7 +102,7 @@ class ViewGroups extends React.Component {
                         </picture>
                     </Col>
                     <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
-                        <ModalHeader toggle={this.closeDeleteModal}>Añadir carpeta</ModalHeader>
+                        <ModalHeader toggle={this.closeDeleteModal}>Borrar grupo</ModalHeader>
                         <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.groupToDelete}?</ModalBody>
                         <ModalFooter><Button color="danger" onClick={this.deleteGroup}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                     </Modal>
