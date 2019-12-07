@@ -14,6 +14,7 @@ import GroupsPage from './components/kidprofile/GroupsPage'
 import KidsPage from './components/kidprofile/KidsPage'
 import CreateGroup from './components/kidprofile/CreateGroup'
 import CreateKid from './components/kidprofile/CreateKid'
+import ViewGroup from './components/kidprofile/ViewGroup'
 import AssociateKid from './components/kidprofile/AssociateKid'
 import Story from './components/story/Story'
 import StoryContent from './components/story/StoryContent'
@@ -65,7 +66,10 @@ class App extends React.Component {
 							<GroupsPage listGroups={this.state.listGroups}/>
 						</Route>
 						<Route path="/creategroup">
-							<CreateGroup createGroup={this.addNewGroup} history={this.props.history}/>
+							<CreateGroup createGroup={this.addNewGroup} />
+						</Route>
+						<Route path="/viewgroup">
+							<ViewGroup/>
 						</Route>
 						<Route path="/createkid">
 							<CreateKid />
