@@ -4,7 +4,7 @@ import {
 	useLocation
 } from 'react-router-dom'
 
-import ViewGroup from './ViewGroup'
+import ViewGroups from './ViewGroups'
 
 function GroupPage(props) {
 
@@ -15,7 +15,7 @@ function GroupPage(props) {
     let from2 = "/creategroup";
 
     return (
-        <ViewGroup from={from} from2={from2} listGroups={props.listGroups} history={history} />
+        <ViewGroups from={from} from2={from2} listGroups={props.listGroups} history={history} />
     );
 }
 export default GroupPage;
