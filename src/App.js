@@ -4,10 +4,11 @@ import {
 	Switch,
 	Route,
 	Redirect,
+	useHistory,
 	withRouter
 } from "react-router-dom"
 
-import {fakeAuth as auth} from './auth'
+import Auth from './auth'
 import LoginPage from './components/auth/LoginPage'
 import RegisterPage from './components/auth/RegisterPage'
 import GroupsPage from './components/kidprofile/GroupsPage'
@@ -20,6 +21,9 @@ import Story from './components/story/Story'
 import StoryContent from './components/story/StoryContent'
 
 function PrivateRoute({ children, ...rest}) {
+
+	let auth = new Auth()
+
 	return (
 		<Route
 			{...rest}
@@ -77,7 +81,6 @@ class App extends React.Component {
 						<Route path="/associatekid">
 							<AssociateKid />
 						</Route>
-						
 						<Route path="/stories">
 							<Story />
 						</Route>

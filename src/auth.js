@@ -1,53 +1,43 @@
-const auth = {
-	isAuthenticated: false,
-	request(email, password, cb) {
+class Auth {
+  isAuthenticated = false
+	token = null
 
-		fetch("https://pictoteask.000webhostapp.com/loginTutor.php", {
-			method: 'POST',
-			body: JSON.stringify({email, password}),
-			headers:{
-				'Content-Type': 'application/json'
-			}
-		}).then(res => res.json())
-		.catch(error => console.error('Error:', error))
-		.then(response => console.log('Success:', response));
+	constructor() {
+		if (sessionStorage.getItem('token')) {
+			this.isAuthenticated = true
+			this.token = sessionStorage.getItem('token')
+		}
+	}
 
-	},
 	login(email, password, cb) {
-		if (this.isAuthenticated) { // prevent doble login
-			return cb(this.isAuthenticated);
+		if (this.isAuthenticated) {
+			return cb(this.isAuthenticated)
 		}
 
-		this.request.bind(this)(email, password, (resp) => {
-			if (resp.authenticated) {
-				console.log(resp);
-				cb(true);
-			}else{
-				cb(false);
+		fetch('http://www.tea-helper.es/api/auth/login', {
+			method: 'POST',
+			body: JSON.stringify({email, password})
+		}).then(res => res.json()).then(response => {
+			let {code, token} = response
+
+			if (token) {
+				this.isAuthenticated = true;
+				this.token = token
+				sessionStorage.setItem('token', token)
 			}
-		});
-	},
+
+			cb(this.isAuthenticated)
+
+		})
+
+	}
+
 	signout(cb) {
-		this.isAuthenticated = false;
+		this.isAuthenticated = false
+		sessionStorage.removeItem('token')
 		cb();
 	}
-}
-
-const fakeAuth = Object.assign({}, auth)
-Object.setPrototypeOf(fakeAuth, auth)
-
-fakeAuth.request = function(email, password, cb) {
-
-	this.isAuthenticated = true; // only true in fake
-
-	const authenticated = this.isAuthenticated;
-	const token = 'fake';
-
-	cb({ authenticated, token, email });
 
 }
 
-export {
-	auth,
-	fakeAuth
-};
+export default Auth

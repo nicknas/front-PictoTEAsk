@@ -5,22 +5,36 @@ import {
 	Button,
 	Form,
 	FormGroup,
-	Label,
-	Input
+	Alert,
+	Label
 } from 'reactstrap'
 
 
 // TODO: change auth with backend
-import {fakeAuth as auth} from '../../auth'
+import Auth from '../../auth'
 
 
 class LoginForm extends React.Component {
 
 	constructor(props) {
-			super(props);
-			this.state = {error: false}
+		super(props);
+		this.state = {
+			error: false,
+			loading: false,
+		}
 
-			this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
+
+	}
+
+	componentDidMount() {
+
+		this.auth = new Auth()
+
+		if (this.auth.isAuthenticated){
+			this.props.history.replace(this.props.from)
+		}
+
 	}
 
 	handleSubmit(event) {
@@ -31,12 +45,14 @@ class LoginForm extends React.Component {
 
 		let {from, history} = this.props;
 
-		auth.login(email, pass, (loggedIn) => {
+		this.setState({error: false, loading: true})
+
+		this.auth.login(email, pass, (loggedIn) => {
 			if (!loggedIn) {
-				return this.setState({error: true})
+				this.refs.pass.value = ''
+				return this.setState({error: true, loading: false})
 			}
 
-			console.log(from)
 			history.replace(from);
 		})
 	}
@@ -46,19 +62,27 @@ class LoginForm extends React.Component {
 			<Form onSubmit={this.handleSubmit}>
 				<FormGroup>
 					<Label>Correo</Label>
-					<Input
+					<input className="form-control"
 						ref="email" required={true}
 						type="email" placeholder="Correo" />
 				</FormGroup>
 				<FormGroup>
 					<Label>Contraseña</Label>
-					<Input
+					<input className="form-control"
 						ref="pass" required={true}
 						type="password" placeholder="Contraseña" />
 				</FormGroup>
 				<Col md={12} className="text-center">
 					<Button type="submit" color="primary"
 						className="btn-block mybtn tx-tfm">INICIAR SESIÓN</Button>
+				</Col>
+				<Col md={12}><br />
+				{this.state.error && (
+							<Alert color="danger"> Error al iniciar sesión </Alert>
+				)}
+        {this.state.loading && (
+							<Alert color="info"> Cargando... </Alert>
+        )}
 				</Col>
 				<Col md={12}>
 					<div className="login-or">
