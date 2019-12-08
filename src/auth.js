@@ -1,3 +1,5 @@
+const auth = 'http://www.tea-helper.es/api/auth'
+
 class Auth {
   isAuthenticated = false
 	token = null
@@ -14,7 +16,7 @@ class Auth {
 			return cb(this.isAuthenticated)
 		}
 
-		fetch('http://www.tea-helper.es/api/auth/login', {
+		fetch(`${auth}/login`, {
 			method: 'POST',
 			body: JSON.stringify({email, password})
 		}).then(res => res.json()).then(response => {
@@ -32,7 +34,31 @@ class Auth {
 
 	}
 
-	signout(cb) {
+	register(name, surname, birthdate, email, password, cb) {
+
+		fetch(`${auth}/register`, {
+			method: 'POST',
+			body: JSON.stringify({name, surname, birthdate, email, password})
+		}).then(res => res.json()).then(response => {
+			let {code, token} = response
+
+			if (token) {
+				this.isAuthenticated = true;
+				this.token = token
+				sessionStorage.setItem('token', token)
+			}
+
+			let info = ''
+			if (response.message)
+				info = response.message
+
+			cb(this.isAuthenticated, info)
+
+		})
+
+	}
+
+	logout(cb) {
 		this.isAuthenticated = false
 		sessionStorage.removeItem('token')
 		cb();

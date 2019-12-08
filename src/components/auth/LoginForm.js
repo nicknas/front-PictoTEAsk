@@ -20,16 +20,16 @@ class LoginForm extends React.Component {
 		super(props);
 		this.state = {
 			error: false,
-			loading: false,
+			loading: false
 		}
+
+		this.auth = new Auth()
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 
 	}
 
 	componentDidMount() {
-
-		this.auth = new Auth()
 
 		if (this.auth.isAuthenticated){
 			this.props.history.replace(this.props.from)

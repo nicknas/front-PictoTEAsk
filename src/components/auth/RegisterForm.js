@@ -6,57 +6,112 @@ import {
 	Form,
 	FormGroup,
 	Label,
-	Input
+	Input,
+	Alert
 } from 'reactstrap'
 
-// TODO: change auth with backend
-// import {fakeAuth as auth} from '../../auth'
+
+import Auth from '../../auth'
 
 
 class RegisterForm extends React.Component {
 
 	constructor(props) {
-			super(props);
-			this.state = {error: false}
+		super(props);
+		this.state = {
+			error: false,
+			info: '',
+			loading: false
+		}
 
-			this.handleSubmit = this.handleSubmit.bind(this)
+		this.auth = new Auth()
+
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	//TODO: implement register
+
 	handleSubmit(event) {
 		event.preventDefault();
+
+		this.setState({
+			error: false,
+			loading: true
+		})
+
+		let {
+			name, surname, email,
+			pass, vpass, terms
+		} = this.refs
+
+		if (pass.value != vpass.value) {
+			return this.setState({
+				error: true,
+				loading: false,
+				info: 'Las Contraseña no coinciden.'
+			})
+		}
+
+		if (!terms.checked) {
+			return this.setState({
+				error: true,
+				loading: false,
+				info: 'Para continuar aceptar los terminos y condiciones.'
+			})
+		}
+
+		let {from, history} = this.props;
+
+		this.setState({error: false, loading: true})
+
+		this.auth.register(
+			name.value,
+			surname.value,
+			'',
+			email.value,
+			pass.value, (loggedIn, info) => {
+				if (!loggedIn) {
+					return this.setState({
+						error: true,
+						loading: false,
+						info: info,
+					})
+				}
+
+				history.replace(from);
+			}
+		)
 	}
 
 	render() {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<FormGroup>
-					<Label>Primer Nombre</Label>
-					<Input
-						ref="firstname" required={true}
-						type="text" placeholder="Primer Nombre" />
+					<Label>Nombre</Label>
+					<input className="form-control"
+						ref="name" required={true}
+						type="text" placeholder="Nombre" />
 				</FormGroup>
 				<FormGroup>
 					<Label>Apellido</Label>
-					<Input
-						ref="lastname" required={true}
+					<input className="form-control"
+						ref="surname" required={true}
 						type="text" placeholder="Apellido" />
 				</FormGroup>
 				<FormGroup>
 					<Label>Correo</Label>
-					<Input
+					<input className="form-control"
 						ref="email" required={true}
 						type="email" placeholder="Correo" />
 				</FormGroup>
 				<FormGroup>
 					<Label>Contraseña</Label>
-					<Input
+					<input className="form-control"
 						ref="pass" required={true}
 						type="password" placeholder="Contraseña" />
 				</FormGroup>
 				<FormGroup>
 					<Label>Validar Contraseña</Label>
-					<Input
+					<input className="form-control"
 						ref="vpass" required={true}
 						type="password" placeholder="Contraseña" />
 				</FormGroup>
@@ -64,7 +119,7 @@ class RegisterForm extends React.Component {
 					<legend>Rol</legend>
 					<FormGroup check>
 						<Label check>
-							<Input type="radio" name="radio1" />{' '}
+							<Input defaultChecked={true} type="radio" name="radio1" />{' '}
 							Padre
 						</Label>
 					</FormGroup>
@@ -84,7 +139,7 @@ class RegisterForm extends React.Component {
 				<FormGroup>
 					<FormGroup check>
 						<Label check>
-							<Input type="checkbox" />{' '}
+							<input ref="terms" type="checkbox" />{' '}
 							Acepto los terminos y condiciones
 						</Label>
 					</FormGroup>
@@ -92,6 +147,14 @@ class RegisterForm extends React.Component {
 				<Col md={12} className="text-center">
 					<Button type="submit" color="primary"
 						className="btn-block mybtn tx-tfm">REGISTRARSE</Button>
+				</Col>
+				<Col md={12}><br />
+				{this.state.error && (
+							<Alert color="danger"> {this.state.info} </Alert>
+				)}
+        {this.state.loading && (
+							<Alert color="info"> Cargando... </Alert>
+        )}
 				</Col>
 				<Col md={12}>
 					<FormGroup>
