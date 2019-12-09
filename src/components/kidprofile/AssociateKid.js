@@ -19,12 +19,26 @@ class AssociateKid extends React.Component {
         formDataKidTutor.append("id_tutor", 7);
         formDataKidTutor.append("id_kid", this.input.current.value);
 
-        fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
+        fetch('http://www.tea-helper.es/api/kids/associations', {
             method: "POST",
-            body: formDataKidTutor
-        }).then(response => response.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            body: JSON.stringify({nick})
+		}).then(res => res.json()).then(response => {
+			let {code, token} = response
+            
+            if (token) {
+				this.isAuthenticated = true;
+				this.token = token
+				sessionStorage.setItem('token', token)
+			}
+
+			let info = ''
+			if (response.message)
+				info = response.message
+
+			cb(this.isAuthenticated, info)
+
+		})
+
         
         this.props.history.push({ pathname: '/associatekid', param: this.input.current.value });
     }

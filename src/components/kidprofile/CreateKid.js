@@ -23,12 +23,25 @@ class CreateKid extends React.Component {
         formDataKids.append("Nombre", "Sánchez");
         formDataKids.append("Nick", this.input.current.value);
 
-        fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
+        fetch('http://www.tea-helper.es/api/kids', {
             method: "POST",
-            body: formDataKids
-        }).then(response => response.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            body: JSON.stringify({name, surname, birthdate, nick})
+		}).then(res => res.json()).then(response => {
+			let {code, token} = response
+            
+            if (token) {
+				this.isAuthenticated = true;
+				this.token = token
+				sessionStorage.setItem('token', token)
+			}
+
+			let info = ''
+			if (response.message)
+				info = response.message
+
+			cb(this.isAuthenticated, info)
+
+		})
 
         this.props.history.push({ pathname: '/kidspage', param: this.input.current.value });
     }
