@@ -24,9 +24,11 @@ class AssociateKid extends React.Component {
             headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
-            .then(association => {console.log('Success:', association)
-                            this.props.history.push({ pathname: '/kidspage'});
-                        });
+            .then(association => {
+                console.log('Success:', association)
+                console.log(this)
+                this.props.history.push({ pathname: '/'});
+            });
     }
 
     render() {
