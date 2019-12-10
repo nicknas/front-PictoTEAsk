@@ -2,9 +2,11 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {
     useHistory,
-    useLocation
+    useLocation,
+    withRouter
 } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import Auth from '../../auth';
 
 class AssociateKid extends React.Component {
     constructor(props) {
@@ -15,18 +17,16 @@ class AssociateKid extends React.Component {
     associateKid(event) {
         event.preventDefault();
 
-        let formDataKidTutor = new FormData();
-        formDataKidTutor.append("id_tutor", 7);
-        formDataKidTutor.append("id_kid", this.input.current.value);
-
-        fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
+        let auth = new Auth();
+        fetch('http://tea-helper.es/api/kids/associations', {
             method: "POST",
-            body: formDataKidTutor
+            body: JSON.stringify({nick:this.input.current.value}),
+            headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
-        
-        this.props.history.push({ pathname: '/associatekid', param: this.input.current.value });
+            .then(association => {console.log('Success:', association)
+                            this.props.history.push({ pathname: '/associatekid'});
+                        });
     }
 
     render() {
