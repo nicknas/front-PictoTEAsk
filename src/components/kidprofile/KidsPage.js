@@ -1,8 +1,9 @@
 import React from 'react'
-
+import {withRouter} from 'react-router-dom';
 
 import ViewKids from './ViewKids'
 import Auth from '../../auth'
+import { domainToASCII } from 'url';
 
 class KidsPage extends React.Component {
     constructor(props) {
@@ -40,4 +41,4 @@ class KidsPage extends React.Component {
     }
 
 }
-export default KidsPage;
+export default withRouter(KidsPage);

@@ -84,4 +84,4 @@ class AssociateKid extends React.Component {
 
 }
 
-export default AssociateKid;
+export default withRouter(AssociateKid);
