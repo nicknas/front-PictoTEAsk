@@ -39,7 +39,7 @@ class RegisterForm extends React.Component {
 		})
 
 		let {
-			name, surname, email,
+			email,
 			pass, vpass, terms
 		} = this.refs
 
@@ -64,8 +64,8 @@ class RegisterForm extends React.Component {
 		this.setState({error: false, loading: true})
 
 		this.auth.register(
-			name.value,
-			surname.value,
+			'Pepe',
+			'Jiménez',
 			'',
 			email.value,
 			pass.value, (loggedIn, info) => {
@@ -86,18 +86,6 @@ class RegisterForm extends React.Component {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<FormGroup>
-					<Label>Nombre</Label>
-					<input className="form-control"
-						ref="name" required={true}
-						type="text" placeholder="Nombre" />
-				</FormGroup>
-				<FormGroup>
-					<Label>Apellido</Label>
-					<input className="form-control"
-						ref="surname" required={true}
-						type="text" placeholder="Apellido" />
-				</FormGroup>
-				<FormGroup>
 					<Label>Correo</Label>
 					<input className="form-control"
 						ref="email" required={true}
@@ -114,27 +102,6 @@ class RegisterForm extends React.Component {
 					<input className="form-control"
 						ref="vpass" required={true}
 						type="password" placeholder="Contraseña" />
-				</FormGroup>
-					<FormGroup tag="fieldset">
-					<legend>Rol</legend>
-					<FormGroup check>
-						<Label check>
-							<Input defaultChecked={true} type="radio" name="radio1" />{' '}
-							Padre
-						</Label>
-					</FormGroup>
-					<FormGroup check>
-						<Label check>
-							<Input type="radio" name="radio1" />{' '}
-							Tutor
-						</Label>
-					</FormGroup>
-					<FormGroup check>
-						<Label check>
-							<Input type="radio" name="radio1" />{' '}
-							Cuidador
-						</Label>
-					</FormGroup>
 				</FormGroup>
 				<FormGroup>
 					<FormGroup check>
