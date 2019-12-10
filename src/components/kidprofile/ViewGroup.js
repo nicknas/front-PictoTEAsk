@@ -10,16 +10,31 @@ class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            kidToAdd: ""
+            kidToAdd: "",
+            addModalOpened: false
         };
+        this.openAddModal = this.openAddModal.bind(this);
         this.createKidsList = this.createKidsList.bind(this);
         this.gokids = this.gokids.bind(this);
         this.goGroups = this.goGroups.bind(this);
-
         this.addKid = this.addKid.bind(this);
+        this.closeAddModal = this.closeAddModal.bind(this);
+        this.handleNickName = this.handleNickName.bind(this);
+        this.saveNewKid = this.saveNewKid.bind(this);
     }
-    addKid(){
+    handleNickName(e) {
+        this.setState({kidToAdd: e.target.value});
+    }
+    openAddModal(event) {
         
+        this.setState({addModalOpened: true });
+        event.stopPropagation();
+    }
+    closeAddModal() {
+        this.setState({addModalOpened: false });
+    }
+    addKid(event){
+        this.props.addKidToGroup(event.currentTarget);
     }
     gokids(event) {
         event.preventDefault();
@@ -31,6 +46,12 @@ class ViewGroup extends React.Component {
 
         this.props.history.push('/groupspage');
     }
+
+    saveNewKid() {
+        this.props.addKidToGroup(this.state.kidToAdd);
+        this.setState({addModalOpened: false, kidToAdd: ""});
+    }
+
     createKidsList() {
         let grouplist = [];
         this.props.listKids.forEach((row) => {
@@ -47,14 +68,19 @@ class ViewGroup extends React.Component {
         
         
         grouplist.push(
-            <Row>
+            <Row onClick={this.openAddModal}>
                 <Col>
                     <picture>
                         <img src="../images/botonNew.svg" className="group-image"  /> Añadir niño
                         </picture>
                 </Col>
-
+                <Modal isOpen={this.state.addModalOpened} toggle={this.closeAddModal}>
+                        <ModalHeader toggle={this.closeAddModal}>Añadir niño al grupo</ModalHeader>
+                        <ModalBody><Label for="">Nick del niño</Label><Input type="text" onChange={this.handleNickName} /></ModalBody>
+                        <ModalFooter><Button color="success" onClick={this.saveNewKid}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
+                    </Modal>
             </Row>
+            
         );
 
         
