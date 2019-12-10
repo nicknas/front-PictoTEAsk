@@ -6,7 +6,6 @@ import {
 	Form,
 	FormGroup,
 	Label,
-	Input,
 	Alert
 } from 'reactstrap'
 
@@ -47,7 +46,7 @@ class RegisterForm extends React.Component {
 			return this.setState({
 				error: true,
 				loading: false,
-				info: 'Las Contraseña no coinciden.'
+				info: 'Las Contraseñas no coinciden.'
 			})
 		}
 
