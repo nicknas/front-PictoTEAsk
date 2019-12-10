@@ -5,6 +5,7 @@ import {
     withRouter
 } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import Auth from '../../auth';
 
 class CreateKid extends React.Component {
     constructor(props) {
@@ -17,20 +18,18 @@ class CreateKid extends React.Component {
         event.preventDefault();
 
 
-        let formDataKids = new FormData();
-        formDataKids.append("Tutor", 7);
-        formDataKids.append("Apellido", "Pepito");
-        formDataKids.append("Nombre", "Sánchez");
-        formDataKids.append("Nick", this.input.current.value);
+        let auth = new Auth();
+        let bodyCreateKid = {name: "Pepe", surname: "Jiménez", nick: this.input.current.value, birthdate: "11-11-2019"};
 
-        fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
+        fetch('http://tea-helper.es/api/kids', {
             method: "POST",
-            body: formDataKids
+            body: JSON.stringify(bodyCreateKid),
+            headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
-
-        this.props.history.push({ pathname: '/kidspage', param: this.input.current.value });
+            .then(kid => {console.log('Success:', kid);
+                          this.props.history.push({ pathname: '/kidspage'});
+                         });
     }
     render() {
         return (

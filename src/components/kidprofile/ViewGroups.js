@@ -27,7 +27,7 @@ class ViewGroups extends React.Component {
         event.preventDefault();
 
         let { from3, history } = this.props;
-
+        this.props.goToGroup(event.currentTarget.childNodes[0].innerText);
         history.replace(from3);
     }
 

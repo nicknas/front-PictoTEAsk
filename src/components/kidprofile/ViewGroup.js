@@ -33,27 +33,17 @@ class ViewGroup extends React.Component {
     }
     createKidsList() {
         let grouplist = [];
-       
+        this.props.listKids.forEach((row) => {
             grouplist.push(
                 <Row className="myrow">
                     <Col md={10} >
                         <picture>
-                            <img src="../images/defaultProfile.jpg" className="group-image" /> HarryPotter86
-
+                            <img src="../images/defaultProfile.jpg" className="group-image" />{row.name}
                         </picture>
                     </Col>
                 </Row>
             );
-            grouplist.push(
-                <Row className="myrow">
-                    <Col md={10} >
-                        <picture>
-                            <img src="../images/defaultProfile.jpg" className="group-image" /> HermioneGrangerSuper
-
-                        </picture>
-                    </Col>
-                </Row>
-            );
+        });
         
         
         grouplist.push(
@@ -94,7 +84,7 @@ class ViewGroup extends React.Component {
                             </Row>
                             <Row>
                                 <Container className='group-list'>
-                                    <h5>Primer ciclo de primaria</h5>
+                                    <h5>{this.props.nameGroup}</h5>
 
                                     {kids}
 

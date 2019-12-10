@@ -46,16 +46,23 @@ function PrivateRoute({ children, ...rest}) {
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {listGroups: [{ name: "Primer ciclo primaria", kids: [] },
-		{ name: "Segundo ciclo primaria", kids: [] }
-		]};
+		this.state = {listGroups: [{ name: "Primer ciclo primaria", kids: [{name: "Hermione"}] },
+		{ name: "Segundo ciclo primaria", kids: [{name: "Harry"}] }
+		],
+			groupSelected: {name: "", kids: []}
+		};
 		this.addNewGroup = this.addNewGroup.bind(this);
 		this.deleteGroup = this.deleteGroup.bind(this);
+		this.viewGroup = this.viewGroup.bind(this);
 	}
 	addNewGroup(nameGroup) {
 		const listGroups = this.state.listGroups;
 		listGroups.push({name: nameGroup, kids: []});
 		this.setState({listGroups: listGroups});
+	}
+	viewGroup(nameGroup) {
+		const groupSelected = this.state.listGroups.find((group) => group.name === nameGroup);
+		this.setState({groupSelected: groupSelected})
 	}
 	deleteGroup(nameGroup) {
 		let listGroups = this.state.listGroups;
@@ -73,13 +80,13 @@ class App extends React.Component {
 							<RegisterPage />
 						</Route>
 						<Route path="/groupspage">
-							<GroupsPage listGroups={this.state.listGroups} deleteGroup={this.deleteGroup}/>
+							<GroupsPage listGroups={this.state.listGroups} goToGroup={this.viewGroup} deleteGroup={this.deleteGroup}/>
 						</Route>
 						<Route path="/creategroup">
 							<CreateGroup createGroup={this.addNewGroup} />
 						</Route>
 						<Route path="/viewgroup">
-							<ViewGroup/>
+							<ViewGroup nameGroup={this.state.groupSelected.name} listKids={this.state.groupSelected.kids}/>
 						</Route>
 						<Route path="/createkid">
 							<CreateKid />
@@ -93,9 +100,7 @@ class App extends React.Component {
 						<Route path="/stories/:storyName">
 							<StoryContent/>
 						</Route>
-						<PrivateRoute path="/">
-							<KidsPage/>
-						</PrivateRoute>
+						<PrivateRoute path="/" component={KidsPage}/>
 					</Switch>
 				</Router>
 		);
