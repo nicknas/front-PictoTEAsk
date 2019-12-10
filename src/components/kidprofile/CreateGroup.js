@@ -26,8 +26,8 @@ class CreateGroup extends React.Component {
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
-        
-        this.props.history.push({ pathname: '/groupspage', param: this.input.current.value });
+        this.props.createGroup(this.input.current.value);
+        this.props.history.push({ pathname: '/groupspage'});
     }
     render() {
         return (

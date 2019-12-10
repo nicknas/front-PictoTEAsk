@@ -50,10 +50,16 @@ class App extends React.Component {
 		{ name: "Segundo ciclo primaria", kids: [] }
 		]};
 		this.addNewGroup = this.addNewGroup.bind(this);
+		this.deleteGroup = this.deleteGroup.bind(this);
 	}
 	addNewGroup(nameGroup) {
 		const listGroups = this.state.listGroups;
 		listGroups.push({name: nameGroup, kids: []});
+		this.setState({listGroups: listGroups});
+	}
+	deleteGroup(nameGroup) {
+		let listGroups = this.state.listGroups;
+		listGroups = listGroups.filter((group) => {return group.name !== nameGroup});
 		this.setState({listGroups: listGroups});
 	}
 	render() {
@@ -67,7 +73,7 @@ class App extends React.Component {
 							<RegisterPage />
 						</Route>
 						<Route path="/groupspage">
-							<GroupsPage listGroups={this.state.listGroups}/>
+							<GroupsPage listGroups={this.state.listGroups} deleteGroup={this.deleteGroup}/>
 						</Route>
 						<Route path="/creategroup">
 							<CreateGroup createGroup={this.addNewGroup} />

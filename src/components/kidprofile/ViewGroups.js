@@ -7,7 +7,6 @@ class ViewGroups extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            groups: this.props.listGroups,
             deleteModalOpened: false,
             addModalOpened: false,
             deleteModalOpened: false,
@@ -62,13 +61,7 @@ class ViewGroups extends React.Component {
 
     deleteGroup() {
         let listGroups = this.state.groups;
-        for (var i = 0; i < listGroups.length; i++) {
-            if (listGroups[i].name != this.state.groupToDelete) {
-                listGroups.splice(i, 1);
-            }
-        }
-
-        this.setState({ groups: listGroups });
+        this.props.deleteGroup(this.state.groupToDelete);
         this.setState({ deleteModalOpened: false, groupToDelete: "" });
     }
 
@@ -80,20 +73,13 @@ class ViewGroups extends React.Component {
 
     createGroupList() {
         let grouplist = [];
-        let { from, history } = this.props;
-        let nombre = history.location.param;
-        if (typeof nombre != 'undefined') {
-            this.state.groups.push({ name: nombre, kids: [] });
-        }
 
-
-        this.state.groups.forEach((row) => {
+        this.props.listGroups.forEach((row) => {
             grouplist.push(
                 <Row className="myrow" onClick={this.goGroup}>
                     <Col md={10} >
                         <picture>
-                            <img src="../images/defaultGroup.jpg" className="group-image" /> {row.name}
-
+                            <img src="../images/defaultGroup.jpg" className="group-image" />{row.name}
                         </picture>
                     </Col>
                     <Col md={2} >
