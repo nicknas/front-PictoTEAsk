@@ -14,9 +14,12 @@ class KidsPage extends React.Component {
     componentDidMount() {
         let auth = new Auth();
         let listKids = [];
+        let formDataViewKids = new FormData();
+        formDataViewKids.append("Tutor", 7);
         let request = new Request('https://pictoteask.000webhostapp.com/getNinosTutor.php',
                     {
-                        method: 'GET',
+                        method: 'POST',
+                        body: formDataViewKids,
                         headers: {'X-AUTH-TOKEN': auth.token},
                     }
                 );

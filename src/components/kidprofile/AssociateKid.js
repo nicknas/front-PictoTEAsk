@@ -18,9 +18,12 @@ class AssociateKid extends React.Component {
         event.preventDefault();
 
         let auth = new Auth();
+        let formDataKidTutor = new FormData();
+        formDataKidTutor.append("id_tutor", 7);
+        formDataKidTutor.append("id_kid", this.input.current.value);
         fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
             method: "POST",
-            body: JSON.stringify({id_kid:this.input.current.value, id_tutor:"7"}),
+            body: formDataKidTutor,
             headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))

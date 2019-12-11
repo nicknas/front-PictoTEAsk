@@ -19,11 +19,15 @@ class CreateKid extends React.Component {
 
 
         let auth = new Auth();
-        let bodyCreateKid = {Nick: this.input.current.value, Nombre: "Pepe", Apellido: "Jiménez", FechaNacimiento: "11-11-2019", Tutor:"7"};
-
+        let formDataKids = new FormData();
+        formDataKids.append("Tutor", 7);
+        formDataKids.append("Apellido", "Pepito");
+        formDataKids.append("Nombre", "Sánchez");
+        formDataKids.append("Nick", this.input.current.value);
+        formDataKids.append("FechaNacimiento", "01-01-2000");
         fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
             method: "POST",
-            body: JSON.stringify(bodyCreateKid),
+            body: formDataKids,
             headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
