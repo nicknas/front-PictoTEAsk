@@ -14,7 +14,7 @@ class KidsPage extends React.Component {
     componentDidMount() {
         let auth = new Auth();
         let listKids = [];
-        let request = new Request('http://www.tea-helper.es/api/kids',
+        let request = new Request('https://pictoteask.000webhostapp.com/getNinosTutor.php',
                     {
                         method: 'GET',
                         headers: {'X-AUTH-TOKEN': auth.token},

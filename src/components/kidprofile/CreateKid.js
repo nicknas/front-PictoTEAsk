@@ -19,9 +19,9 @@ class CreateKid extends React.Component {
 
 
         let auth = new Auth();
-        let bodyCreateKid = {name: "Pepe", surname: "Jiménez", nick: this.input.current.value, birthdate: "11-11-2019"};
+        let bodyCreateKid = {Nick: this.input.current.value, Nombre: "Pepe", Apellido: "Jiménez", FechaNacimiento: "11-11-2019", Tutor:"7"};
 
-        fetch('http://tea-helper.es/api/kids', {
+        fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
             method: "POST",
             body: JSON.stringify(bodyCreateKid),
             headers: {'X-AUTH-TOKEN': auth.token}

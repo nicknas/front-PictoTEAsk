@@ -18,9 +18,9 @@ class AssociateKid extends React.Component {
         event.preventDefault();
 
         let auth = new Auth();
-        fetch('http://tea-helper.es/api/kids/associations', {
+        fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
             method: "POST",
-            body: JSON.stringify({nick:this.input.current.value}),
+            body: JSON.stringify({id_kid:this.input.current.value, id_tutor:"7"}),
             headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
