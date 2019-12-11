@@ -53,7 +53,10 @@ class CreateGroup extends React.Component {
                                     <Label >Nombre del grupo*</Label>
                                     <Input innerRef={this.input} type="text" name="name" placeholder="Nombre" />
                                 </FormGroup>
-                                <Button type="submit" color="primary"  >Submit</Button>
+                                <Col md={12} className="text-center">
+                                        <Button type="submit" color="primary"
+                                            className="btn-block mybtn tx-tfm">CREAR GRUPO</Button>
+                                    </Col>
                             </Form>
                         </div>
                     </Row>

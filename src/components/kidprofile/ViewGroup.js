@@ -71,7 +71,7 @@ class ViewGroup extends React.Component {
             <Row onClick={this.openAddModal}>
                 <Col>
                     <picture>
-                        <img src="../images/botonNew.svg" className="group-image"  /> Añadir niño
+                        <img src="../images/botonNew.svg" className="group-image"  /> <font color="#3E8EDE">Añadir niño</font>
                         </picture>
                 </Col>
                 <Modal isOpen={this.state.addModalOpened} toggle={this.closeAddModal}>

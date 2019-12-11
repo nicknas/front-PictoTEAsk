@@ -97,10 +97,10 @@ class ViewGroups extends React.Component {
         });
         
         grouplist.push(
-            <Row>
+            <Row onClick={this.goCreateGroup}>
                 <Col>
                     <picture>
-                        <img src="../images/botonNew.svg" className="group-image" onClick={this.goCreateGroup} /> Crear grupo
+                        <img src="../images/botonNew.svg" className="group-image"  /> <font color="#3E8EDE">Crear grupo</font>
                         </picture>
                 </Col>
 

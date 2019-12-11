@@ -94,10 +94,10 @@ class ViewKids extends React.Component {
             );
         });
         kidlist.push(
-            <Row>
+            <Row onClick={this.goCreateKid}>
                 <Col>
                     <picture>
-                        <img src="../images/botonNew.svg" className="group-image" onClick={this.goCreateKid} /> Añadir niño
+                        <img src="../images/botonNew.svg" className="group-image"  /> <font color="#3E8EDE">Añadir niño</font>
                         </picture>
                 </Col>
 
