@@ -7,7 +7,7 @@ import {
 	useHistory,
 	withRouter
 } from "react-router-dom"
-
+ 
 import Auth from './auth'
 import LoginPage from './components/auth/LoginPage'
 import RegisterPage from './components/auth/RegisterPage'
@@ -22,6 +22,7 @@ import StoryContent from './components/story/StoryContent'
 import SeeActivity from './components/activities/SeeActivity'
 import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
+import AddGame from './components/games/AddGame'
 
 function PrivateRoute({ children, ...rest}) {
 
@@ -84,6 +85,9 @@ class App extends React.Component {
 					<Switch>
 						<Route path="/login">
 							<LoginPage />
+						</Route>
+						<Route path="/addGame">
+							<AddGame/>
 						</Route>
 						<Route path="/signup">
 							<RegisterPage />

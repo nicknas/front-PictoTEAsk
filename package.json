@@ -12,15 +12,20 @@
     "browserify-css": "^0.15.0"
   },
   "dependencies": {
+    "add": "^2.0.6",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
+    "or": "^0.2.0",
     "popper.js": "^1.16.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
-    "reactstrap": "^8.1.1"
+    "react-select": "^3.0.8",
+    "react-time-picker": "^3.8.0",
+    "reactstrap": "^8.1.1",
+    "yarn": "^1.21.1"
   },
   "scripts": {
     "start": "react-scripts start",
