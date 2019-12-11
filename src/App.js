@@ -22,7 +22,7 @@ import StoryContent from './components/story/StoryContent'
 import SeeActivity from './components/activities/SeeActivity'
 import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
-import AddGame from './components/games/AddGame'
+import AddGame from './components/activities/AddGame'
 
 function PrivateRoute({ children, ...rest}) {
 

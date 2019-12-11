@@ -61,11 +61,19 @@
 
 .time-picker{
     padding-left: 15px;
+    width: 202px;
+    height: 30px;
+
 }
 
 .myrow2{
-    padding-bottom: 15px;
+    padding-bottom: 20px;
     text-align: center;
+    justify-content: center 
+}
+
+.btnactiv{
+    border-radius:50px;
 }
 
 
