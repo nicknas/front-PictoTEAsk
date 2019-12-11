@@ -19,6 +19,9 @@ import ViewGroup from './components/kidprofile/ViewGroup'
 import AssociateKid from './components/kidprofile/AssociateKid'
 import Story from './components/story/Story'
 import StoryContent from './components/story/StoryContent'
+import SeeActivity from './components/activities/SeeActivity'
+import SeeTask from './components/activities/SeeTask'
+import AddTask from './components/activities/AddTask'
 
 function PrivateRoute({ children, ...rest}) {
 
@@ -102,6 +105,15 @@ class App extends React.Component {
 						</Route>
 						<Route path="/stories">
 							<Story />
+						</Route>
+						<Route path="/seeactivity">
+							<SeeActivity />
+						</Route>
+						<Route path="/seetask">
+							<SeeTask />
+						</Route>
+						<Route path="/addtask">
+							<AddTask />
 						</Route>
 						<Route path="/stories/:storyName">
 							<StoryContent/>
