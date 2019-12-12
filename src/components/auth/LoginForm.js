@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
         )}
 				</Col>
 				<FormGroup>
-					<div className="text-center">No tienes cuenta? <Link to="/signup">Regístrate</Link></div>
+					<div className="text-center">¿No tienes cuenta? <Link to="/signup">Regístrate</Link></div>
 				</FormGroup>
 			</Form>
 		)
