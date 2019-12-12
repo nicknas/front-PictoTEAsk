@@ -19,18 +19,15 @@ class AssociateKid extends React.Component {
 
         let auth = new Auth();
         let formDataKidTutor = new FormData();
-        formDataKidTutor.append("id_tutor", 7);
-        formDataKidTutor.append("id_kid", this.input.current.value);
+        formDataKidTutor.append("id_tutor", auth.token.id_tutor);
+        formDataKidTutor.append("id_kid", this.refs.id_kid.value);
         fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
             method: "POST",
             body: formDataKidTutor,
-            headers: {'X-AUTH-TOKEN': auth.token}
         }).then(response => response.json())
-            .catch(error => console.error('Error:', error))
             .then(association => {
-                console.log('Success:', association)
-                console.log(this)
-                this.props.history.push({ pathname: '/'});
+                console.log(association)
+                this.props.history.push({ pathname: '/kidspage'});
             });
     }
 
@@ -55,8 +52,8 @@ class AssociateKid extends React.Component {
                                 <Form onSubmit={this.associateKid}>
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
-                                        <Input
-                                            innerRef={this.input} required={true}
+                                        <input className="form-control"
+                                            ref='id_kid' required={true}
                                             type="text" placeholder="Introduce el nickname" />
                                     </FormGroup>
 

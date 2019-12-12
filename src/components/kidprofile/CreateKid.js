@@ -4,14 +4,13 @@ import {
     useLocation,
     withRouter
 } from 'react-router-dom'
-import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Button } from 'reactstrap';
 import Auth from '../../auth';
 
 class CreateKid extends React.Component {
     constructor(props) {
         super(props);
         this.createKid = this.createKid.bind(this);
-        this.input = React.createRef();
     }
 
     createKid(event) {
@@ -20,20 +19,19 @@ class CreateKid extends React.Component {
 
         let auth = new Auth();
         let formDataKids = new FormData();
-        formDataKids.append("Tutor", 7);
+        formDataKids.append("Tutor", auth.token.id_tutor);
         formDataKids.append("Apellido", "Pepito");
-        formDataKids.append("Nombre", "Sánchez");
-        formDataKids.append("Nick", this.input.current.value);
-        formDataKids.append("FechaNacimiento", "01-01-2000");
+        formDataKids.append("Nombre", "Sanchez");
+        formDataKids.append("Nick", this.refs.nick.value);
+        formDataKids.append("FechaNacimiento", "2000-01-01");
         fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
             method: "POST",
-            body: formDataKids,
-            headers: {'X-AUTH-TOKEN': auth.token}
+            body: formDataKids
         }).then(response => response.json())
-            .catch(error => console.error('Error:', error))
-            .then(kid => {console.log('Success:', kid);
-                          this.props.history.push({ pathname: '/kidspage'});
-                         });
+            .then(kid => {
+                console.log(kid);
+                this.props.history.push({ pathname: '/kidspage' });
+            });
     }
     render() {
         return (
@@ -57,15 +55,11 @@ class CreateKid extends React.Component {
                             <Form onSubmit={this.createKid}>
                                 <FormGroup>
                                     <Label >Nombre del niño*</Label>
-                                    <Input innerRef={this.input} required={true} type="text" name="name" placeholder="Nombre" />
+                                    <input className="form-control"
+                                        ref='nick' required={true} type="text" name="name" placeholder="Nombre" />
                                 </FormGroup>
                                 <Button type="submit" color="primary"  >Submit</Button>
                             </Form>
-
-
-
-
-
                         </div>
                     </Row>
                 </Col>

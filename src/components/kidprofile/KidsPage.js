@@ -15,22 +15,21 @@ class KidsPage extends React.Component {
         let auth = new Auth();
         let listKids = [];
         let formDataViewKids = new FormData();
-        formDataViewKids.append("Tutor", 7);
+        formDataViewKids.append("Tutor", auth.token.id_tutor);
         let request = new Request('https://pictoteask.000webhostapp.com/getNinosTutor.php',
                     {
                         method: 'POST',
                         body: formDataViewKids,
-                        headers: {'X-AUTH-TOKEN': auth.token},
                     }
                 );
-        fetch(request)
+        /*fetch(request)
             .then((response) => {if (response.ok) return response.json();})
             .then(kids => {
                 kids.forEach((row) => {
                     listKids.push({name: row.nick, id: row.id});
                 });
                 this.setState({listKids: listKids});
-            });
+            });*/
     }
 
 
