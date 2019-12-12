@@ -13,7 +13,7 @@ class LogoutHeader extends React.Component {
 
 		let auth = new Auth()
 		auth.logout(Function())
-		location.reload();
+		window.location.reload();
 	}
 
 	render() {

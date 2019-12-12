@@ -10,58 +10,7 @@ import {
 } from 'reactstrap'
 
 
-// TODO: change auth with backend
-import Auth from '../../auth'
-
-
-class LoginForm extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			error: false,
-			info: '',
-			loading: false
-		}
-
-		this.auth = new Auth()
-
-		this.handleSubmit = this.handleSubmit.bind(this)
-
-	}
-
-	componentDidMount() {
-
-		if (this.auth.isAuthenticated){
-			this.props.history.replace(this.props.from)
-		}
-
-	}
-
-	handleSubmit(event) {
-		event.preventDefault();
-
-		const email = this.refs.email.value;
-		const pass = this.refs.pass.value;
-
-		let {from, history} = this.props;
-
-		this.setState({error: false, loading: true})
-
-		this.auth.login(email, pass, (loggedIn, info) => {
-			if (!loggedIn) {
-				this.refs.pass.value = ''
-				return this.setState({
-					error: true,
-					loading: false,
-					info: info,
-				})
-			}
-
-			history.replace(from);
-			window.location.reload();
-		})
-	}
+class DayCalendar extends React.Component {
 
 	render() {
 		return (
