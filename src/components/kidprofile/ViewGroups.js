@@ -16,7 +16,7 @@ class ViewGroups extends React.Component {
             groupToDelete: "",
             groupToAdd: ""
         };
-        
+        this.input = React.createRef();
         this.openDeleteModal = this.openDeleteModal.bind(this);
         this.deleteGroup = this.deleteGroup.bind(this);
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
@@ -63,9 +63,9 @@ class ViewGroups extends React.Component {
         this.setState({ groupToDelete: "", deleteModalOpened: false });
     }
 
-    deleteGroup() {
-        let listGroups = this.state.groups;
-        this.props.deleteGroup(this.state.groupToDelete);
+    deleteGroup(event, id) {
+        event.preventDefault();
+        this.props.deleteGroup(id);
         this.setState({ deleteModalOpened: false, groupToDelete: "" });
     }
 
@@ -117,7 +117,7 @@ class ViewGroups extends React.Component {
                                             <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
                                                 <ModalHeader toggle={this.closeDeleteModal}>Borrar grupo</ModalHeader>
                                                 <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.groupToDelete}?</ModalBody>
-                                                <ModalFooter><Button color="danger" onClick={this.deleteGroup}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
+                                                <ModalFooter><Button color="danger" onClick={(event) => this.deleteGroup(event, item.id)}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                                             </Modal>
                                         </Row>
 
