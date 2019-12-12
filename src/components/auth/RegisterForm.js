@@ -78,6 +78,7 @@ class RegisterForm extends React.Component {
 				}
 
 				history.replace(from);
+				location.reload();
 			}
 		)
 	}

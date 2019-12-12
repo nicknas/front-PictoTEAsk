@@ -7,9 +7,10 @@ import {
 	useHistory,
 	withRouter
 } from "react-router-dom"
- 
+
 import Auth from './auth'
 import LoginPage from './components/auth/LoginPage'
+import LogoutHeader from './components/auth/LogoutHeader'
 import RegisterPage from './components/auth/RegisterPage'
 import GroupsPage from './components/kidprofile/GroupsPage'
 import KidsPage from './components/kidprofile/KidsPage'
@@ -33,7 +34,7 @@ function PrivateRoute({ children, ...rest}) {
 			{...rest}
 			render={({ location }) =>
 				auth.isAuthenticated ? (
-					children
+						children
 				) : (
 					<Redirect
 						to={{
@@ -84,46 +85,49 @@ class App extends React.Component {
 	render() {
 		return (
 				<Router>
+
+					<LogoutHeader />
+
 					<Switch>
 						<Route path="/login">
 							<LoginPage />
 						</Route>
-						<Route path="/addGame">
-							<AddGame/>
-						</Route>
 						<Route path="/signup">
 							<RegisterPage />
 						</Route>
-						<Route path="/groupspage">
+						<PrivateRoute path="/addGame">
+							<AddGame/>
+						</PrivateRoute>
+						<PrivateRoute path="/groupspage">
 							<GroupsPage setGroupSelected={this.setGroupSelected}/>
-						</Route>
-						<Route path="/creategroup">
+						</PrivateRoute>
+						<PrivateRoute path="/creategroup">
 							<CreateGroup createGroup={this.addNewGroup} />
-						</Route>
-						<Route path="/viewgroup">
+						</PrivateRoute>
+						<PrivateRoute path="/viewgroup">
 							<ViewGroup groupSelected={this.groupSelected}/>
-						</Route>
-						<Route path="/createkid">
+						</PrivateRoute>
+						<PrivateRoute path="/createkid">
 							<CreateKid/>
-						</Route>
-						<Route path="/associatekid" >
+						</PrivateRoute>
+						<PrivateRoute path="/associatekid" >
 							<AssociateKid/>
-						</Route>
-						<Route path="/stories">
+						</PrivateRoute>
+						<PrivateRoute path="/stories">
 							<Story />
-						</Route>
-						<Route path="/seeactivity">
+						</PrivateRoute>
+						<PrivateRoute path="/seeactivity">
 							<SeeActivity />
-						</Route>
-						<Route path="/seetask">
+						</PrivateRoute>
+						<PrivateRoute path="/seetask">
 							<SeeTask />
-						</Route>
-						<Route path="/addtask">
+						</PrivateRoute>
+						<PrivateRoute path="/addtask">
 							<AddTask />
-						</Route>
-						<Route path="/stories/:storyName">
+						</PrivateRoute>
+						<PrivateRoute path="/stories/:storyName">
 							<StoryContent/>
-						</Route>
+						</PrivateRoute>
 						<PrivateRoute path="/">
 							<KidsPage/>
 						</PrivateRoute>
