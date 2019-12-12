@@ -50,15 +50,14 @@ function PrivateRoute({ children, ...rest}) {
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {listGroups: [{ name: "Primer ciclo primaria", kids: [{name: "Hermione"}] },
-		{ name: "Segundo ciclo primaria", kids: [{name: "Harry"}] }
-		],
-			groupSelected: {name: "", kids: []}
+		this.state = {
+			groupSelected: {}
 		};
 		this.addNewGroup = this.addNewGroup.bind(this);
 		this.deleteGroup = this.deleteGroup.bind(this);
 		this.viewGroup = this.viewGroup.bind(this);
 		this.addKidToGroup = this.addKidToGroup.bind(this);
+		this.setGroupSelected = this.setGroupSelected.bind(this);
 	}
 	addKidToGroup(kidNick){
 		let gs = this.state.groupSelected;
@@ -79,6 +78,9 @@ class App extends React.Component {
 		listGroups = listGroups.filter((group) => {return group.name !== nameGroup});
 		this.setState({listGroups: listGroups});
 	}
+	setGroupSelected(idg, group){
+		this.setState({ groupSelected: {name: group, id: idg} });
+	}
 	render() {
 		return (
 				<Router>
@@ -93,13 +95,13 @@ class App extends React.Component {
 							<RegisterPage />
 						</Route>
 						<Route path="/groupspage">
-							<GroupsPage listGroups={this.state.listGroups} goToGroup={this.viewGroup} deleteGroup={this.deleteGroup}/>
+							<GroupsPage setGroupSelected={this.setGroupSelected}/>
 						</Route>
 						<Route path="/creategroup">
 							<CreateGroup createGroup={this.addNewGroup} />
 						</Route>
 						<Route path="/viewgroup">
-							<ViewGroup nameGroup={this.state.groupSelected.name} listKids={this.state.groupSelected.kids} addKidToGroup={this.addKidToGroup}/>
+							<ViewGroup groupSelected={this.groupSelected}/>
 						</Route>
 						<Route path="/createkid">
 							<CreateKid/>

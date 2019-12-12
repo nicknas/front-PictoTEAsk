@@ -53,7 +53,7 @@ class ViewGroup extends React.Component {
     }
 
     createKidsList() {
-        let grouplist = [];
+        /*let grouplist = [];
         this.props.listKids.forEach((row) => {
             grouplist.push(
                 <Row className="myrow">
@@ -84,7 +84,7 @@ class ViewGroup extends React.Component {
         );
 
         
-        return grouplist;
+        return grouplist;*/
     }
     render() {
         let kids = this.createKidsList();

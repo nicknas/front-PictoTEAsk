@@ -5,13 +5,11 @@ import './groups.css'
 import CreateGroup from './CreateGroup';
 
 
-const auth = 'https://pictoteask.000webhostapp.com'
 
 class ViewGroups extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listGroups: [],
             deleteModalOpened: false,
             addModalOpened: false,
             deleteModalOpened: false,
@@ -28,31 +26,12 @@ class ViewGroups extends React.Component {
 
     }
 
-    componentDidMount() {
-        let grouplist = [];
-        let listGroups = [];
-        let formData = new FormData()
-        formData.append('Tutor', 7);
-        fetch(`${auth}/getGrupoTutor.php`, {
-            method: 'POST',
-            body: formData
-        }).then(res => res.json())
-            .then((data) => {
+    
 
-                for (let i = 0; i < data.Grupos.length; i++) {
-                    listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
-                }
-                console.log(listGroups);
-                this.setState({ listGroups: listGroups });
-        });
-        
-    }
-
-    goGroup(event) {
+    goGroup(event, id, name) {
         event.preventDefault();
-
         let { from3, history } = this.props;
-        this.props.goToGroup(event.currentTarget.childNodes[0].innerText);
+        this.props.goToGroup(id, name);
         history.replace(from3);
     }
 
@@ -123,8 +102,8 @@ class ViewGroups extends React.Component {
                                 <Container className='group-list'>
                                     <h5>Grupos</h5>
 
-                                    {this.state.listGroups.map(item => (
-                                        <Row className="myrow" onClick={this.goGroup}>
+                                    {this.props.listGroups.map(item => (
+                                        <Row className="myrow" onClick={(event) => this.goGroup(event, item.id, item.name)}>
                                             <Col md={10} >
                                                 <picture>
                                                     <img src="../images/defaultGroup.jpg" className="group-image" />{item.name}

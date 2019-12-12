@@ -11,8 +11,12 @@ class CreateGroup extends React.Component {
         super(props);
         this.createGroup = this.createGroup.bind(this);
         this.input = React.createRef();
+        this.goBack = this.goBack.bind(this);
     }
 
+    goBack(){
+        this.props.history.push({ pathname: '/groupspage' });
+    }
     createGroup(event) {
         event.preventDefault();
 
@@ -27,7 +31,7 @@ class CreateGroup extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
         this.props.createGroup(this.input.current.value);
-        this.props.history.push({ pathname: '/groupspage'});
+        this.props.history.push({ pathname: '/groupspage' });
     }
     render() {
         return (
@@ -53,11 +57,18 @@ class CreateGroup extends React.Component {
                                     <Label >Nombre del grupo*</Label>
                                     <Input innerRef={this.input} type="text" name="name" placeholder="Nombre" />
                                 </FormGroup>
-                                <Col md={12} className="text-center">
-                                        <Button type="submit" color="primary"
-                                            className="btn-block mybtn tx-tfm">CREAR GRUPO</Button>
-                                    </Col>
+                                
+                                <Col md={12} className="myrow">
+                                    <Button type="submit" color="primary"
+                                        className="btn-block mybtn tx-tfm">CREAR GRUPO</Button>
+                                </Col>
+                                
+                               
                             </Form>
+                            <Col md={12} className="text-center" onClick={this.goBack}>
+                                    <Button type="submit" color="secondary"
+                                        className="btn-block mybtn tx-tfm">VOLVER</Button>
+                            </Col>
                         </div>
                     </Row>
                 </Col>

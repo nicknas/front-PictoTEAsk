@@ -1,22 +1,53 @@
 import React from 'react'
-import {
-	useHistory,
-	useLocation
-} from 'react-router-dom'
+
+import {withRouter} from 'react-router-dom';
 
 import ViewGroups from './ViewGroups'
+const auth = 'https://pictoteask.000webhostapp.com'
 
-function GroupPage(props) {
+class GroupsPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listGroups: []
+        }
+        this.goToGroup = this.goToGroup.bind(this);
+    }
 
-    let history = useHistory();
-    let location = useLocation();
+    goToGroup(id, name){
+        this.props.setGroupSelected();
+    }
 
-    let from = "/kidspage";
-    let from2 = "/creategroup";
-    let from3 = "/viewgroup";
+    componentDidMount() {
+        let grouplist = [];
+        let listGroups = [];
+        let formData = new FormData()
+        formData.append('Tutor', 7);
+        fetch(`${auth}/getGrupoTutor.php`, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json())
+            .then((data) => {
 
-    return (
-        <ViewGroups from={from} from2={from2} listGroups={props.listGroups} deleteGroup={props.deleteGroup} from3={from3} history={history} goToGroup={props.goToGroup} />
-    );
+                for (let i = 0; i < data.Grupos.length; i++) {
+                    listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                }
+                console.log(listGroups);
+                this.setState({ listGroups: listGroups });
+        });
+        
+    }
+  
+    render() {
+        let from = "/kidspage";
+        let from2 = "/creategroup";
+        let from3 = "/viewgroup";
+    
+        return (
+            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.state.listGroups} goToGroup={this.goToGroup}/>
+        );
+    }
+
 }
-export default GroupPage;
+export default withRouter(GroupsPage);
+
