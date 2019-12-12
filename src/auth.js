@@ -1,13 +1,14 @@
-const auth = 'http://www.tea-helper.es/api/auth'
+const auth = 'https://pictoteask.000webhostapp.com'
 
 class Auth {
   isAuthenticated = false
+	id    = null
 	token = null
 
 	constructor() {
 		if (sessionStorage.getItem('token')) {
 			this.isAuthenticated = true
-			this.token = sessionStorage.getItem('token')
+			this.token = JSON.parse(sessionStorage.getItem('token'))
 		}
 	}
 
@@ -16,41 +17,64 @@ class Auth {
 			return cb(this.isAuthenticated)
 		}
 
-		fetch(`${auth}/login`, {
-			method: 'POST',
-			body: JSON.stringify({email, password})
-		}).then(res => res.json()).then(response => {
-			let {code, token} = response
+		let formData = new FormData()
+		formData.append('email', email)
+		formData.append('password', password)
 
-			if (token) {
+		fetch(`${auth}/loginTutor.php`, {
+			method: 'POST',
+			body: formData
+		}).then(res => res.json()).then(response => {
+			let {error, error_msg, tutor} = response
+
+			let info = ''
+
+			if (error) {
+
+				info = error_msg
+
+			} else {
+
 				this.isAuthenticated = true;
-				this.token = token
-				sessionStorage.setItem('token', token)
+				this.token = tutor
+				sessionStorage.setItem('token', JSON.stringify(tutor))
+
 			}
 
-			cb(this.isAuthenticated)
+			cb(this.isAuthenticated, info)
 
 		})
 
 	}
 
-	register(name, surname, birthdate, email, password, cb) {
+	register(name, surname, email, password, cpassword, cb) {
 
-		fetch(`${auth}/register`, {
+		let formData = new FormData()
+		formData.append('name', name)
+		formData.append('surname', surname)
+		formData.append('email', email)
+		formData.append('password', password)
+		formData.append('cpassword', cpassword)
+
+		fetch(`${auth}/registroTutor.php`, {
 			method: 'POST',
-			body: JSON.stringify({name, surname, birthdate, email, password})
+			body: formData
 		}).then(res => res.json()).then(response => {
-			let {code, token} = response
-
-			if (token) {
-				this.isAuthenticated = true;
-				this.token = token
-				sessionStorage.setItem('token', token)
-			}
+			let {error, error_msg, user} = response
 
 			let info = ''
-			if (response.message)
-				info = response.message
+
+			if (error) {
+
+				info = error_msg
+
+			} else {
+
+				this.isAuthenticated = true;
+				this.token = user
+				sessionStorage.setItem('token', JSON.stringify(user))
+
+			}
 
 			cb(this.isAuthenticated, info)
 

@@ -63,11 +63,12 @@ class RegisterForm extends React.Component {
 		this.setState({error: false, loading: true})
 
 		this.auth.register(
-			'Pepe',
-			'Jiménez',
-			'',
+			'demo',
+			'demo',
 			email.value,
-			pass.value, (loggedIn, info) => {
+			pass.value,
+			vpass.value,
+			(loggedIn, info) => {
 				if (!loggedIn) {
 					return this.setState({
 						error: true,

@@ -20,6 +20,7 @@ class LoginForm extends React.Component {
 		super(props);
 		this.state = {
 			error: false,
+			info: '',
 			loading: false
 		}
 
@@ -47,10 +48,14 @@ class LoginForm extends React.Component {
 
 		this.setState({error: false, loading: true})
 
-		this.auth.login(email, pass, (loggedIn) => {
+		this.auth.login(email, pass, (loggedIn, info) => {
 			if (!loggedIn) {
 				this.refs.pass.value = ''
-				return this.setState({error: true, loading: false})
+				return this.setState({
+					error: true,
+					loading: false,
+					info: info,
+				})
 			}
 
 			history.replace(from);
@@ -78,7 +83,7 @@ class LoginForm extends React.Component {
 				</Col>
 				<Col md={12}><br />
 				{this.state.error && (
-							<Alert color="danger"> Error al iniciar sesión </Alert>
+							<Alert color="danger"> {this.state.info} </Alert>
 				)}
         {this.state.loading && (
 							<Alert color="info"> Cargando... </Alert>
