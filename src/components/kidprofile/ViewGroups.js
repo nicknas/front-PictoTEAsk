@@ -3,17 +3,22 @@ import { Link } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, ButtonGroup, Media, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './groups.css'
 import CreateGroup from './CreateGroup';
+
+
+const auth = 'https://pictoteask.000webhostapp.com'
+
 class ViewGroups extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            listGroups: [],
             deleteModalOpened: false,
             addModalOpened: false,
             deleteModalOpened: false,
             groupToDelete: "",
             groupToAdd: ""
         };
-        this.createGroupList = this.createGroupList.bind(this);
+        
         this.openDeleteModal = this.openDeleteModal.bind(this);
         this.deleteGroup = this.deleteGroup.bind(this);
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
@@ -23,7 +28,27 @@ class ViewGroups extends React.Component {
 
     }
 
-    goGroup(event){
+    componentDidMount() {
+        let grouplist = [];
+        let listGroups = [];
+        let formData = new FormData()
+        formData.append('Tutor', 7);
+        fetch(`${auth}/getGrupoTutor.php`, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json())
+            .then((data) => {
+
+                for (let i = 0; i < data.Grupos.length; i++) {
+                    listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                }
+                console.log(listGroups);
+                this.setState({ listGroups: listGroups });
+        });
+        
+    }
+
+    goGroup(event) {
         event.preventDefault();
 
         let { from3, history } = this.props;
@@ -71,47 +96,9 @@ class ViewGroups extends React.Component {
         event.stopPropagation();
     }
 
-    createGroupList() {
-        let grouplist = [];
 
-        this.props.listGroups.forEach((row) => {
-            grouplist.push(
-                <Row className="myrow" onClick={this.goGroup}>
-                    <Col md={10} >
-                        <picture>
-                            <img src="../images/defaultGroup.jpg" className="group-image" />{row.name}
-                        </picture>
-                    </Col>
-                    <Col md={2} >
-                        <picture onClick={this.openDeleteModal}>
-                            <img src="../images/papelera.png" width="25px" />
-                        </picture>
-                    </Col>
-                    <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
-                        <ModalHeader toggle={this.closeDeleteModal}>Borrar grupo</ModalHeader>
-                        <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.groupToDelete}?</ModalBody>
-                        <ModalFooter><Button color="danger" onClick={this.deleteGroup}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
-                    </Modal>
-                </Row>
-            );
-        });
-        
-        grouplist.push(
-            <Row onClick={this.goCreateGroup}>
-                <Col>
-                    <picture>
-                        <img src="../images/botonNew.svg" className="group-image"  /> <font color="#3E8EDE">Crear grupo</font>
-                        </picture>
-                </Col>
-
-            </Row>
-        );
-
-        
-        return grouplist;
-    }
     render() {
-        let group = this.createGroupList();
+
         return (
             <Container>
                 <Row>
@@ -136,7 +123,34 @@ class ViewGroups extends React.Component {
                                 <Container className='group-list'>
                                     <h5>Grupos</h5>
 
-                                    {group}
+                                    {this.state.listGroups.map(item => (
+                                        <Row className="myrow" onClick={this.goGroup}>
+                                            <Col md={10} >
+                                                <picture>
+                                                    <img src="../images/defaultGroup.jpg" className="group-image" />{item.name}
+                                                </picture>
+                                            </Col>
+                                            <Col md={2} >
+                                                <picture onClick={this.openDeleteModal}>
+                                                    <img src="../images/papelera.png" width="25px" />
+                                                </picture>
+                                            </Col>
+                                            <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
+                                                <ModalHeader toggle={this.closeDeleteModal}>Borrar grupo</ModalHeader>
+                                                <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.groupToDelete}?</ModalBody>
+                                                <ModalFooter><Button color="danger" onClick={this.deleteGroup}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
+                                            </Modal>
+                                        </Row>
+
+                                    ))}
+                                    <Row onClick={this.goCreateGroup}>
+                                        <Col>
+                                            <picture>
+                                                <img src="../images/botonNew.svg" className="group-image" /> <font color="#3E8EDE">Crear grupo</font>
+                                            </picture>
+                                        </Col>
+
+                                    </Row>
 
 
 
