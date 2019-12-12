@@ -22,15 +22,15 @@ class CreateGroup extends React.Component {
 
         let formDataGroup = new FormData();
         formDataGroup.append("Tutor", 7);
+        console.log(this.input.current.value);
         formDataGroup.append("Nombre_grupo", this.input.current.value);
 
-        fetch('https://pictoteask.000webhostapp.com/addGroup.php', {
+        fetch('https://pictoteask.000webhostapp.com/addGrupo.php', {
             method: "POST",
             body: formDataGroup
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
-        this.props.createGroup(this.input.current.value);
         this.props.history.push({ pathname: '/groupspage' });
     }
     render() {
