@@ -12,6 +12,7 @@ class GroupsPage extends React.Component {
             listGroups: []
         }
         this.goToGroup = this.goToGroup.bind(this);
+        this.deleteGroup = this.deleteGroup.bind(this);
     }
 
     goToGroup(id, name){
@@ -36,15 +37,29 @@ class GroupsPage extends React.Component {
                 this.setState({ listGroups: listGroups });
         });
         
+        
     }
   
+    deleteGroup(id) {
+        let formData = new FormData();
+        let listGroups = this.state.listGroups;
+        formData.append('id_group', id);
+        formData.append('Tutor', 7);
+        fetch(`${auth}/delGroup.php`, {
+            method: 'POST',
+            body: formData
+        });
+       
+    }
+
+
     render() {
         let from = "/kidspage";
         let from2 = "/creategroup";
         let from3 = "/viewgroup";
     
         return (
-            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.state.listGroups} goToGroup={this.goToGroup}/>
+            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.state.listGroups} goToGroup={this.goToGroup} deleteGroup = {this.deleteGroup}/>
         );
     }
 
