@@ -53,7 +53,6 @@ class App extends React.Component {
 		this.state = {
 			groupSelected: {}
 		};
-		this.addNewGroup = this.addNewGroup.bind(this);
 		this.deleteGroup = this.deleteGroup.bind(this);
 		this.viewGroup = this.viewGroup.bind(this);
 		this.addKidToGroup = this.addKidToGroup.bind(this);
@@ -64,11 +63,7 @@ class App extends React.Component {
 		gs.kids.push({name:kidNick});
 		this.setState({groupSelected:gs});
 	}
-	addNewGroup(nameGroup) {
-		const listGroups = this.state.listGroups;
-		listGroups.push({name: nameGroup, kids: []});
-		this.setState({listGroups: listGroups});
-	}
+
 	viewGroup(nameGroup) {
 		const groupSelected = this.state.listGroups.find((group) => group.name === nameGroup);
 		this.setState({groupSelected: groupSelected})
@@ -98,7 +93,7 @@ class App extends React.Component {
 							<GroupsPage setGroupSelected={this.setGroupSelected}/>
 						</Route>
 						<Route path="/creategroup">
-							<CreateGroup createGroup={this.addNewGroup} />
+							<CreateGroup />
 						</Route>
 						<Route path="/viewgroup">
 							<ViewGroup groupSelected={this.groupSelected}/>
