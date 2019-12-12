@@ -1,7 +1,15 @@
 import React from 'react'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-
+import { withRouter } from 'react-router-dom'
+import TimePicker from 'react-time-picker';
+import '../kidprofile/groups.css'
 class AddTask extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            time: '00:00',
+        }
+    }
     render() {
         return (
             <Container>
@@ -13,53 +21,71 @@ class AddTask extends React.Component {
                         </picture>
                     </Row>
                     <Row >
-                        <Col>
-                            <Row className="fila">
-                                <Col>
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <div className="logo mb-3">
-                                                <Col md={12} className="text-center">
-                                                    <h1>Añadir tarea</h1>
-                                                </Col>
-                                            </div>
-                                            <center><p className="card-text">
-                                                <div className="hora"><b>Hora inicio:  </b><input type="time" value="08:50" /></div>
-                                            </p></center>
-                                            <center><p className="card-text">
-                                                <div className="hora"><b>Hora fin:  </b><input type="time" value="09:00" /></div>
-                                            </p></center>
-                                            <center><p className="card-text">
-                                                <div className="hora"><b>Pictos</b></div>
-                                            </p></center>
-                                            <center><p className="card-text">
-                                                <div className="hora"><img className="img-thumbnail foto" src="../images/lavar_los_dientes.png" width="80px" />
-                                                    <Button type="button" class="boton" >
-                                                        <img src="../images/estrella.png" width="20px" />
-                                                    </Button></div>
-                                            </p></center>
-                                            <center><p className="card-text">
-                                                <div className="hora"><img className="img-thumbnail foto" src="../images/cepillo_y_pasta_de_dientes.png" width="80px" />
-                                                    <Button type="button" class="boton" >
-                                                        <img src="../images/estrella1.png" width="20px" />
-                                                    </Button></div>
-                                            </p></center>
-                                            <center><p className="card-text">
-                                                <picture>
-                                                    <img src="../images/botonNew.svg" className="group-image" /> Añadir niño
-                                                </picture>
-                                            </p></center>
-                                            <Col>
-                                                <Button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm" >Crear</Button>
-                                            </Col>
-                                            <Col>
-                                                <Button type="submit" className=" btn btn-block mybtn btn-danger tx-tfm" >Cancelar</Button>
-                                            </Col>
-                                        </div>
-                                    </div>
+                        <div className="myform form">
+                            <div className="logo mb-3">
+                                <Col md={12} className="text-center">
+                                    <h1>Añadir tarea</h1>
                                 </Col>
-                            </Row>
-                        </Col>
+                            </div>
+                            <Container>
+
+                                <Col md={12} className="mx-auto">
+
+                                    <Row className="myrow2">
+
+                                        <b>Hora inicio:</b>
+                                        <TimePicker className="time-picker"
+                                            value={this.state.time}
+                                        />
+                                    </Row>
+                                </Col>
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <b>Hora fin:</b>
+                                        <TimePicker className="time-picker"
+
+                                            value={this.state.time}
+                                        />
+                                    </Row>
+                                </Col>
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <b>Pictos</b>
+                                    </Row>
+                                </Col>
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <div className="hora">
+                                            <img className="img-thumbnail foto" src="../images/lavar_los_dientes.png" width="80px" />
+                                            <Button type="button" class="boton" ><img src="../images/estrella.png" width="20px" /></Button>
+                                        </div>
+                                    </Row>
+                                </Col>
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <div className="hora">
+                                            <img className="img-thumbnail foto" src="../images/cepillo_y_pasta_de_dientes.png" width="80px" />
+                                            <Button type="button" class="boton" ><img src="../images/estrella1.png" width="20px" /></Button>
+                                        </div>
+                                    </Row>
+                                </Col>
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <picture>
+                                            <img src="../images/botonNew.svg" className="group-image" /> Añadir niño
+                                                </picture>
+                                    </Row>
+                                </Col>
+                                
+                                <Container>
+
+                                    <Button className="btnactiv" color="primary" size="lg" block>Crear</Button>
+
+                                    <Button className="btnactiv" color="danger" size="lg" block>Cancelar</Button>
+
+                                </Container>
+                            </Container>
+                        </div>
                     </Row>
                 </Col>
             </Container>
@@ -69,4 +95,4 @@ class AddTask extends React.Component {
 
 }
 
-export default AddTask;
+export default withRouter(AddTask);
