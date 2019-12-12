@@ -3,6 +3,7 @@ import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button }
 import { withRouter } from 'react-router-dom'
 import TimePicker from 'react-time-picker';
 import '../kidprofile/groups.css'
+import './activities.css'
 class AddTask extends React.Component {
     constructor(props) {
         super(props);
@@ -57,7 +58,7 @@ class AddTask extends React.Component {
                                     <Row className="myrow2">
                                         <div className="hora">
                                             <img className="img-thumbnail foto" src="../images/lavar_los_dientes.png" width="80px" />
-                                            <Button type="button" class="boton" ><img src="../images/estrella.png" width="20px" /></Button>
+                                            <Button type="button"  className=" botonestrella"><img src="../images/estrella.png" width="20px" /></Button>
                                         </div>
                                     </Row>
                                 </Col>
@@ -65,14 +66,14 @@ class AddTask extends React.Component {
                                     <Row className="myrow2">
                                         <div className="hora">
                                             <img className="img-thumbnail foto" src="../images/cepillo_y_pasta_de_dientes.png" width="80px" />
-                                            <Button type="button" class="boton" ><img src="../images/estrella1.png" width="20px" /></Button>
+                                            <Button type="button" className="botonestrella"><img src="../images/estrella1.png" width="20px" /></Button>
                                         </div>
                                     </Row>
                                 </Col>
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <picture>
-                                            <img src="../images/botonNew.svg" className="group-image" /> Añadir niño
+                                            <img src="../images/botonNew.svg" className="group-image" /> Añadir Picto
                                                 </picture>
                                     </Row>
                                 </Col>
