@@ -59,6 +59,7 @@ class LoginForm extends React.Component {
 			}
 
 			history.replace(from);
+			location.reload();
 		})
 	}
 
@@ -88,26 +89,6 @@ class LoginForm extends React.Component {
         {this.state.loading && (
 							<Alert color="info"> Cargando... </Alert>
         )}
-				</Col>
-				<Col md={12}>
-					<div className="login-or">
-						<hr className="hr-or" />
-						<span className="span-or">o</span>
-					</div>
-				</Col>
-				<Col md={12} className="mb-3">
-					<div className="text-center">
-						<div className="social btn mybtn">
-							<i className="fa fa-google-plus"></i> inicia sesión con Google
-						</div>
-					</div>
-				</Col>
-				<Col md={12} className="mb-3">
-					<div className="text-center">
-						<div className="social btn mybtn">
-							<i className="fa fa-facebook-f"></i> inicia sesión con  Facebook
-						</div>
-					</div>
 				</Col>
 				<FormGroup>
 					<div className="text-center">No tienes cuenta? <Link to="/signup">Regístrate</Link></div>
