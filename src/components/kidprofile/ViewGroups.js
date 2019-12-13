@@ -105,7 +105,7 @@ class ViewGroups extends React.Component {
                             <Row>
                                 <Container className='group-list'>
                                     <h5>Grupos</h5>
-                                    {console.log(this.props)}
+                                    
                                     {this.props.listGroups.map((item) => 
 
                                         <Row id={item.id} key={item.id} className="myrow" onClick={(event) => this.goGroup(event)}>
