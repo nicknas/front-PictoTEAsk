@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import ViewGroups from './ViewGroups'
 const auth = 'https://pictoteask.000webhostapp.com'
@@ -15,12 +15,12 @@ class GroupsPage extends React.Component {
         this.deleteGroup = this.deleteGroup.bind(this);
     }
 
-    goToGroup(id){
+    goToGroup(id) {
         this.props.setGroupSelected(id);
     }
 
     componentDidMount() {
-        let grouplist = [];
+
         let listGroups = [];
         let formData = new FormData()
         formData.append('Tutor', 7);
@@ -35,13 +35,13 @@ class GroupsPage extends React.Component {
                 }
                 console.log(listGroups);
                 this.setState({ listGroups: listGroups });
-        });
-        
-        
+            });
+
+
     }
 
-    
-  
+
+
     deleteGroup(id) {
         let formData = new FormData();
         let listGroups = this.state.listGroups;
@@ -51,9 +51,26 @@ class GroupsPage extends React.Component {
             method: 'POST',
             body: formData
         }).then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
-       
+            .catch(error => console.error('Error:', error))
+            .then(() => {
+                let listGroups = [];
+                let formData = new FormData()
+                formData.append('Tutor', 7);
+                fetch(`${auth}/getGrupoTutor.php`, {
+                    method: 'POST',
+                    body: formData
+                }).then(res => res.json())
+                    .then((data) => {
+
+                        for (let i = 0; i < data.Grupos.length; i++) {
+                            listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                        }
+                        console.log(listGroups);
+                        this.setState({ listGroups: listGroups });
+                    });
+            }
+            );
+
     }
 
 
@@ -61,9 +78,9 @@ class GroupsPage extends React.Component {
         let from = "/kidspage";
         let from2 = "/creategroup";
         let from3 = "/viewgroup";
-    
+
         return (
-            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.state.listGroups} goToGroup={this.goToGroup} deleteGroup = {this.deleteGroup}/>
+            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.state.listGroups} goToGroup={this.goToGroup} deleteGroup={this.deleteGroup} />
         );
     }
 
