@@ -107,7 +107,7 @@ class App extends React.Component {
 							<CreateGroup setListGroup={this.setListGroup}/>
 						</PrivateRoute>
 						<PrivateRoute path="/viewgroup">
-							<ViewGroup groupSelectedId={this.state.groupSelectedId} groupSelectedName={this.state.groupSelectedName} listKidsGroup={this.state.listKidsGroup} setKidsGroup={this.setKidsGroup} groupSelectedName={this.state.groupSelectedName}/>
+							<ViewGroup groupSelectedId={this.state.groupSelectedId} groupSelectedName={this.state.groupSelectedName} listGroups={this.state.listGroups} listKidsGroup={this.state.listKidsGroup} setKidsGroup={this.setKidsGroup} groupSelectedName={this.state.groupSelectedName}/>
 						</PrivateRoute>
 						<PrivateRoute path="/createkid">
 							<CreateKid/>
