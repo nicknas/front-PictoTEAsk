@@ -19,8 +19,9 @@ class AssociateKid extends React.Component {
 
         let auth = new Auth();
         let formDataKidTutor = new FormData();
+        formDataKidTutor.append("nick", this.refs.nick.value);
         formDataKidTutor.append("id_tutor", auth.token.id_tutor);
-        formDataKidTutor.append("id_kid", this.refs.id_kid.value);
+        
         fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
             method: "POST",
             body: formDataKidTutor,
@@ -53,7 +54,7 @@ class AssociateKid extends React.Component {
                                     <FormGroup>
                                         <Label>Nickname del niño</Label>
                                         <input className="form-control"
-                                            ref='id_kid' required={true}
+                                            ref='nick' required={true}
                                             type="text" placeholder="Introduce el nickname" />
                                     </FormGroup>
 

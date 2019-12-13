@@ -29,11 +29,10 @@ class KidsPage extends React.Component {
             .then((response) => { if (response.ok) return response.json(); })
             .then(data => {
                 for (let i = 0; i < data.kids.length; i++) {
-                    listKids.push({ name: data.kids[i][1], id: data.kids[i][0], state: data.kids[i][2] });
+                    listKids.push({ id: data.kids[i].id_kid, name: data.kids[i].nick, state: data.kids[i].state });
                 }
                 console.log(listKids);
                 this.setState({ listKids: listKids });
-                //this.props.setListKids(listKids);
             });
     }
     deleteKid(id) {
