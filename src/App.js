@@ -8,6 +8,7 @@ import {
 	withRouter
 } from "react-router-dom"
 
+
 import Auth from './auth'
 import LoginPage from './components/auth/LoginPage'
 import LogoutHeader from './components/auth/LogoutHeader'
@@ -24,6 +25,9 @@ import SeeActivity from './components/activities/SeeActivity'
 import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
 import AddGame from './components/activities/AddGame'
+
+// temp
+import DayCalendar from './components/calendar/DayCalendar'
 
 function PrivateRoute({ children, ...rest}) {
 
@@ -85,6 +89,9 @@ class App extends React.Component {
 						</Route>
 						<Route path="/signup">
 							<RegisterPage />
+						</Route>
+						<Route path="/draw">
+							<DayCalendar />
 						</Route>
 						<PrivateRoute path="/addGame">
 							<AddGame/>

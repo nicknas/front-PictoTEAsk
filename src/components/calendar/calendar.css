@@ -1,0 +1,26 @@
+.card-header {
+	text-align: center;
+	background-color: inherit;
+}
+
+.card-footer {
+	background-color: inherit;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.center-date {
+	position: absolute;
+	margin-left: 35px;
+	width: 280px;
+}
