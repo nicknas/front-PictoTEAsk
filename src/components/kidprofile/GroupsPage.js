@@ -40,26 +40,7 @@ class GroupsPage extends React.Component {
         
     }
 
-    componentDidUpdate() {
-        let grouplist = [];
-        let listGroups = [];
-        let formData = new FormData()
-        formData.append('Tutor', 7);
-        fetch(`${auth}/getGrupoTutor.php`, {
-            method: 'POST',
-            body: formData
-        }).then(res => res.json())
-            .then((data) => {
-
-                for (let i = 0; i < data.Grupos.length; i++) {
-                    listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
-                }
-                console.log(listGroups);
-                this.setState({ listGroups: listGroups });
-        });
-        
-        
-    }
+    
   
     deleteGroup(id) {
         let formData = new FormData();
@@ -69,7 +50,9 @@ class GroupsPage extends React.Component {
         fetch(`${auth}/delGroup.php`, {
             method: 'POST',
             body: formData
-        });
+        }).then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
        
     }
 
