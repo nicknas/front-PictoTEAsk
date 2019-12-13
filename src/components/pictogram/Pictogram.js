@@ -7,8 +7,7 @@ class Pictogram extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listDirectories: [{name: "común", pictos: []}
-                             ], 
+            listDirectories: [], 
             viewDirectories: true, 
             imageSelected: {}, 
             directorySelected: {name: "", pictos: []},
@@ -28,33 +27,113 @@ class Pictogram extends React.Component {
     }
 
     addNewPicto(picto) {
-        let directorySelected = this.state.directorySelected;
-        directorySelected.pictos.push(picto);   
-        let listDirectories = this.state.listDirectories;
-        listDirectories[listDirectories.findIndex((directory) => {return directory.name === directorySelected.name})] = directorySelected;
-        this.setState({listDirectories: listDirectories, directorySelected: directorySelected});
+        let directorySelected = this.state.directorySelected;  
+        let formDataAddToFolder = new FormData(); 
+        formDataAddToFolder.append("carpeta", directorySelected.name);
+        formDataAddToFolder.append("idTutor", 7);
+        formDataAddToFolder.append("path", picto.img.replace('https://pictoteask.000webhostapp.com/', ''));
+        let addToFolderRequest = new Request('https://pictoteask.000webhostapp.com/addToFolder.php', {method: 'POST', body: formDataAddToFolder});
+        fetch(addToFolderRequest)
+            .then((response) => {
+                return response.json();
+            })
+            .catch(error => console.error("Error", error))
+            .then((data) => {
+                this.selectDirectory(directorySelected.name);
+            });
     }
 
     addNewDirectory(nameDirectory) {
         let listDirectories = this.state.listDirectories;
-        listDirectories.push({name: nameDirectory, pictos: []});
-        this.setState({listDirectories: listDirectories});
+        let formDataAddFolder = new FormData();
+        formDataAddFolder.append("carpeta", nameDirectory);
+        formDataAddFolder.append("idTutor", 7);
+        let addFolderRequest = new Request('https://pictoteask.000webhostapp.com/createFolderPicts.php', {method: "POST", body: formDataAddFolder});
+        fetch(addFolderRequest)
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then((success) => {
+                console.log('Success:', success);
+                this.goBackToDirectories();
+            });
+        
     }
 
     deleteDirectory(nameDirectory) {
-        let listDirectories = this.state.listDirectories;
-        listDirectories = listDirectories.filter((directory) => {return directory.name !== nameDirectory});
-        this.setState({listDirectories: listDirectories});
+        let formDataDeleteFolder = new FormData(); 
+        formDataDeleteFolder.append("carpeta", nameDirectory);
+        formDataDeleteFolder.append("idTutor", 7);
+        let addToFolderRequest = new Request('https://pictoteask.000webhostapp.com/deleteFolder.php', {method: 'POST', body: formDataDeleteFolder});
+        fetch(addToFolderRequest)
+            .then((response) => {
+                return response.json();
+            })
+            .catch(error => console.error("Error", error))
+            .then((data) => {
+                this.goBackToDirectories();
+            });
     }
 
     goBackToDirectories() {
-        this.setState({viewDirectories: true});
+        let formDataDirectories = new FormData();
+        formDataDirectories.append("idTutor", 7);
+        let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
+        fetch(request)
+            .then((response) => response.json())
+            .catch(error => console.error('Error:', error))
+            .then((folders) => {
+                let listDirectories = [{name: "común", pictos: []}];
+                folders.sources.forEach((row) => {
+                    listDirectories.push({name: row.nombre, pictos: []});
+                });
+                this.setState({listDirectories: listDirectories, viewDirectories: true});
+            });
     }
 
     selectDirectory(nameDirectory) {
-        let directory = this.state.listDirectories.find((directory) => {return directory.name === nameDirectory});
-        this.setState({viewDirectories: false, directorySelected: directory});
+        let directory = {name: "", pictos: []};
+        directory.name = nameDirectory;
+        let formDataDirectory = new FormData(); 
+        if (directory.name !== "común") {
+            formDataDirectory.append("idTutor", 7);
+            formDataDirectory.append("carpeta", directory.name);
+        }
+        let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectory});
+        fetch(request)
+            .then((response) => response.json())
+            .catch(error => console.error('Error:', error))
+            .then((folder) => {
+                if (directory.name === "común") {
+                    for (let i = 0; i < 10; i++) {
+                        directory.pictos.push({name: folder.sources[i].nombre, img: 'https://pictoteask.000webhostapp.com/' + folder.sources[i].path});
+                    }
+                }
+                else {
+                    folder.sources.forEach((row) => {
+                        directory.pictos.push({name: row.nombre, img: 'https://pictoteask.000webhostapp.com/' + row.path});
+                    });
+                }
+                    
+                    this.setState({viewDirectories: false, directorySelected: directory});
+                });
     }
+
+    componentDidMount() {
+        let formDataDirectories = new FormData();
+        formDataDirectories.append("idTutor", 7);
+        let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
+        fetch(request)
+            .then((response) => response.json())
+            .catch(error => console.error('Error:', error))
+            .then((folders) => {
+                let listDirectories = [{name: "común", pictos: []}];
+                folders.sources.forEach((row) => {
+                    listDirectories.push({name: row.nombre, pictos: []});
+                });
+                this.setState({listDirectories: listDirectories});
+            });
+            
+    } 
 
     render() {
         let view;

@@ -29,6 +29,9 @@ import AddGame from './components/activities/AddGame'
 // temp
 import WeekCalendar from './components/calendar/WeekCalendar'
 
+
+const auth = 'https://pictoteask.000webhostapp.com'
+
 function PrivateRoute({ children, ...rest}) {
 
 	let auth = new Auth()
@@ -56,17 +59,14 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			groupSelected: {}
+			groupSelected: {},
+			listGroups: []
 		};
 
 		this.viewGroup = this.viewGroup.bind(this);
-		this.addKidToGroup = this.addKidToGroup.bind(this);
+
 		this.setGroupSelected = this.setGroupSelected.bind(this);
-	}
-	addKidToGroup(kidNick){
-		let gs = this.state.groupSelected;
-		gs.kids.push({name:kidNick});
-		this.setState({groupSelected:gs});
+		this.setListGroup = this.setListGroup.bind(this);
 	}
 
 	viewGroup(nameGroup) {
@@ -74,9 +74,14 @@ class App extends React.Component {
 		this.setState({groupSelected: groupSelected})
 	}
 
+	setListGroup(listGroups){
+		this.setState({ listGroups: listGroups });
+	}
+
 	setGroupSelected(idg, group){
 		this.setState({ groupSelected: {name: group, id: idg} });
 	}
+
 	render() {
 		return (
 				<Router>
@@ -97,10 +102,10 @@ class App extends React.Component {
 							<AddGame/>
 						</PrivateRoute>
 						<PrivateRoute path="/groupspage">
-							<GroupsPage setGroupSelected={this.setGroupSelected}/>
+							<GroupsPage setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listGroups={this.state.listGroups}/>
 						</PrivateRoute>
 						<PrivateRoute path="/creategroup">
-							<CreateGroup />
+							<CreateGroup setListGroup={this.setListGroup}/>
 						</PrivateRoute>
 						<PrivateRoute path="/viewgroup">
 							<ViewGroup groupSelected={this.groupSelected}/>
