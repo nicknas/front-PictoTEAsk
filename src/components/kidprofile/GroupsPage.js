@@ -28,7 +28,7 @@ class GroupsPage extends React.Component {
             .then((data) => {
 
                 for (let i = 0; i < data.Grupos.length; i++) {
-                    listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                    listGroups.push({ name: data.Grupos[i].nombre, id: data.Grupos[i].id_group});
                 }
                
                 this.props.setListGroup(listGroups);
@@ -60,7 +60,7 @@ class GroupsPage extends React.Component {
                     .then((data) => {
 
                         for (let i = 0; i < data.Grupos.length; i++) {
-                            listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                            listGroups.push({ name: data.Grupos[i].nombre, id: data.Grupos[i].id_group });
                         }
                       
                         this.props.setListGroup(listGroups);

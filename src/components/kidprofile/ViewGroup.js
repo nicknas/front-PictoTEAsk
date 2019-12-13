@@ -57,18 +57,17 @@ class ViewGroup extends React.Component {
         let listKids = [];
         let formData = new FormData()
         formData.append('Tutor', 7);
-        console.log(this.props.groupSelectedName);
+      
         formData.append('Nombre_grupo', this.props.groupSelectedName);
         fetch(`${auth}/getNinosGrupo.php`, {
             method: 'POST',
             body: formData
         }).then(res => res.json())
             .then((data) => {
-                
+                console.log(data);
                for (let i = 0; i < data.kids.length; i++) {
                     listKids.push(data.kids[i]);
                 }
-                listKids.push({name: "Pepito", id: 2});
                 this.props.setKidsGroup(listKids);
                
             });
