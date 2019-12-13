@@ -15,8 +15,8 @@ class GroupsPage extends React.Component {
         this.deleteGroup = this.deleteGroup.bind(this);
     }
 
-    goToGroup(id, name){
-        this.props.setGroupSelected();
+    goToGroup(id){
+        this.props.setGroupSelected(id);
     }
 
     componentDidMount() {
