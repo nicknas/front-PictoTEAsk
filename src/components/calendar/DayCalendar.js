@@ -107,10 +107,12 @@ class DayCalendar extends React.Component {
 				<CardBody>
 					{
 						this.state.tasks.map((item) => (
-							<div key={item.key}>
-								<CardText>{item.init} - {item.end}</CardText>
-								<img class="img-thumbnail" src="images/hacer_la_cama.png" width="80px"/>
-								<img src="images/estrella.png" width="20px" />
+							<div style={{'clear': 'both', 'height': '95px'}} key={item.key}>
+								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.init} - {item.end}</CardText>
+								<div className="float-right">
+									<img className="img-thumbnail" src="images/hacer_la_cama.png" width="80px"/>
+									<img src="images/estrella.png" width="20px" />
+								</div>
 							</div>
 						))
 					}
