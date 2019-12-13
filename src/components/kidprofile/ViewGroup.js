@@ -6,6 +6,8 @@ import {
     useLocation,
     withRouter
 } from 'react-router-dom'
+const auth = 'https://pictoteask.000webhostapp.com'
+
 class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,6 @@ class ViewGroup extends React.Component {
             addModalOpened: false
         };
         this.openAddModal = this.openAddModal.bind(this);
-        this.createKidsList = this.createKidsList.bind(this);
         this.gokids = this.gokids.bind(this);
         this.goGroups = this.goGroups.bind(this);
         this.addKid = this.addKid.bind(this);
@@ -23,17 +24,17 @@ class ViewGroup extends React.Component {
         this.saveNewKid = this.saveNewKid.bind(this);
     }
     handleNickName(e) {
-        this.setState({kidToAdd: e.target.value});
+        this.setState({ kidToAdd: e.target.value });
     }
     openAddModal(event) {
-        
-        this.setState({addModalOpened: true });
+
+        this.setState({ addModalOpened: true });
         event.stopPropagation();
     }
     closeAddModal() {
-        this.setState({addModalOpened: false });
+        this.setState({ addModalOpened: false });
     }
-    addKid(event){
+    addKid(event) {
         this.props.addKidToGroup(event.currentTarget);
     }
     gokids(event) {
@@ -49,45 +50,34 @@ class ViewGroup extends React.Component {
 
     saveNewKid() {
         this.props.addKidToGroup(this.state.kidToAdd);
-        this.setState({addModalOpened: false, kidToAdd: ""});
+        this.setState({ addModalOpened: false, kidToAdd: "" });
     }
 
-    createKidsList() {
-        /*let grouplist = [];
-        this.props.listKids.forEach((row) => {
-            grouplist.push(
-                <Row className="myrow">
-                    <Col md={10} >
-                        <picture>
-                            <img src="../images/defaultProfile.jpg" className="group-image" />{row.name}
-                        </picture>
-                    </Col>
-                </Row>
-            );
-        });
-        
-        
-        grouplist.push(
-            <Row onClick={this.openAddModal}>
-                <Col>
-                    <picture>
-                        <img src="../images/botonNew.svg" className="group-image"  /> <font color="#3E8EDE">Añadir niño</font>
-                        </picture>
-                </Col>
-                <Modal isOpen={this.state.addModalOpened} toggle={this.closeAddModal}>
-                        <ModalHeader toggle={this.closeAddModal}>Añadir niño al grupo</ModalHeader>
-                        <ModalBody><Label for="">Nick del niño</Label><Input type="text" onChange={this.handleNickName} /></ModalBody>
-                        <ModalFooter><Button color="success" onClick={this.saveNewKid}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
-                    </Modal>
-            </Row>
-            
-        );
+    componentDidMount() {
+        let listKids = [];
+        let formData = new FormData()
+        formData.append('Tutor', 7);
+        console.log(this.props.groupSelectedName);
+        formData.append('Nombre_grupo', this.props.groupSelectedName);
+        fetch(`${auth}/getNinosGrupo.php`, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json())
+            .then((data) => {
+                
+               for (let i = 0; i < data.kids.length; i++) {
+                    listKids.push(data.kids[i]);
+                }
+                listKids.push({name: "Pepito", id: 2});
+                this.props.setKidsGroup(listKids);
+               
+            });
 
-        
-        return grouplist;*/
     }
+
+
+
     render() {
-        let kids = this.createKidsList();
         return (
             <Container>
                 <Row>
@@ -110,9 +100,29 @@ class ViewGroup extends React.Component {
                             </Row>
                             <Row>
                                 <Container className='group-list'>
-                                    <h5>{this.props.nameGroup}</h5>
+                                    <h5>{this.props.groupSelectedName}</h5>
+                                    
+                                    {this.props.listKidsGroup.map((item) =>
 
-                                    {kids}
+                                        <Row id={item.id} key={item.id} className="myrow" onClick={(event) => this.goGroup(event)}>
+                                            <Col md={10} >
+                                                <picture>
+                                                    <img src="../images/defaultGroup.jpg" className="group-image" />{item.name}
+                                                </picture>
+                                            </Col>
+                                            <Col md={2} >
+                                                <picture onClick={(event) => this.openDeleteModal(event, item.id)}>
+                                                    <img src="../images/papelera.png" width="25px" />
+                                                </picture>
+                                            </Col>
+                                            <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
+                                                <ModalHeader toggle={this.closeDeleteModal}>Borrar grupo</ModalHeader>
+                                                <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.groupToDelete}?</ModalBody>
+                                                <ModalFooter  ><Button id={item.id} key={item.id} color="danger" onClick={(event) => this.deleteGroup(event)}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
+                                            </Modal>
+                                        </Row>
+
+                                    )}
 
 
 
