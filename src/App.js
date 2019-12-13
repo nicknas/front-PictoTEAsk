@@ -27,7 +27,7 @@ import AddTask from './components/activities/AddTask'
 import AddGame from './components/activities/AddGame'
 
 // temp
-import DayCalendar from './components/calendar/DayCalendar'
+import WeekCalendar from './components/calendar/WeekCalendar'
 
 function PrivateRoute({ children, ...rest}) {
 
@@ -58,7 +58,7 @@ class App extends React.Component {
 		this.state = {
 			groupSelected: {}
 		};
-		
+
 		this.viewGroup = this.viewGroup.bind(this);
 		this.addKidToGroup = this.addKidToGroup.bind(this);
 		this.setGroupSelected = this.setGroupSelected.bind(this);
@@ -73,7 +73,7 @@ class App extends React.Component {
 		const groupSelected = this.state.listGroups.find((group) => group.name === nameGroup);
 		this.setState({groupSelected: groupSelected})
 	}
-	
+
 	setGroupSelected(idg, group){
 		this.setState({ groupSelected: {name: group, id: idg} });
 	}
@@ -91,7 +91,7 @@ class App extends React.Component {
 							<RegisterPage />
 						</Route>
 						<Route path="/draw">
-							<DayCalendar />
+							<WeekCalendar />
 						</Route>
 						<PrivateRoute path="/addGame">
 							<AddGame/>

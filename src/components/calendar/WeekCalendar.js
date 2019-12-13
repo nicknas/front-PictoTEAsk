@@ -15,16 +15,17 @@ import {
 import './calendar.css'
 
 
-class DayCalendar extends React.Component {
+class WeekCalendar extends React.Component {
 
 
 	constructor(props) {
 		super(props);
 
 		moment.locale('es');
-		this.moment = moment()
+		this.moment = moment().day(1)
 		this.state = {
-			date: this.moment.format("dddd, LL"),
+			date_s: this.moment.format("D"),
+			date_e: moment(this.moment).add(7, 'day').format("LL"),
 			tasks: []
 		}
 
@@ -36,7 +37,8 @@ class DayCalendar extends React.Component {
 	componentDidMount() {
 		this.request((tasks) => {
 			this.setState({
-				date: this.moment.format("dddd, LL"),
+				date_s: this.moment.format("D"),
+				date_e: moment(this.moment).add(7, 'day').format("LL"),
 				tasks: tasks
 			})
 		})
@@ -47,7 +49,8 @@ class DayCalendar extends React.Component {
 		this.moment = this.moment.subtract(1, 'day')
 		this.request((tasks) => {
 			this.setState({
-				date: this.moment.format("dddd, LL"),
+				date_s: this.moment.format("D"),
+				date_e: moment(this.moment).add(7, 'day').format("LL"),
 				tasks: tasks
 			})
 		})
@@ -58,37 +61,54 @@ class DayCalendar extends React.Component {
 		this.moment = this.moment.add(1, 'day')
 		this.request((tasks) => {
 			this.setState({
-				date: this.moment.format("dddd, LL"),
+				date_s: this.moment.format("D"),
+				date_e: moment(this.moment).add(7, 'day').format("LL"),
 				tasks: tasks
 			})
 		})
 	}
 
 	request(cb) {
-		let formData = new FormData()
-		formData.append('id_nino', 28)
-		formData.append('date', this.moment.format('YYYY-MM-DD'))
 
-		fetch('https://pictoteask.000webhostapp.com/getTaskDate.php', {
-			method: 'POST',
-			body: formData
-		}).then(res => res.json()).then(response => {
+		const req = 7
+		const api = 'https://pictoteask.000webhostapp.com/getTaskDate.php'
+		let count = 1
+		let tasks = []
+		let date = moment(this.moment)
+		let up = 0
 
-			let {Tareas} = response
-			let tasks = []
+		for (let i=0; i<7; i++) {
 
-			for (let i=0; i < Tareas.length; i++) {
-				tasks.push({
-					key: i,
-					start: i == 0,
-					init: Tareas[i][1],
-					end: Tareas[i][2]
-				})
-			}
+			let formData = new FormData()
+			formData.append('id_nino', 28)
+			formData.append('date', date.add(up, 'day').format('YYYY-MM-DD'))
+			up = 1
 
-			cb(tasks)
+			fetch(api, {
+				method: 'POST',
+				body: formData
+			}).then(res => res.json()).then(response => {
 
-		})
+					count++
+					let {Tareas} = response
+
+					for (let x=0; x < Tareas.length; x++) {
+
+						let date = moment(Tareas[x][8])
+						tasks.push({
+							key: x,
+							date: `${date.format('dddd DD')} de ${date.format('MMMM')}`
+						})
+
+					}
+
+				if (req == count) {
+					cb(tasks)
+				}
+
+			})
+		}
+
 	}
 
 	render() {
@@ -98,7 +118,7 @@ class DayCalendar extends React.Component {
 					<a className="float-left cursor-pointer" onClick={this.prev}>
 						<img width="20px" src="images/galon-izquierdo.png" />
 					</a>
-						<CardTitle className="center-date">{this.state.date}</CardTitle>
+						<CardTitle className="center-date">Del {this.state.date_s} al {this.state.date_e}</CardTitle>
 					<a className="float-right cursor-pointer" onClick={this.next}>
 						<img width="20px" src="images/galon-derecho.png" />
 					</a>
@@ -107,20 +127,17 @@ class DayCalendar extends React.Component {
 					{
 						this.state.tasks.map((item) => (
 							<div style={{'clear': 'both', 'height': '95px'}} key={item.key}>
-								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.init} - {item.end}</CardText>
+								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.date}</CardText>
 								<div className="float-right">
 									<img className="img-thumbnail" src="images/hacer_la_cama.png" width="80px"/>
-									<img src="images/estrella.png" width="20px" />
 								</div>
 							</div>
 						))
 					}
 				</CardBody>
-				<CardFooter>
-				</CardFooter>
 			</Card>
 		)
 	}
 }
 
-export default DayCalendar;
+export default WeekCalendar;
