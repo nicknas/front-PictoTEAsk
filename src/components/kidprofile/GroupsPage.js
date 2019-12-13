@@ -39,6 +39,8 @@ class GroupsPage extends React.Component {
         
         
     }
+
+    
   
     deleteGroup(id) {
         let formData = new FormData();
@@ -48,7 +50,9 @@ class GroupsPage extends React.Component {
         fetch(`${auth}/delGroup.php`, {
             method: 'POST',
             body: formData
-        });
+        }).then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
        
     }
 
