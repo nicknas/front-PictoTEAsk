@@ -55,7 +55,12 @@ class PictogramDirectories extends React.Component {
         let carpetas = [];
 
         this.props.listDirectories.forEach((row) => {
-            carpetas.push(<li><Card onClick={this.goToFolder} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col><img onClick={this.openDeleteModal} className="imgPapelera" src="images/papelera.png" alt=""/></Col></Row></Card></li>);
+            if (row.name === "común") {
+                carpetas.push(<li><Card onClick={this.goToFolder} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col></Row></Card></li>);
+            }
+            else {
+                carpetas.push(<li><Card onClick={this.goToFolder} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col><img onClick={this.openDeleteModal} className="imgPapelera" src="images/papelera.png" alt=""/></Col></Row></Card></li>);
+            }
         });
         carpetas.push(<li><Card onClick={this.addDirectory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}} className="cardNew"><Row className="no-gutters"><Col style={{width: "100%"}}><CardImg className="imgNew" src="images/botonNew.svg" alt="..."/></Col><Col><CardBody><CardTitle><h5 className="nombreCarpeta">Nueva Carpeta</h5></CardTitle></CardBody></Col></Row></Card></li>);
         return carpetas;
