@@ -5,7 +5,7 @@ import {
     withRouter
 } from 'react-router-dom'
 import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-
+const auth = 'https://pictoteask.000webhostapp.com'
 class CreateGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -30,7 +30,23 @@ class CreateGroup extends React.Component {
             body: formDataGroup
         }).then(response => response.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            .then(() => {
+                let listGroups = [];
+                let formData = new FormData()
+                formData.append('Tutor', 7);
+                fetch(`${auth}/getGrupoTutor.php`, {
+                    method: 'POST',
+                    body: formData
+                }).then(res => res.json())
+                    .then((data) => {
+
+                        for (let i = 0; i < data.Grupos.length; i++) {
+                            listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                        }
+                        this.props.setListGroup(listGroups);
+                    });
+            }
+            );
         this.props.history.push({ pathname: '/groupspage' });
     }
     render() {

@@ -8,9 +8,6 @@ const auth = 'https://pictoteask.000webhostapp.com'
 class GroupsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            listGroups: []
-        }
         this.goToGroup = this.goToGroup.bind(this);
         this.deleteGroup = this.deleteGroup.bind(this);
     }
@@ -34,7 +31,7 @@ class GroupsPage extends React.Component {
                     listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
                 }
                 console.log(listGroups);
-                this.setState({ listGroups: listGroups });
+                this.props.setListGroup(listGroups);
             });
 
 
@@ -44,7 +41,7 @@ class GroupsPage extends React.Component {
 
     deleteGroup(id) {
         let formData = new FormData();
-        let listGroups = this.state.listGroups;
+      
         formData.append('id_group', id);
         formData.append('Tutor', 7);
         fetch(`${auth}/delGroup.php`, {
@@ -66,7 +63,7 @@ class GroupsPage extends React.Component {
                             listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
                         }
                         console.log(listGroups);
-                        this.setState({ listGroups: listGroups });
+                        this.props.setListGroup(listGroups);
                     });
             }
             );
@@ -80,7 +77,7 @@ class GroupsPage extends React.Component {
         let from3 = "/viewgroup";
 
         return (
-            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.state.listGroups} goToGroup={this.goToGroup} deleteGroup={this.deleteGroup} />
+            <ViewGroups from={from} from2={from2} from3={from3} history={this.props.history} setGroupSelected={this.props.setGroupSelected} listGroups={this.props.listGroups} goToGroup={this.goToGroup} deleteGroup={this.deleteGroup} />
         );
     }
 
