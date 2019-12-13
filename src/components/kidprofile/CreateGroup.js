@@ -80,7 +80,9 @@ class CreateGroup extends React.Component {
                                     <h1>Crear un grupo</h1>
                                 </Col>
                             </div>
-
+                            <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
+                                Ya existe un grupo con ese nombre, prueba con otro distinto
+                            </Alert>
                             <Form onSubmit={this.createGroup}>
                                 <FormGroup>
                                     <Label >Nombre del grupo*</Label>
@@ -98,9 +100,7 @@ class CreateGroup extends React.Component {
                                     className="btn-block mybtn tx-tfm">VOLVER</Button>
                             </Col>
                             
-                            <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
-                                Ya existe un grupo con ese nombre, prueba con otro distinto
-                            </Alert>
+                            
                             
                         </div>
                     </Row>
