@@ -105,9 +105,6 @@ class App extends React.Component {
 						<PrivateRoute path="/viewGame">
 							<ViewGame/>
 						</PrivateRoute>
-						<PrivateRoute path="/editGame">
-							<EditGame/>
-						</PrivateRoute>
 						<PrivateRoute path="/groupspage">
 							<GroupsPage listGroups={this.state.listGroups} setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listKids={this.state.listKids}/>
 						</PrivateRoute>
