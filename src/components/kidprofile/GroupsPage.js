@@ -17,6 +17,9 @@ class GroupsPage extends React.Component {
     }
 
     componentDidMount() {
+        if(this.props.listGroups.length == 0){
+            this.props.history.replace("/kidspage");
+        }
         let auth = new Auth();
         let listGroups = [];
         let formData = new FormData()
@@ -41,9 +44,9 @@ class GroupsPage extends React.Component {
 
     deleteGroup(id) {
         let formData = new FormData();
-      
-        formData.append('id_group', id);
-        formData.append('Tutor', 7);
+        let auth = new Auth();
+        formData.append('Id_group', id);
+        formData.append('Tutor', auth.token.id_tutor);
         fetch(`${enlace}/delGroup.php`, {
             method: 'POST',
             body: formData
@@ -52,7 +55,7 @@ class GroupsPage extends React.Component {
             .then(() => {
                 let listGroups = [];
                 let formData = new FormData()
-                formData.append('Tutor', 7);
+                formData.append('Tutor', auth.token.id_tutor);
                 fetch(`${enlace}/getGrupoTutor.php`, {
                     method: 'POST',
                     body: formData

@@ -1,6 +1,6 @@
 import React from 'react'
 import './groups.css'
-import { Container, Row, Col, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Container, Row, Col, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
 import { withRouter } from 'react-router-dom'
 import Auth from '../../auth';
 
@@ -12,7 +12,8 @@ class ViewGroup extends React.Component {
         this.state = {
             kidToAdd: "",
             addModalOpened: false,
-            addModalOpened: false
+            addModalOpened: false,
+            errorAlert: false
         };
         this.openAddModal = this.openAddModal.bind(this);
         this.gokids = this.gokids.bind(this);
@@ -21,22 +22,25 @@ class ViewGroup extends React.Component {
         this.saveNewKid = this.saveNewKid.bind(this);
         this.openAddModal = this.openAddModal.bind(this);
         this.handleNickName = this.handleNickName.bind(this);
+        this.onDismiss = this.onDismiss.bind(this);
     }
+    onDismiss() {
+        this.setState({ errorAlert: false });
+    }
+    handleNickName(event) {
 
-    handleNickName(event){
-  
-        
-        this.setState({kidToAdd: event.target.value});
+
+        this.setState({ kidToAdd: event.target.value });
     }
 
     closeAddModal() {
-        this.setState({ kidToAdd:"", addModalOpened: false});
+        this.setState({ kidToAdd: "", addModalOpened: false });
     }
     openAddModal(event) {
         this.setState({ addModalOpened: true });
         event.stopPropagation();
     }
-   
+
 
     gokids(event) {
         event.preventDefault();
@@ -50,12 +54,28 @@ class ViewGroup extends React.Component {
     }
 
     saveNewKid() {
-        /*
+        let idKid = "";
+        let existe = false;
+        for (let i = 0; i < this.props.listKids.length; i++) {
+            if (this.props.listKids[i].name == this.state.kidToAdd) {
+                idKid = this.props.listKids[i].id;
+                existe = true;
+            }
+        }
+        if (!existe) {
+            this.setState({ errorAlert: true });
+        }
+        else {
+            this.closeAddModal();
+        }
+
+        this.props.history.push('/groupspage');
+
         let auth = new Auth();
         let formDataGroup = new FormData();
-        formDataGroup.append("id_kid", this.state.kidToAdd);
+        formDataGroup.append("id_kid", idKid);
         formDataGroup.append("id_tutor", auth.token.id_tutor);
-        formDataGroup.append("id_grupo", );
+        formDataGroup.append("id_group", this.props.groupSelectedId);
 
         fetch('https://pictoteask.000webhostapp.com/addKidToGroup.php', {
             method: "POST",
@@ -65,7 +85,7 @@ class ViewGroup extends React.Component {
                 if (data.error_msg == "Creada correctamente") {
                     let listKids = [];
                     let formData = new FormData()
-                    formData.append('Tutor', 7);
+                    formData.append('Tutor', auth.token.id_tutor);
                     fetch(`${enlace}/getGrupoTutor.php`, {
                         method: 'POST',
                         body: formData
@@ -73,39 +93,47 @@ class ViewGroup extends React.Component {
                         .then((data) => {
 
                             for (let i = 0; i < data.Grupos.length; i++) {
-                                listKids.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                                listKids.push({ name: data.Grupos[i].nombre, id: data.Grupos[i].id_group });
                             }
                             this.props.setKidsGroup(this.state.kidToAdd);
                             this.setState({ addModalOpened: false, kidToAdd: "" });
+
                         });
                 }
                 else {
-                    this.setState({errorAlert:true});
+                    this.setState({ errorAlert: true });
                 }
             }
-            );*/
-        
-        
+            );
+
+
     }
 
     componentDidMount() {
-        let auth = new Auth();
-        let listKids = [];
-        let formData = new FormData()
-        formData.append('Tutor', auth.token.id_tutor);
 
-        formData.append('Nombre_grupo', this.props.groupSelectedName);
-        fetch(`${enlace}/getNinosGrupo.php`, {
-            method: 'POST',
-            body: formData
-        }).then(res => res.json())
-            .then((data) => {
-                for (let i = 0; i < data.kids.length; i++) {
-                    listKids.push(data.kids[i]);
-                }
-                this.props.setKidsGroup(listKids);
+        if (this.props.groupSelectedName == "") {
+            this.props.history.push('/kidspage');
+        }
+        else {
+            let auth = new Auth();
+            let listKids = [];
+            let formData = new FormData()
+            formData.append('Tutor', auth.token.id_tutor);
 
-            });
+            formData.append('Nombre_grupo', this.props.groupSelectedName);
+            fetch(`${enlace}/getNinosGrupo.php`, {
+                method: 'POST',
+                body: formData
+            }).then(res => res.json())
+                .then((data) => {
+                    for (let i = 0; i < data.kids.length; i++) {
+                        listKids.push({ name: data.kids[i].nick, id: data.kids[i].id_kid });
+
+                    }
+                    this.props.setKidsGroup(listKids);
+
+                });
+        }
 
     }
 
@@ -169,7 +197,11 @@ class ViewGroup extends React.Component {
                                     <Modal isOpen={this.state.addModalOpened} toggle={this.closeAddModal}>
                                         <ModalHeader toggle={this.closeAddModal}>Añadir niño al grupo</ModalHeader>
                                         <ModalBody><Label for="">Nick del niño</Label><Input type="text" onChange={this.handleNickName} /></ModalBody>
+                                        <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
+                                            El nick del niño que has introducido no existe en tu lista de niños asociados
+                            </Alert>
                                         <ModalFooter><Button color="success" onClick={this.saveNewKid}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
+
                                     </Modal>
                                 </Container>
 

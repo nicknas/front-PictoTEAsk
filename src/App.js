@@ -3,9 +3,7 @@ import {
 	HashRouter as Router,
 	Switch,
 	Route,
-	Redirect,
-	useHistory,
-	withRouter
+	Redirect
 } from "react-router-dom"
 
 
@@ -104,13 +102,13 @@ class App extends React.Component {
 							<AddGame/>
 						</PrivateRoute>
 						<PrivateRoute path="/groupspage">
-							<GroupsPage setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listGroups={this.state.listGroups}/>
+							<GroupsPage listGroups={this.state.listGroups} setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listGroups={this.state.listGroups}/>
 						</PrivateRoute>
 						<PrivateRoute path="/creategroup">
 							<CreateGroup setListGroup={this.setListGroup}/>
 						</PrivateRoute>
 						<PrivateRoute path="/viewgroup">
-							<ViewGroup groupSelectedId={this.state.groupSelectedId} groupSelectedName={this.state.groupSelectedName} listGroups={this.state.listGroups} listKidsGroup={this.state.listKidsGroup} setKidsGroup={this.setKidsGroup} groupSelectedName={this.state.groupSelectedName}/>
+							<ViewGroup groupSelectedId={this.state.groupSelectedId} listKids={this.state.listKids} groupSelectedId={this.state.groupSelectedId} groupSelectedName={this.state.groupSelectedName} listGroups={this.state.listGroups} listKidsGroup={this.state.listKidsGroup} setKidsGroup={this.setKidsGroup} groupSelectedName={this.state.groupSelectedName}/>
 						</PrivateRoute>
 						<PrivateRoute path="/createkid">
 							<CreateKid/>

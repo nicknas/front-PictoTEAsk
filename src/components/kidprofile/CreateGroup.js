@@ -80,6 +80,7 @@ class CreateGroup extends React.Component {
                             <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
                                 Ya existe un grupo con ese nombre, prueba con otro distinto
                             </Alert>
+                            
                             <Form onSubmit={this.createGroup}>
                                 <FormGroup>
                                     <Label >Nombre del grupo*</Label>
