@@ -67,7 +67,7 @@ class ViewGroup extends React.Component {
         this.setState({ deleteModalOpened: false, kidToDelete: "" });
     }
     openDeleteModal(event, id) {
-        this.setState({ deleteModalOpened: true, kidToDelete: id });
+        this.setState({ deleteModalOpened: true, kidToDelete: id});
         event.stopPropagation();
     }
     onDismiss() {
@@ -80,7 +80,7 @@ class ViewGroup extends React.Component {
     }
 
     closeAddModal() {
-        this.setState({ kidToAdd: "", addModalOpened: false });
+        this.setState({ kidToAdd: "", addModalOpened: false, errorAlert: false, error_msg: "" });
     }
     openAddModal(event) {
         this.setState({ addModalOpened: true });
@@ -263,7 +263,7 @@ class ViewGroup extends React.Component {
                                         <ModalBody><Label for="">Nick del niño</Label><Input type="text" onChange={this.handleNickName} /></ModalBody>
                                         <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
                                             {this.state.error_msg}
-                            </Alert>
+                                        </Alert>
                                         <ModalFooter><Button color="success" onClick={this.saveNewKid}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
 
                                     </Modal>
