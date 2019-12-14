@@ -13,7 +13,13 @@ class AssociateKid extends React.Component {
         super(props);
         this.associateKid = this.associateKid.bind(this);
         this.input = React.createRef();
+        this.goBack = this.goBack.bind(this);
     }
+    goBack() {
+        this.props.history.push({ pathname: '/kidspage' });
+    }
+
+
     associateKid(event) {
         event.preventDefault();
 
@@ -58,12 +64,18 @@ class AssociateKid extends React.Component {
                                             type="text" placeholder="Introduce el nickname" />
                                     </FormGroup>
 
-                                    <Col md={12} className="text-center">
+                                    <Col md={12} className="myrow">
                                         <Button type="submit" color="primary"
                                             className="btn-block mybtn tx-tfm">Asociar niño</Button>
+                                            
                                     </Col>
-
+                                    
+                                    <Col md={12} className="myrow" onClick={this.goBack}>
+                                <Button type="submit" color="secondary"
+                                    className="btn-block mybtn tx-tfm">VOLVER</Button>
+                            </Col>
                                     <Col md={12}>
+                                        
                                         <div className="login-or">
                                             <hr className="hr-or"/>
                                             <span className="span-or">or</span>
@@ -74,6 +86,9 @@ class AssociateKid extends React.Component {
                                         <div className="text-center">¿Desea <Link to='/createkid'>crear un niño</Link>?</div>
                                     </FormGroup>
                                 </Form>
+
+                                
+                                
                             </div>
                         </div>
                     </Col>

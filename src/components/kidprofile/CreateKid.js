@@ -11,6 +11,11 @@ class CreateKid extends React.Component {
     constructor(props) {
         super(props);
         this.createKid = this.createKid.bind(this);
+        this.goBack = this.goBack.bind(this);
+    }
+
+    goBack() {
+        this.props.history.push({ pathname: '/kidspage' });
     }
 
     createKid(event) {
@@ -58,8 +63,15 @@ class CreateKid extends React.Component {
                                     <input className="form-control"
                                         ref='nick' required={true} type="text" name="name" placeholder="Nombre" />
                                 </FormGroup>
-                                <Button type="submit" color="primary"  >Submit</Button>
+                                <Col md={12} className="myrow">
+                                    <Button type="submit" color="primary"
+                                        className="btn-block mybtn tx-tfm">REGISTRAR NIÑO</Button>
+                                </Col>
                             </Form>
+                            <Col md={12} className="myrow" onClick={this.goBack}>
+                                <Button type="submit" color="secondary"
+                                    className="btn-block mybtn tx-tfm">VOLVER</Button>
+                            </Col>
                         </div>
                     </Row>
                 </Col>
