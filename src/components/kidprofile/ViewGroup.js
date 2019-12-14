@@ -1,12 +1,10 @@
 import React from 'react'
 import './groups.css'
-import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, ButtonGroup, Media, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import {
-    useHistory,
-    useLocation,
-    withRouter
-} from 'react-router-dom'
-const auth = 'https://pictoteask.000webhostapp.com'
+import { Container, Row, Col, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { withRouter } from 'react-router-dom'
+import Auth from '../../auth';
+
+const enlace = 'https://pictoteask.000webhostapp.com'
 
 class ViewGroup extends React.Component {
     constructor(props) {
@@ -53,9 +51,10 @@ class ViewGroup extends React.Component {
 
     saveNewKid() {
         /*
+        let auth = new Auth();
         let formDataGroup = new FormData();
         formDataGroup.append("id_kid", this.state.kidToAdd);
-        formDataGroup.append("id_tutor", 7);
+        formDataGroup.append("id_tutor", auth.token.id_tutor);
         formDataGroup.append("id_grupo", );
 
         fetch('https://pictoteask.000webhostapp.com/addKidToGroup.php', {
@@ -67,7 +66,7 @@ class ViewGroup extends React.Component {
                     let listKids = [];
                     let formData = new FormData()
                     formData.append('Tutor', 7);
-                    fetch(`${auth}/getGrupoTutor.php`, {
+                    fetch(`${enlace}/getGrupoTutor.php`, {
                         method: 'POST',
                         body: formData
                     }).then(res => res.json())
@@ -90,12 +89,13 @@ class ViewGroup extends React.Component {
     }
 
     componentDidMount() {
+        let auth = new Auth();
         let listKids = [];
         let formData = new FormData()
-        formData.append('Tutor', 7);
+        formData.append('Tutor', auth.token.id_tutor);
 
         formData.append('Nombre_grupo', this.props.groupSelectedName);
-        fetch(`${auth}/getNinosGrupo.php`, {
+        fetch(`${enlace}/getNinosGrupo.php`, {
             method: 'POST',
             body: formData
         }).then(res => res.json())

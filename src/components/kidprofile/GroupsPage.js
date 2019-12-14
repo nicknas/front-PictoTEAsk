@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { withRouter } from 'react-router-dom';
-
+import Auth from '../../auth';
 import ViewGroups from './ViewGroups'
-const auth = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask.000webhostapp.com'
 
 class GroupsPage extends React.Component {
     constructor(props) {
@@ -17,11 +17,11 @@ class GroupsPage extends React.Component {
     }
 
     componentDidMount() {
-
+        let auth = new Auth();
         let listGroups = [];
         let formData = new FormData()
-        formData.append('Tutor', 7);
-        fetch(`${auth}/getGrupoTutor.php`, {
+        formData.append('Tutor', auth.token.id_tutor);
+        fetch(`${enlace}/getGrupoTutor.php`, {
             method: 'POST',
             body: formData
         }).then(res => res.json())
@@ -44,7 +44,7 @@ class GroupsPage extends React.Component {
       
         formData.append('id_group', id);
         formData.append('Tutor', 7);
-        fetch(`${auth}/delGroup.php`, {
+        fetch(`${enlace}/delGroup.php`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -53,7 +53,7 @@ class GroupsPage extends React.Component {
                 let listGroups = [];
                 let formData = new FormData()
                 formData.append('Tutor', 7);
-                fetch(`${auth}/getGrupoTutor.php`, {
+                fetch(`${enlace}/getGrupoTutor.php`, {
                     method: 'POST',
                     body: formData
                 }).then(res => res.json())
