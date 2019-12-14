@@ -94,7 +94,8 @@ class ViewGroup extends React.Component {
     }
     goGroups(event) {
         event.preventDefault();
-
+        let listKids = [];
+        this.props.setKidsGroup(listKids);
         this.props.history.push('/groupspage');
     }
 
@@ -114,7 +115,7 @@ class ViewGroup extends React.Component {
             this.closeAddModal();
         }
 
-        this.props.history.push('/groupspage');
+        
 
         let auth = new Auth();
         let formDataGroup = new FormData();
@@ -127,23 +128,26 @@ class ViewGroup extends React.Component {
             body: formDataGroup
         }).then(response => response.json())
             .then((data) => {
-                if (data.error_msg == "Creada correctamente") {
+                if (!data.error) {
                     let listKids = [];
                     let formData = new FormData()
                     formData.append('Tutor', auth.token.id_tutor);
-                    fetch(`${enlace}/getGrupoTutor.php`, {
+        
+                    formData.append('Nombre_grupo', this.props.groupSelectedName);
+                    fetch(`${enlace}/getNinosGrupo.php`, {
                         method: 'POST',
                         body: formData
                     }).then(res => res.json())
-                        .then((data) => {
+                    .then((data) => {
+                        for (let i = 0; i < data.kids.length; i++) {
+                            listKids.push({ name: data.kids[i].nick, id: data.kids[i].id_kid });
 
-                            for (let i = 0; i < data.Grupos.length; i++) {
-                                listKids.push({ name: data.Grupos[i].nombre, id: data.Grupos[i].id_group });
-                            }
-                            this.props.setKidsGroup(this.state.kidToAdd);
-                            this.setState({ addModalOpened: false, kidToAdd: "" });
-
-                        });
+                        }
+                        this.props.setKidsGroup(listKids);
+                        this.setState({ addModalOpened: false, kidToAdd: ""});
+                        
+                    });
+                        
                 }
                 else {
                     this.setState({ errorAlert: true });
