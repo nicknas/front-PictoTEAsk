@@ -25,9 +25,7 @@ import SeeActivity from './components/activities/SeeActivity'
 import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
 import AddGame from './components/activities/AddGame'
-
-// temp
-import DayCalendar from './components/calendar/DayCalendar'
+import CalendarPage from './components/calendar/CalendarPage'
 
 
 const auth = 'https://pictoteask.000webhostapp.com'
@@ -62,18 +60,18 @@ class App extends React.Component {
 			groupSelected: {},
 			listGroups: []
 		};
-		
+
 		this.viewGroup = this.viewGroup.bind(this);
-		
+
 		this.setGroupSelected = this.setGroupSelected.bind(this);
 		this.setListGroup = this.setListGroup.bind(this);
 	}
-	
+
 	viewGroup(nameGroup) {
 		const groupSelected = this.state.listGroups.find((group) => group.name === nameGroup);
 		this.setState({groupSelected: groupSelected})
 	}
-	
+
 	setListGroup(listGroups){
 		this.setState({ listGroups: listGroups });
 	}
@@ -93,9 +91,9 @@ class App extends React.Component {
 						<Route path="/signup">
 							<RegisterPage />
 						</Route>
-						<Route path="/draw">
-							<DayCalendar />
-						</Route>
+						<PrivateRoute path="/calendar">
+							<CalendarPage />
+						</PrivateRoute>
 						<PrivateRoute path="/addGame">
 							<AddGame/>
 						</PrivateRoute>

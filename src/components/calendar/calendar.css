@@ -24,3 +24,62 @@
 	margin-left: 35px;
 	width: 280px;
 }
+
+.calendar {
+	width: 1050px;
+}
+
+.calendar .header {
+	display: flex;
+	width: 100%;
+	padding: 12px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 20px;
+	justify-content: space-between;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.calendar .week {
+	display: flex;
+	width: 100%;
+	background-color: rgba(0, 0, 255, 0.05);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	text-align: center;
+}
+
+.calendar-container {
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+        justify-content: center;
+}
+
+.btn-primary {
+	border: 1px solid rgba(0,0,0,.2);
+	border-radius: 0;
+	color: rgb(73, 80, 87);
+	background: #fff;
+}
+
+.calendar-btn {
+	padding: 0.7rem 5rem;
+}
+
+.calendar .week p {
+	margin-top: 1rem;
+	color: #666;
+	width: 150px;
+}
+
+.calendar .wrap {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.calendar .wrap .cell {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	width: 150px;
+	height: 150px;
+}

@@ -14,6 +14,7 @@ import {
 
 import './calendar.css'
 
+const api = 'https://pictoteask.000webhostapp.com'
 
 class WeekCalendar extends React.Component {
 
@@ -71,20 +72,19 @@ class WeekCalendar extends React.Component {
 	request(cb) {
 
 		const req = 7
-		const api = 'https://pictoteask.000webhostapp.com/getTaskDate.php'
 		let count = 1
 		let tasks = []
 		let date = moment(this.moment)
 		let up = 0
 
-		for (let i=0; i<7; i++) {
+		for (let i=0; i<req; i++) {
 
 			let formData = new FormData()
 			formData.append('id_nino', 28)
 			formData.append('date', date.add(up, 'day').format('YYYY-MM-DD'))
 			up = 1
 
-			fetch(api, {
+			fetch(`${api}/getTaskDate.php`, {
 				method: 'POST',
 				body: formData
 			}).then(res => res.json()).then(response => {
@@ -94,11 +94,14 @@ class WeekCalendar extends React.Component {
 
 					for (let x=0; x < Tareas.length; x++) {
 
-						let date = moment(Tareas[x][8])
-						tasks.push({
-							key: x,
-							date: `${date.format('dddd DD')} de ${date.format('MMMM')}`
-						})
+						let date = moment(Tareas[x].dia)
+						if (Tareas[x].path_picto) {
+							tasks.push({
+								key: x,
+								image: `${api}${Tareas[x].path_picto}`,
+								date: `${date.format('dddd DD')} de ${date.format('MMMM')}`
+							})
+						}
 
 					}
 
@@ -129,7 +132,7 @@ class WeekCalendar extends React.Component {
 							<div style={{'clear': 'both', 'height': '95px'}} key={item.key}>
 								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.date}</CardText>
 								<div className="float-right">
-									<img className="img-thumbnail" src="images/hacer_la_cama.png" width="80px"/>
+									<img className="img-thumbnail" src={item.image} width="80px"/>
 								</div>
 							</div>
 						))

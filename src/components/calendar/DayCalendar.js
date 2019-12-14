@@ -14,6 +14,7 @@ import {
 
 import './calendar.css'
 
+const api = 'https://pictoteask.000webhostapp.com'
 
 class DayCalendar extends React.Component {
 
@@ -69,21 +70,26 @@ class DayCalendar extends React.Component {
 		formData.append('id_nino', 28)
 		formData.append('date', this.moment.format('YYYY-MM-DD'))
 
-		fetch('https://pictoteask.000webhostapp.com/getTaskDate.php', {
+		fetch(`${api}/getTaskDate.php`, {
 			method: 'POST',
 			body: formData
 		}).then(res => res.json()).then(response => {
 
 			let {Tareas} = response
 			let tasks = []
+			let start = true
 
 			for (let i=0; i < Tareas.length; i++) {
-				tasks.push({
-					key: i,
-					start: i == 0,
-					init: Tareas[i][1],
-					end: Tareas[i][2]
-				})
+				if (Tareas[i].path_picto) {
+					tasks.push({
+						key: i,
+						start: start ? 'images/estrella.png' : 'images/estrella1.png',
+						image: `${api}${Tareas[i].path_picto}`,
+						init: Tareas[i].hora_inicio,
+						end: Tareas[i].hora_fin
+					})
+					start = false
+				}
 			}
 
 			cb(tasks)
@@ -109,8 +115,8 @@ class DayCalendar extends React.Component {
 							<div style={{'clear': 'both', 'height': '95px'}} key={item.key}>
 								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.init} - {item.end}</CardText>
 								<div className="float-right">
-									<img className="img-thumbnail" src="images/hacer_la_cama.png" width="80px"/>
-									<img src="images/estrella.png" width="20px" />
+									<img className="img-thumbnail" src={item.image} width="80px"/>
+									<img src={item.start} width="20px" />
 								</div>
 							</div>
 						))
