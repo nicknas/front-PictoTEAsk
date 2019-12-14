@@ -1,11 +1,8 @@
 import React from 'react'
-import {
-    useHistory,
-    useLocation,
-    withRouter
-} from 'react-router-dom'
-import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
-const auth = 'https://pictoteask.000webhostapp.com'
+import { withRouter } from 'react-router-dom'
+import Auth from '../../auth';
+import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
+const enlace = 'https://pictoteask.000webhostapp.com'
 class CreateGroup extends React.Component {
     
     constructor(props) {
@@ -27,9 +24,9 @@ class CreateGroup extends React.Component {
     }
     createGroup(event) {
         event.preventDefault();
-
+        let auth = new Auth();
         let formDataGroup = new FormData();
-        formDataGroup.append("Tutor", 7);
+        formDataGroup.append("Tutor", auth.token.id_tutor);
 
         formDataGroup.append("Nombre_grupo", this.input.current.value);
 
@@ -38,11 +35,11 @@ class CreateGroup extends React.Component {
             body: formDataGroup
         }).then(response => response.json())
             .then((data) => {
-                if (data.error_msg == "Creada correctamente") {
+                if (!data.error) {
                     let listGroups = [];
                     let formData = new FormData()
                     formData.append('Tutor', 7);
-                    fetch(`${auth}/getGrupoTutor.php`, {
+                    fetch(`${enlace}/getGrupoTutor.php`, {
                         method: 'POST',
                         body: formData
                     }).then(res => res.json())
@@ -83,6 +80,7 @@ class CreateGroup extends React.Component {
                             <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
                                 Ya existe un grupo con ese nombre, prueba con otro distinto
                             </Alert>
+                            
                             <Form onSubmit={this.createGroup}>
                                 <FormGroup>
                                     <Label >Nombre del grupo*</Label>

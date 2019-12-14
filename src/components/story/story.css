@@ -3,12 +3,11 @@ body {
 }
 #cajaBuscar {
     border-radius: 50px;
-    width: 365px;
+    width: 475px;
 }
-.botonBuscar {
+#botonBuscar {
     border-radius: 50px;
-    margin-right: 10px;
-    width: 110px;	
+    width: 120px;	
 }
 .columna {
     margin-left: 20px;
@@ -28,8 +27,13 @@ body {
 .cardNew{
     opacity: 0.6;
 }
-input[type="file"] {
-    display: none;
+.imgCard{
+    margin-left: 10px;
+    margin-top: 15px;
+    width: 70px;
+}
+.imgCard{
+    text-align: left;
 }
 .nombreCarpeta {
     margin-left: -115px;
@@ -46,12 +50,4 @@ h2{
     margin-top: 20px;
     margin-left: 140px;
     opacity: 0.6;
-}
-.imgCard {
-    text-align: left;
-}
-.imgCard {
-    margin-left: 10px;
-    margin-top: 15px;
-    width: 70px;
 }

@@ -8,9 +8,6 @@ const enlace = 'https://pictoteask.000webhostapp.com'
 class KidsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            listKids: []
-        };
         this.deleteKid = this.deleteKid.bind(this);
     }
 
@@ -29,11 +26,12 @@ class KidsPage extends React.Component {
             .then((response) => { if (response.ok) return response.json(); })
             .then(data => {
                 for (let i = 0; i < data.kids.length; i++) {
-                    listKids.push({ name: data.kids[i][1], id: data.kids[i][0], state: data.kids[i][2] });
+                    if(data.kids[i].state == "ACCEPTED"){
+                        listKids.push({ id: data.kids[i].id_kid, name: data.kids[i].nick, state: data.kids[i].state });
+                    } 
                 }
-                console.log(listKids);
-                this.setState({ listKids: listKids });
-                //this.props.setListKids(listKids);
+                
+                this.props.setListKids(listKids);
             });
     }
     deleteKid(id) {
@@ -46,12 +44,13 @@ class KidsPage extends React.Component {
         formDataDisassociateKid.append('Nino', id);
         formDataDisassociateKid.append('Tutor', auth.token.id_tutor);
 
-        let { listKids } = this.state;
+        let listKids = this.props.listKids;
+        console.log("Hola" + this.props.listKids);
         let auxkids = listKids;
         listKids = listKids.filter(item => {
             return item.id != id;
         });
-        this.setState({ listKids: listKids });
+        
 
         fetch(`${enlace}/delKid.php`, {
             method: 'POST',
@@ -65,7 +64,7 @@ class KidsPage extends React.Component {
                 }).then(response => response.json())
                     .catch(error => console.error('Error:', error))
                     .then(response => {
-                        if (response.error) this.setState({ listKids: auxkids });
+                        if (response.error) this.props.setListKids(auxkids);
                         window.location.reload();
                     }));
     }
@@ -76,7 +75,7 @@ class KidsPage extends React.Component {
         let from2 = "/associatekid";
 
         return (
-            <ViewKids from={from} from2={from2} history={this.props.history} listKids={this.state.listKids} deleteKid={this.deleteKid} />
+            <ViewKids from={from} from2={from2} history={this.props.history} listKids={this.props.listKids} deleteKid={this.deleteKid} />
         );
     }
 

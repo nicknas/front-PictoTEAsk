@@ -30,10 +30,13 @@ class ViewGroups extends React.Component {
     
 
     goGroup(event) {
-        let id = event.currentTarget.getAttribute('id');
         event.preventDefault();
+        let id = event.currentTarget.getAttribute('id');
+        
+        let name = event.currentTarget.getAttribute('name');
+  
         let { from3, history } = this.props;
-        this.props.goToGroup(id);
+        this.props.goToGroup(id, name);
         history.replace(from3);
     }
 
@@ -105,10 +108,9 @@ class ViewGroups extends React.Component {
                             <Row>
                                 <Container className='group-list'>
                                     <h5>Grupos</h5>
-                                    
                                     {this.props.listGroups.map((item) => 
 
-                                        <Row id={item.id} key={item.id} className="myrow" onClick={(event) => this.goGroup(event)}>
+                                        <Row id={item.id} key={item.id} name={item.name} className="myrow" onClick={(event) => this.goGroup(event)}>
                                             <Col md={10} >
                                                 <picture>
                                                     <img src="../images/defaultGroup.jpg" className="group-image" />{item.name}

@@ -3,9 +3,7 @@ import {
 	HashRouter as Router,
 	Switch,
 	Route,
-	Redirect,
-	useHistory,
-	withRouter
+	Redirect
 } from "react-router-dom"
 
 
@@ -25,6 +23,8 @@ import SeeActivity from './components/activities/SeeActivity'
 import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
 import AddGame from './components/activities/AddGame'
+import ViewGame from './components/activities/ViewGame'
+import EditGame from './components/activities/EditGame'
 import CalendarPage from './components/calendar/CalendarPage'
 
 
@@ -57,26 +57,31 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			groupSelected: {},
-			listGroups: []
+			groupSelectedId: "",
+			groupSelectedName: "",
+			listKidsGroup: [],
+			listGroups: [],
+			listKids: []
 		};
-
-		this.viewGroup = this.viewGroup.bind(this);
-
+		this.setListKids = this.setListKids.bind(this);
+		this.setKidsGroup = this.setKidsGroup.bind(this);
 		this.setGroupSelected = this.setGroupSelected.bind(this);
 		this.setListGroup = this.setListGroup.bind(this);
 	}
-
-	viewGroup(nameGroup) {
-		const groupSelected = this.state.listGroups.find((group) => group.name === nameGroup);
-		this.setState({groupSelected: groupSelected})
+	setListKids(listKids){
+		this.setState({ listKids });
+	}
+	setKidsGroup(listKidsGroup){
+		this.setState({ listKidsGroup });
 	}
 
 	setListGroup(listGroups){
 		this.setState({ listGroups: listGroups });
 	}
-	setGroupSelected(idg, group){
-		this.setState({ groupSelected: {name: group, id: idg} });
+	setGroupSelected(groupSelectedId, groupSelectedName){
+
+		this.setState({groupSelectedId: groupSelectedId});
+		this.setState({groupSelectedName: groupSelectedName});
 	}
 	render() {
 		return (
@@ -97,14 +102,20 @@ class App extends React.Component {
 						<PrivateRoute path="/addGame">
 							<AddGame/>
 						</PrivateRoute>
+						<PrivateRoute path="/viewGame">
+							<ViewGame/>
+						</PrivateRoute>
+						<PrivateRoute path="/editGame">
+							<EditGame/>
+						</PrivateRoute>
 						<PrivateRoute path="/groupspage">
-							<GroupsPage setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listGroups={this.state.listGroups}/>
+							<GroupsPage listGroups={this.state.listGroups} setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listKids={this.state.listKids}/>
 						</PrivateRoute>
 						<PrivateRoute path="/creategroup">
 							<CreateGroup setListGroup={this.setListGroup}/>
 						</PrivateRoute>
 						<PrivateRoute path="/viewgroup">
-							<ViewGroup groupSelected={this.groupSelected}/>
+							<ViewGroup groupSelectedId={this.state.groupSelectedId} listKids={this.state.listKids} groupSelectedId={this.state.groupSelectedId} groupSelectedName={this.state.groupSelectedName} listGroups={this.state.listGroups} listKidsGroup={this.state.listKidsGroup} setKidsGroup={this.setKidsGroup} groupSelectedName={this.state.groupSelectedName}/>
 						</PrivateRoute>
 						<PrivateRoute path="/createkid">
 							<CreateKid/>
@@ -128,7 +139,7 @@ class App extends React.Component {
 							<StoryContent/>
 						</PrivateRoute>
 						<PrivateRoute path="/">
-							<KidsPage/>
+							<KidsPage listKids={this.state.listKids} setListKids={this.setListKids}/>
 						</PrivateRoute>
 					</Switch>
 				</Router>

@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { withRouter } from 'react-router-dom';
-
+import Auth from '../../auth';
 import ViewGroups from './ViewGroups'
-const auth = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask.000webhostapp.com'
 
 class GroupsPage extends React.Component {
     constructor(props) {
@@ -12,28 +12,32 @@ class GroupsPage extends React.Component {
         this.deleteGroup = this.deleteGroup.bind(this);
     }
 
-    goToGroup(id) {
-        this.props.setGroupSelected(id);
+    goToGroup(id, name) {
+        this.props.setGroupSelected(id, name);
     }
 
     componentDidMount() {
-
+        if(this.props.listKids.length == 0){
+            this.props.history.push("/kidspage");
+        }
+        else{
+        let auth = new Auth();
         let listGroups = [];
         let formData = new FormData()
-        formData.append('Tutor', 7);
-        fetch(`${auth}/getGrupoTutor.php`, {
+        formData.append('Tutor', auth.token.id_tutor);
+        fetch(`${enlace}/getGrupoTutor.php`, {
             method: 'POST',
             body: formData
         }).then(res => res.json())
             .then((data) => {
 
                 for (let i = 0; i < data.Grupos.length; i++) {
-                    listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                    listGroups.push({ name: data.Grupos[i].nombre, id: data.Grupos[i].id_group});
                 }
                
                 this.props.setListGroup(listGroups);
             });
-
+        }
 
     }
 
@@ -41,10 +45,10 @@ class GroupsPage extends React.Component {
 
     deleteGroup(id) {
         let formData = new FormData();
-      
+        let auth = new Auth();
         formData.append('id_group', id);
-        formData.append('Tutor', 7);
-        fetch(`${auth}/delGroup.php`, {
+        formData.append('Tutor', auth.token.id_tutor);
+        fetch(`${enlace}/delGroup.php`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -52,15 +56,15 @@ class GroupsPage extends React.Component {
             .then(() => {
                 let listGroups = [];
                 let formData = new FormData()
-                formData.append('Tutor', 7);
-                fetch(`${auth}/getGrupoTutor.php`, {
+                formData.append('Tutor', auth.token.id_tutor);
+                fetch(`${enlace}/getGrupoTutor.php`, {
                     method: 'POST',
                     body: formData
                 }).then(res => res.json())
                     .then((data) => {
 
                         for (let i = 0; i < data.Grupos.length; i++) {
-                            listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+                            listGroups.push({ name: data.Grupos[i].nombre, id: data.Grupos[i].id_group });
                         }
                       
                         this.props.setListGroup(listGroups);

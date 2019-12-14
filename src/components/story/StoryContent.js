@@ -52,7 +52,7 @@ class StoryContent extends React.Component {
         listPaths.forEach((row, i) => {
             let listImageCols = [];
             row.forEach((col) => {
-                listImageCols.push(<div className="col- columna"><Card onClick={this.selectImageCard} style={{width: "175px"}}><CardImg top src={col.img}/><CardBody><h5><CardTitle>{col.name}</CardTitle></h5></CardBody></Card></div>);
+                listImageCols.push(<div className="col- columna"><Card onClick={this.selectImageCard} style={{width: "175px"}}><CardImg top src={col.img}/></Card></div>);
             });
             if (i === (listPaths.length - 1) && listImageCols.length < 3) {
                 listImageCols.push(<div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>);
@@ -67,7 +67,7 @@ class StoryContent extends React.Component {
                 listImageRows.push(<Row>{listImageCols}</Row>);
             }
             
-        });
+        }); 
         return listImageRows;
     }
 
