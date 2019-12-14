@@ -127,7 +127,7 @@ class RegisterForm extends React.Component {
 				<Col md={12}>
 					<FormGroup>
 						<div className="text-center">
-							<Link to="/login">Ya tienes cuenta? inicia sesión</Link>
+							¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
 						</div>
 					</FormGroup>
 				</Col>
