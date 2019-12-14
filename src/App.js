@@ -23,7 +23,8 @@ import SeeActivity from './components/activities/SeeActivity'
 import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
 import AddGame from './components/activities/AddGame'
-
+import ViewGame from './components/activities/ViewGame'
+import EditGame from './components/activities/EditGame'
 // temp
 import DayCalendar from './components/calendar/DayCalendar'
 
@@ -100,6 +101,12 @@ class App extends React.Component {
 						</Route>
 						<PrivateRoute path="/addGame">
 							<AddGame/>
+						</PrivateRoute>
+						<PrivateRoute path="/viewGame">
+							<ViewGame/>
+						</PrivateRoute>
+						<PrivateRoute path="/editGame">
+							<EditGame/>
 						</PrivateRoute>
 						<PrivateRoute path="/groupspage">
 							<GroupsPage listGroups={this.state.listGroups} setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listKids={this.state.listKids}/>

@@ -14,7 +14,7 @@ class AddGame extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: '00:00',
+            time: "",
             selectedOption: null
         }
         this.handleChange = this.handleChange.bind(this);
@@ -83,7 +83,7 @@ class AddGame extends React.Component {
 
                                     <Button className="btnactiv" color="primary" size="lg" block>Crear</Button>
 
-                                    <Button className="btnactiv" color="danger" size="lg" block>Cancelar</Button>
+                                    <Button className="btnactiv" color="secondary" size="lg" block>Cancelar</Button>
 
                                 </Container>
                             </Container>
