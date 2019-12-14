@@ -15,7 +15,8 @@ class ViewGroup extends React.Component {
             kidToDelete: "",
             addModalOpened: false,
             addModalOpened: false,
-            errorAlert: false
+            errorAlert: false,
+            error_msg: ""
         };
         this.openAddModal = this.openAddModal.bind(this);
         this.gokids = this.gokids.bind(this);
@@ -70,7 +71,7 @@ class ViewGroup extends React.Component {
         event.stopPropagation();
     }
     onDismiss() {
-        this.setState({ errorAlert: false });
+        this.setState({ errorAlert: false, error_msg: "" });
     }
     handleNickName(event) {
 
@@ -102,13 +103,20 @@ class ViewGroup extends React.Component {
     saveNewKid() {
         let idKid = "";
         let existe = false;
+        let alreadyin = false;
         for (let i = 0; i < this.props.listKids.length; i++) {
             if (this.props.listKids[i].name == this.state.kidToAdd) {
                 idKid = this.props.listKids[i].id;
                 existe = true;
             }
         }
-        if (!existe) {
+        for (let i = 0; i < this.props.listKidsGroup.length; i++) {
+            if (this.props.listKidsGroup[i].name == this.state.kidToAdd) {
+                idKid = this.props.listKidsGroup[i].id;
+                alreadyin = true;
+            }
+        }
+        if (!existe || alreadyin) {
             this.setState({ errorAlert: true });
         }
         else {
@@ -144,13 +152,20 @@ class ViewGroup extends React.Component {
 
                         }
                         this.props.setKidsGroup(listKids);
-                        this.setState({ addModalOpened: false, kidToAdd: ""});
+                        this.setState({ addModalOpened: false, kidToAdd: "", errorAlert: false});
                         
                     });
                         
                 }
                 else {
-                    this.setState({ errorAlert: true });
+                    console.log(data.error_msg);
+                    if(data.error_msg == "Ya se encuentra en el grupo"){
+                        this.setState({ errorAlert: true, error_msg: "El niño con ese nick ya se encuentra dentro del grupo"});
+
+                    }
+                    else{
+                        this.setState({ errorAlert: true, error_msg: "El nick del niño que has introducido no existe en tu lista de niños asociados"});
+                    }
                 }
             }
             );
@@ -218,7 +233,7 @@ class ViewGroup extends React.Component {
                                         <Row id={item.id} key={item.id} className="myrow">
                                             <Col md={10} >
                                                 <picture>
-                                                    <img src="../images/defaultGroup.jpg" className="group-image" />{item.name}
+                                                    <img src="../images/defaultProfile.jpg" className="group-image" />{item.name}
                                                 </picture>
                                             </Col>
                                             <Col md={2} >
@@ -247,7 +262,7 @@ class ViewGroup extends React.Component {
                                         <ModalHeader toggle={this.closeAddModal}>Añadir niño al grupo</ModalHeader>
                                         <ModalBody><Label for="">Nick del niño</Label><Input type="text" onChange={this.handleNickName} /></ModalBody>
                                         <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
-                                            El nick del niño que has introducido no existe en tu lista de niños asociados
+                                            {this.state.error_msg}
                             </Alert>
                                         <ModalFooter><Button color="success" onClick={this.saveNewKid}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
 
