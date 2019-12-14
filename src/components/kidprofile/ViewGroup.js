@@ -10,7 +10,9 @@ class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            deleteModalOpened: false,
             kidToAdd: "",
+            kidToDelete: "",
             addModalOpened: false,
             addModalOpened: false,
             errorAlert: false
@@ -23,6 +25,49 @@ class ViewGroup extends React.Component {
         this.openAddModal = this.openAddModal.bind(this);
         this.handleNickName = this.handleNickName.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
+        this.deleteKid = this.deleteKid.bind(this);
+        this.openDeleteModal = this.openDeleteModal.bind(this);
+        this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    }
+
+    deleteKid() {
+        let auth = new Auth();
+        let listKids = [];
+        let formData = new FormData()
+        formData.append('Tutor', auth.token.id_tutor);
+        formData.append('Nino', this.state.kidToDelete);
+        formData.append('Grupo', this.props.groupSelectedId);
+        fetch(`${enlace}/delRelacionGroup.php`, {
+            method: 'POST',
+            body: formData
+        }).then(() => {
+                let auth = new Auth();
+                let listKids = [];
+                let formData = new FormData()
+                formData.append('Tutor', auth.token.id_tutor);
+
+                formData.append('Nombre_grupo', this.props.groupSelectedName);
+                fetch(`${enlace}/getNinosGrupo.php`, {
+                    method: 'POST',
+                    body: formData
+                }).then(res => res.json())
+                    .then((data) => {
+                        for (let i = 0; i < data.kids.length; i++) {
+                            listKids.push({ name: data.kids[i].nick, id: data.kids[i].id_kid });
+
+                        }
+                        this.props.setKidsGroup(listKids);
+
+                    });
+            })
+        this.setState({ deleteModalOpened: false, kidToDelete: "" });
+    }
+    closeDeleteModal(event) {
+        this.setState({ deleteModalOpened: false, kidToDelete: "" });
+    }
+    openDeleteModal(event, id) {
+        this.setState({ deleteModalOpened: true, kidToDelete: id });
+        event.stopPropagation();
     }
     onDismiss() {
         this.setState({ errorAlert: false });
@@ -166,7 +211,7 @@ class ViewGroup extends React.Component {
 
                                     {this.props.listKidsGroup.map((item) =>
 
-                                        <Row id={item.id} key={item.id} className="myrow" onClick={(event) => this.goGroup(event)}>
+                                        <Row id={item.id} key={item.id} className="myrow">
                                             <Col md={10} >
                                                 <picture>
                                                     <img src="../images/defaultGroup.jpg" className="group-image" />{item.name}
@@ -178,9 +223,9 @@ class ViewGroup extends React.Component {
                                                 </picture>
                                             </Col>
                                             <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
-                                                <ModalHeader toggle={this.closeDeleteModal}>Borrar grupo</ModalHeader>
-                                                <ModalBody>¿Está seguro de que quiere borrar el grupo {this.state.groupToDelete}?</ModalBody>
-                                                <ModalFooter  ><Button id={item.id} key={item.id} color="danger" onClick={(event) => this.deleteGroup(event)}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
+                                                <ModalHeader toggle={this.closeDeleteModal}>Sacar niño del grupo</ModalHeader>
+                                                <ModalBody>¿Está seguro de que quiere sacar al niño del grupo {this.props.groupSelectedName}?</ModalBody>
+                                                <ModalFooter  ><Button id={item.id} key={item.id} color="danger" onClick={(event) => this.deleteKid(event)}>Sacar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                                             </Modal>
                                         </Row>
 
