@@ -4,7 +4,7 @@ import {
     useLocation,
     withRouter
 } from 'react-router-dom'
-import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Button } from 'reactstrap';
+import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Button, Alert } from 'reactstrap';
 import Auth from '../../auth';
 
 class CreateKid extends React.Component {
@@ -12,8 +12,15 @@ class CreateKid extends React.Component {
         super(props);
         this.createKid = this.createKid.bind(this);
         this.goBack = this.goBack.bind(this);
-    }
+        this.onDismiss = this.onDismiss.bind(this);
 
+        this.state = {
+            errorAlert: false
+        }
+    }
+    onDismiss() {
+        this.setState({ errorAlert: false });
+    }
     goBack() {
         this.props.history.push({ pathname: '/kidspage' });
     }
@@ -34,8 +41,13 @@ class CreateKid extends React.Component {
             body: formDataKids
         }).then(response => response.json())
             .then(kid => {
-                console.log(kid);
-                this.props.history.push({ pathname: '/kidspage' });
+                if (!kid.error) {
+                    console.log(kid);
+                    this.props.history.push({ pathname: '/kidspage' });
+                }
+                else {
+                    this.setState({ errorAlert: true });
+                }
             });
     }
     render() {
@@ -56,6 +68,9 @@ class CreateKid extends React.Component {
                                     <h1>Registrar un niño</h1>
                                 </Col>
                             </div>
+                            <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
+                                Ya existe un niño con ese nick, prueba con otro nick distinto
+                            </Alert>
 
                             <Form onSubmit={this.createKid}>
                                 <FormGroup>
