@@ -8,7 +8,12 @@ import {
 	CardHeader,
 	CardTitle,
 	CardText,
-	CardFooter
+	CardFooter,
+	Button,
+	ButtonDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem
 } from 'reactstrap'
 
 
@@ -31,11 +36,14 @@ class DayCalendar extends React.Component {
 
 		this.state = {
 			date: this.moment.format("dddd, LL"),
+			isOpen: false,
 			tasks: []
 		}
 
-		this.prev = this.prev.bind(this)
-		this.next = this.next.bind(this)
+		this.toggle = this.toggle.bind(this)
+		this.go     = this.go.bind(this)
+		this.prev   = this.prev.bind(this)
+		this.next   = this.next.bind(this)
 
 	}
 
@@ -47,6 +55,27 @@ class DayCalendar extends React.Component {
 			})
 		})
 	}
+
+	go(pathname) {
+		this.props.parent.props.history.push({
+						pathname,
+						state: {
+							from: this.props.parent.props.location.pathname,
+							data: {
+								kid: this.props.parent.kid,
+								moment: this.moment
+							}
+						}
+		})
+	}
+
+	toggle(event) {
+		event.preventDefault()
+		let isOpen = !this.state.isOpen
+
+		this.setState({isOpen})
+	}
+
 
 	prev(event) {
 		event.preventDefault()
@@ -128,27 +157,15 @@ class DayCalendar extends React.Component {
 					}
 				</CardBody>
 				<CardFooter>
-					<Link to={{
-						pathname: '/addtask',
-						state: {
-							from: this.props.parent.props.location.pathname,
-							data: {
-								kid: this.props.parent.kid,
-								moment: this.moment
-							}
-						}
-					}} > addtask </Link>
-					<br />
-					<Link to={{
-						pathname: '/addStoryCalendar',
-						state: {
-							from: this.props.parent.props.location.pathname,
-							data: {
-								kid: this.props.parent.kid,
-								moment: this.moment
-							}
-						}
-					}} > addStoryCalendar </Link>
+					<ButtonDropdown isOpen={this.state.isOpen} toggle={this.toggle}>
+						<Button id="caret" color="primary">Añadir actividad</Button>
+						<DropdownToggle caret color="primary" />
+						<DropdownMenu>
+							<DropdownItem onClick={() => this.go('/addtask')}>Añadir tarea</DropdownItem>
+							<DropdownItem onClick={() => this.go('/addStoryCalendar')} >Añadir cuento</DropdownItem>
+							<DropdownItem disabled>Añadir juego</DropdownItem>
+						</DropdownMenu>
+					</ButtonDropdown>
 				</CardFooter>
 			</Card>
 		)
