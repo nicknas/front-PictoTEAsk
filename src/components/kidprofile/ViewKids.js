@@ -1,7 +1,19 @@
 import React from 'react'
-import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+	Container,
+	Row,
+	Col,
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter
+} from 'reactstrap';
+
 import './groups.css'
+
 class ViewKids extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,48 +29,51 @@ class ViewKids extends React.Component {
         this.goGroups = this.goGroups.bind(this);
         this.goCreateKid = this.goCreateKid.bind(this);
     }
+
     goGroups(event) {
 
         event.preventDefault();
-
-
-
         let { from, history } = this.props;
 
-
-        history.replace(from);
-
-
+        history.push(from);
     }
 
     goCreateKid(event) {
 
         event.preventDefault();
-
         let { from2, history } = this.props;
 
-
-        history.replace(from2);
-
-
+        history.push(from2);
     }
 
     closeDeleteModal() {
-        this.setState({ kidToDelete: "", idToDelete: "", deleteModalOpened: false });
+			this.setState({
+				kidToDelete: "",
+				idToDelete: "",
+				deleteModalOpened: false
+			});
     }
 
     deleteKid(event) {
         event.preventDefault();
 
-
-        this.props.deleteKid(this.state.idToDelete);
-        this.setState({ deleteModalOpened: false, kidToDelete: "" });
+        this.props.parent.deleteKid(this.state.idToDelete);
+				this.setState({
+					deleteModalOpened: false,
+					kidToDelete: ""
+				});
     }
 
     openDeleteModal(event, id) {
-        let kidName = event.currentTarget.parentNode.previousSibling.innerText;
-        this.setState({ kidToDelete: kidName, idToDelete: id, deleteModalOpened: true });
-        event.stopPropagation();
+      event.stopPropagation();
+
+      let kidName = event.currentTarget.parentNode.previousSibling.innerText;
+
+			this.setState({
+				kidToDelete: kidName,
+				idToDelete: id,
+				deleteModalOpened: true
+			});
     }
 
     render() {
@@ -86,21 +101,24 @@ class ViewKids extends React.Component {
                             <Row>
                                 <Container className='group-list'>
                                     <h5>Niños</h5>
-                                  
-                                    {this.props.listKids.map((row) => 
-                                        <Row id={row.id} key={row.id} className="myrow">
-                                            <Col md={10} >
-                                                <picture>
-                                                    <img src="../images/defaultProfile.jpg" className="group-image" /> {row.name}
 
-                                                </picture>
+                                    {this.props.listKids.map((row) =>
+                                        <Row key={row.id} className="myrow">
+                                            <Col style={{'cursor': 'pointer'}} md={10} >
+																							<picture>
+																								<img
+																									src="images/defaultProfile.jpg"
+																									className="group-image" /> {row.name}
+																							</picture>
                                             </Col>
                                             <Col md={2} >
-                                                <picture onClick={(event) => this.openDeleteModal(event, row.id)}>
-                                                    <img src="../images/papelera.png" width="25px" />
+                                                <picture style={{'cursor': 'pointer'}} onClick={(event) => this.openDeleteModal(event, row.id)}>
+                                                    <img src="images/papelera.png" width="25px" />
                                                 </picture>
                                             </Col>
-                                            <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
+																						<Modal
+																							isOpen={this.state.deleteModalOpened}
+																							toggle={this.closeDeleteModal}>
                                                 <ModalHeader toggle={this.closeDeleteModal}>Desasociar niño</ModalHeader>
                                                 <ModalBody>¿Está seguro de que quiere desasociar el niño {this.state.kidToDelete}?</ModalBody>
                                                 <ModalFooter><Button id={row.id} key={row.id} color="danger" onClick={(event) => this.deleteKid(event)}>Desasociar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
@@ -110,11 +128,10 @@ class ViewKids extends React.Component {
 
                                     <Row onClick={this.goCreateKid}>
                                         <Col>
-                                            <picture>
+                                            <picture style={{'cursor': 'pointer'}}>
                                                 <img src="../images/botonNew.svg" className="group-image" /> <font color="#3E8EDE">Añadir niño</font>
                                             </picture>
                                         </Col>
-
                                     </Row>
 
                                 </Container>

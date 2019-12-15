@@ -4,7 +4,18 @@ import {
     useLocation,
     withRouter
 } from 'react-router-dom'
-import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Button, Alert } from 'reactstrap';
+import {
+	Jumbotron,
+	Container,
+	Row,
+	Col,
+	Form,
+	FormGroup,
+	Label,
+	Button,
+	Alert
+} from 'reactstrap';
+
 import Auth from '../../auth';
 
 class CreateKid extends React.Component {
@@ -28,21 +39,21 @@ class CreateKid extends React.Component {
     createKid(event) {
         event.preventDefault();
 
-
         let auth = new Auth();
+
         let formDataKids = new FormData();
         formDataKids.append("Tutor", auth.token.id_tutor);
         formDataKids.append("Apellido", "Pepito");
         formDataKids.append("Nombre", "Sanchez");
         formDataKids.append("Nick", this.refs.nick.value);
         formDataKids.append("FechaNacimiento", "2000-01-01");
+
         fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
             method: "POST",
             body: formDataKids
         }).then(response => response.json())
             .then(kid => {
                 if (!kid.error) {
-                    console.log(kid);
                     this.props.history.push({ pathname: '/kidspage' });
                 }
                 else {

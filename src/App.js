@@ -61,16 +61,12 @@ class App extends React.Component {
 			groupSelectedName: "",
 			listKidsGroup: [],
 			listGroups: [],
-			listKids: []
 		};
-		this.setListKids = this.setListKids.bind(this);
 		this.setKidsGroup = this.setKidsGroup.bind(this);
 		this.setGroupSelected = this.setGroupSelected.bind(this);
 		this.setListGroup = this.setListGroup.bind(this);
 	}
-	setListKids(listKids){
-		this.setState({ listKids });
-	}
+
 	setKidsGroup(listKidsGroup){
 		this.setState({ listKidsGroup });
 	}
@@ -136,7 +132,7 @@ class App extends React.Component {
 							<StoryContent/>
 						</PrivateRoute>
 						<PrivateRoute path="/">
-							<KidsPage listKids={this.state.listKids} setListKids={this.setListKids}/>
+							<KidsPage />
 						</PrivateRoute>
 					</Switch>
 				</Router>
