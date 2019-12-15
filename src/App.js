@@ -24,7 +24,7 @@ import SeeTask from './components/activities/SeeTask'
 import AddTask from './components/activities/AddTask'
 import AddGame from './components/activities/AddGame'
 import ViewGame from './components/activities/ViewGame'
-// import EditGame from './components/activities/EditGame'
+import EditGame from './components/activities/EditGame'
 import CalendarPage from './components/calendar/CalendarPage'
 
 
@@ -101,6 +101,9 @@ class App extends React.Component {
 						</PrivateRoute>
 						<PrivateRoute path="/addGame">
 							<AddGame/>
+						</PrivateRoute>
+						<PrivateRoute path="/editGame">
+							<EditGame/>
 						</PrivateRoute>
 						<PrivateRoute path="/viewGame">
 							<ViewGame/>
