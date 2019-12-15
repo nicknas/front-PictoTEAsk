@@ -1,4 +1,5 @@
 import React from 'react'
+import {withRouter} from 'react-router-dom'
 import {
 	Container,
 	Row,
@@ -18,9 +19,9 @@ class CalendarPage extends React.Component {
 		super(props);
 
 		this.component = [
-				<DayCalendar />,
+				<DayCalendar parent={this} />,
 				<WeekCalendar />,
-				<MonthCalendar />
+				<MonthCalendar parent={this} />
 		]
 
 		this.state = {
@@ -52,15 +53,15 @@ class CalendarPage extends React.Component {
 						<Button className="calendar-btn"
 							onClick={() => this.onClick(0)}
 							color="primary"
-							active={this.state.selected === 0}>One</Button>
+							active={this.state.selected === 0}>Día</Button>
 						<Button className="calendar-btn"
 							onClick={() => this.onClick(1)}
 							color="primary"
-							active={this.state.selected === 1}>Two</Button>
+							active={this.state.selected === 1}>Semana</Button>
 						<Button className="calendar-btn"
 							onClick={() => this.onClick(2)}
 							color="primary"
-							active={this.state.selected === 2}>Three</Button>
+							active={this.state.selected === 2}>Mes</Button>
 					</ButtonGroup>
 				</div>
 				<div className="calendar-container">
@@ -71,4 +72,4 @@ class CalendarPage extends React.Component {
 	}
 }
 
-export default CalendarPage;
+export default withRouter(CalendarPage);

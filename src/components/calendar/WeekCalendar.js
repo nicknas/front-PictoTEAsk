@@ -26,7 +26,7 @@ class WeekCalendar extends React.Component {
 		this.moment = moment().day(1)
 		this.state = {
 			date_s: this.moment.format("D"),
-			date_e: moment(this.moment).add(7, 'day').format("LL"),
+			date_e: moment(this.moment).add(6, 'day').format("LL"),
 			tasks: []
 		}
 
@@ -39,7 +39,7 @@ class WeekCalendar extends React.Component {
 		this.request((tasks) => {
 			this.setState({
 				date_s: this.moment.format("D"),
-				date_e: moment(this.moment).add(7, 'day').format("LL"),
+				date_e: moment(this.moment).add(6, 'day').format("LL"),
 				tasks: tasks
 			})
 		})
@@ -51,7 +51,7 @@ class WeekCalendar extends React.Component {
 		this.request((tasks) => {
 			this.setState({
 				date_s: this.moment.format("D"),
-				date_e: moment(this.moment).add(7, 'day').format("LL"),
+				date_e: moment(this.moment).add(6, 'day').format("LL"),
 				tasks: tasks
 			})
 		})
@@ -63,7 +63,7 @@ class WeekCalendar extends React.Component {
 		this.request((tasks) => {
 			this.setState({
 				date_s: this.moment.format("D"),
-				date_e: moment(this.moment).add(7, 'day').format("LL"),
+				date_e: moment(this.moment).add(6, 'day').format("LL"),
 				tasks: tasks
 			})
 		})
@@ -72,9 +72,9 @@ class WeekCalendar extends React.Component {
 	request(cb) {
 
 		const req = 7
-		let count = 1
 		let tasks = []
 		let date = moment(this.moment)
+		let count = 0
 		let up = 0
 
 		for (let i=0; i<req; i++) {
@@ -102,7 +102,6 @@ class WeekCalendar extends React.Component {
 								date: `${date.format('dddd DD')} de ${date.format('MMMM')}`
 							})
 						}
-
 					}
 
 				if (req == count) {
@@ -115,6 +114,7 @@ class WeekCalendar extends React.Component {
 	}
 
 	render() {
+
 		return (
 			<Card style={{width: '25rem'}}>
 				<CardHeader>

@@ -21,6 +21,7 @@ class MonthCalendar extends React.Component {
 		super(props);
 
 		this.className = this.className.bind(this)
+		this.onClick = this.onClick.bind(this)
 		this.prev = this.prev.bind(this)
 		this.next = this.next.bind(this)
 
@@ -65,7 +66,11 @@ class MonthCalendar extends React.Component {
 			calendar[y] = {
 										key: y,
 										day: day,
-										style: {},
+										moment: moment(this.moment).add(day-1, 'day'),
+										style: {
+											background: 'inherit',
+											cursor: 'pointer'
+										},
 										task: undefined
 			}
 
@@ -93,7 +98,7 @@ class MonthCalendar extends React.Component {
 	request(cb) {
 
 		const req = this.state.calendar.length
-		let count = 1
+		let count = 0
 
 		let {calendar} = this.state
 		let date = moment(this.moment)
@@ -209,6 +214,19 @@ class MonthCalendar extends React.Component {
 		}, 1000)
 	}
 
+	onClick(moment) {
+		if (!moment) return
+		let {parent} = this.props
+
+		if (!parent.props.location.state) {
+			parent.props.location.state = {from: {}}
+		}
+
+		parent.props.location.state.data = moment
+		parent.props.location.state.from.pathname = '/calendar'
+		parent.setState({selected: 0})
+	}
+
 	render() {
 		return (
 			<div>
@@ -243,7 +261,7 @@ class MonthCalendar extends React.Component {
 					<div className="wrap">
 						{
 							this.state.calendar.map((item) => (
-								<div style={item.style.background && (item.style)} className="cell" key={item.key}>
+								<div onClick={() => this.onClick(item.moment)} style={item.style.background && (item.style)} className="cell" key={item.key}>
 									<div style={item.style} className={this.className(item.key)}>{item.day}</div>
 								</div>
 							))

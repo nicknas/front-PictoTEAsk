@@ -23,7 +23,12 @@ class DayCalendar extends React.Component {
 		super(props);
 
 		moment.locale('es');
-		this.moment = moment()
+
+		let {location} = this.props.parent.props
+		let state = location.state || {from: {}}
+
+		this.moment = state.from.pathname == location.pathname && state.data ? state.data : moment()
+
 		this.state = {
 			date: this.moment.format("dddd, LL"),
 			tasks: []
