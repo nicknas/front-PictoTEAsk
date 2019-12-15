@@ -14,8 +14,8 @@ class AddTask extends React.Component {
         super(props);
         this.state = {
             idTask: 0,
-            timeini: '00:00:00',
-            timefin: '00:00:00',
+            timeini: '00:00',
+            timefin: '00:00',
             currentSelected: {},
             addNewPictoView: false,
             pictos: [],
@@ -35,6 +35,7 @@ class AddTask extends React.Component {
     onChangeF = timefin => this.setState({ timefin })
     addNewPicto() {
         this.state.pictos.push(this.state.currentSelected);
+        console.log(this.state);
         this.setState({ addNewPictoView: false });
         if (this.state.estrellas.length === 0)
             this.state.estrellas.push("fav");
@@ -125,13 +126,13 @@ class AddTask extends React.Component {
         let auth = new Auth();
         let formDataTasks = new FormData();
 
-        formDataTasks.append("Tini", '00:00:00');
-        formDataTasks.append("Tfin", '00:00:00');
+        formDataTasks.append("Tini", this.state.timeini.concat(":00"));
+        formDataTasks.append("Tfin", this.state.timefin.concat(":00"));
         formDataTasks.append("Path_picto", this.state.pictos[0].img.substring(36));
         formDataTasks.append("Tutor", auth.token.id_tutor);
-        formDataTasks.append("Nino", 32);
+        formDataTasks.append("Nino", 32); //Deber recibirlo por props
         formDataTasks.append("Text", "");
-        formDataTasks.append("Dia", "2000-01-15");
+        formDataTasks.append("Dia", "2000-01-19");//Deber recibirlo por props
         formDataTasks.append("Tipo", "tarea");
         formDataTasks.append("Enlace", enlace);
 
@@ -141,6 +142,7 @@ class AddTask extends React.Component {
             body: formDataTasks
         }).then(response => response.json())
             .then(task => {
+                console.log(task);
                 if (!task.error) {
                     this.setState({idTask: task.task.id_tarea});
                     if (enlace == 1)
