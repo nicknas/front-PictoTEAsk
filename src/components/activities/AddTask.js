@@ -12,6 +12,10 @@ import Auth from '../../auth';
 class AddTask extends React.Component {
     constructor(props) {
         super(props);
+
+
+			console.log(this.props.location)
+
         this.state = {
             idTask: 0,
             timeini: '00:00',

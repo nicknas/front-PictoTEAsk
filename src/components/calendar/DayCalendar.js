@@ -128,6 +128,27 @@ class DayCalendar extends React.Component {
 					}
 				</CardBody>
 				<CardFooter>
+					<Link to={{
+						pathname: '/addtask',
+						state: {
+							from: this.props.parent.props.location.pathname,
+							data: {
+								kid: this.props.parent.kid,
+								moment: this.moment
+							}
+						}
+					}} > addtask </Link>
+					<br />
+					<Link to={{
+						pathname: '/addStoryCalendar',
+						state: {
+							from: this.props.parent.props.location.pathname,
+							data: {
+								kid: this.props.parent.kid,
+								moment: this.moment
+							}
+						}
+					}} > addStoryCalendar </Link>
 				</CardFooter>
 			</Card>
 		)

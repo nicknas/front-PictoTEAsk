@@ -16,6 +16,7 @@ class AddStoryCalendar extends React.Component {
             timeFin: "",
             selectedOption: null
         }
+				console.log(this.props.location)
         this.auth = new Auth();
         this.addStory = this.addStory.bind(this);
     }
