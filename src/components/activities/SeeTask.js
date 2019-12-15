@@ -126,6 +126,7 @@ class SeeTask extends React.Component {
                 listImageRows.push(
                     <div>
                         <Card style={{ width: "175px" }}><CardImg top src={enlace.concat(listPaths[i].path_pictrograma)} /></Card>
+                        <Button variant="danger">Eliminar</Button>
                     </div>
                 );
             }
@@ -144,6 +145,28 @@ class SeeTask extends React.Component {
             this.props.imageSelected(imageSelected);
             this.setState({ currentSelected: e.currentTarget });
         }
+    }
+    editSubTask(subt){
+        let formDataTasks = new FormData();
+
+        formDataTasks.append("id_subtask", subt.id_subtarea);
+        formDataTasks.append("text", subt.texto);
+        formDataTasks.append("path", subt.path_pictrograma);
+        formDataTasks.append("orden", subt.orden);
+
+        fetch('https://pictoteask.000webhostapp.com/updtSubTask.php', {
+            method: "POST",
+            body: formDataTasks
+        }).then(response => response.json())
+            .then(task => {
+                console.log(task);
+                if (!task.error) {
+                    console.log(task);
+                }
+                else {
+                    this.setState({ errorAlert: true });
+                }
+            });
     }
     editTask(event) {
         event.preventDefault();
@@ -168,10 +191,28 @@ class SeeTask extends React.Component {
             .then(task => {
                 console.log(task);
                 if (!task.error) {
-                    this.setState({ idTask: task.task.id_tarea });
                     if (enlace == 1)
-                        this.addSubTasks(auth.token.id_tutor);
-                    this.props.history.push({ pathname: '/kidspage' });
+                            for(let i=0; i< this.state.subtareas.length;i++)
+                                this.editSubTask(this.state.subtareas[i]);
+                }
+                else {
+                    this.setState({ errorAlert: true });
+                }
+            });
+    }
+    delSubtask(id){
+        let formDataTasks = new FormData();
+
+        formDataTasks.append("id_subtask", id);
+
+        fetch('https://pictoteask.000webhostapp.com/delSubTask.php', {
+            method: "POST",
+            body: formDataTasks
+        }).then(response => response.json())
+            .then(task => {
+                console.log(task);
+                if (!task.error) {
+                    console.log("Subtarea Eliminada",this.state);
                 }
                 else {
                     this.setState({ errorAlert: true });
@@ -193,9 +234,9 @@ class SeeTask extends React.Component {
             .then(task => {
                 console.log(task);
                 if (!task.error) {
-                    this.setState({ idTask: task.task.id_tarea });
                     if (enlace == 1)
-                        this.addSubTasks(auth.token.id_tutor);
+                            for(let i=0; i< this.state.subtareas.length;i++)
+                                this.delSubTasks(this.state.subtareas[i].id_subtarea);
                     this.props.history.push({ pathname: '/kidspage' });
                 }
                 else {
