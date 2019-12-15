@@ -24,6 +24,7 @@ class MonthCalendar extends React.Component {
 		this.onClick = this.onClick.bind(this)
 		this.prev = this.prev.bind(this)
 		this.next = this.next.bind(this)
+		this.req = 0
 
 		moment.locale('es');
 		this.moment = moment(moment().format('YYYY-MM-01'))
@@ -61,6 +62,7 @@ class MonthCalendar extends React.Component {
 		for (y=i; y<=i+31; y++){
 
 			day++
+			this.req = day
 
 			this.map_calendar[day] = y
 			calendar[y] = {
@@ -97,7 +99,7 @@ class MonthCalendar extends React.Component {
 
 	request(cb) {
 
-		const req = this.state.calendar.length
+		const req = this.req
 		let count = 0
 
 		let {calendar} = this.state
