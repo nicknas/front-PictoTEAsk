@@ -98,6 +98,7 @@ class WeekCalendar extends React.Component {
 						if (Tareas[x].path_picto) {
 							tasks.push({
 								key: x,
+								moment: date,
 								image: `${api}${Tareas[x].path_picto}`,
 								date: `${date.format('dddd DD')} de ${date.format('MMMM')}`
 							})
@@ -111,6 +112,19 @@ class WeekCalendar extends React.Component {
 			})
 		}
 
+	}
+
+	onClick(moment) {
+		if (!moment) return
+		let {parent} = this.props
+
+		if (!parent.props.location.state) {
+			parent.props.location.state = {from: {}}
+		}
+
+		parent.props.location.state.data = moment
+		parent.props.location.state.from.pathname = '/calendar'
+		parent.setState({selected: 0})
 	}
 
 	render() {
@@ -129,11 +143,12 @@ class WeekCalendar extends React.Component {
 				<CardBody>
 					{
 						this.state.tasks.map((item) => (
-							<div style={{'clear': 'both', 'height': '95px'}} key={item.key}>
-								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.date}</CardText>
-								<div className="float-right">
-									<img className="img-thumbnail" src={item.image} width="80px"/>
-								</div>
+							<div onClick={() => this.onClick(item.moment)}
+								style={{'cursor': 'pointer', 'clear': 'both', 'height': '95px'}} key={item.key}>
+									<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.date}</CardText>
+									<div className="float-right">
+										<img className="img-thumbnail" src={item.image} width="80px"/>
+									</div>
 							</div>
 						))
 					}

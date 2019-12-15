@@ -20,7 +20,7 @@ class CalendarPage extends React.Component {
 
 		this.component = [
 				<DayCalendar parent={this} />,
-				<WeekCalendar />,
+				<WeekCalendar parent={this} />,
 				<MonthCalendar parent={this} />
 		]
 
