@@ -13,6 +13,7 @@ class AddTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            idTask: 0,
             timeini: '00:00:00',
             timefin: '00:00:00',
             currentSelected: {},
@@ -27,10 +28,11 @@ class AddTask extends React.Component {
         this.closeAddModal = this.closeAddModal.bind(this);
         this.getImageSelected = this.getImageSelected.bind(this);
         this.addTask = this.addTask.bind(this);
+        this.addSubTasks = this.addSubTasks.bind(this);
     }
 
-    onChangeI = timeini => this.setState({timeini}) 
-    onChangeF = timefin => this.setState({timefin}) 
+    onChangeI = timeini => this.setState({ timeini })
+    onChangeF = timefin => this.setState({ timefin })
     addNewPicto() {
         this.state.pictos.push(this.state.currentSelected);
         this.setState({ addNewPictoView: false });
@@ -63,8 +65,8 @@ class AddTask extends React.Component {
         }
         let listImageRows = [];
         let pathstar;
-        for (let i=0; i< listPaths.length;i++){
-            if(this.state.estrellas[i] == "fav") pathstar = "../images/estrella.png";
+        for (let i = 0; i < listPaths.length; i++) {
+            if (this.state.estrellas[i] == "fav") pathstar = "../images/estrella.png";
             else pathstar = "../images/estrella1.png";
             listImageRows.push(
                 <div>
@@ -73,7 +75,6 @@ class AddTask extends React.Component {
                 </div>
             );
         }
-        console.log(this.state);
         let columnaAdd = <div><Card onClick={this.createNewPictogram} className="cardNew" style={{ width: "175px" }}><CardImg className="imgNew" top src="images/botonNew.svg" /><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
         listImageRows.push(<Row>{columnaAdd}</Row>);
         return listImageRows;
@@ -91,20 +92,46 @@ class AddTask extends React.Component {
             this.setState({ currentSelected: e.currentTarget });
         }
     }
+    addSubTasks(idTutor) {
+        console.log(this.state);
+        console.log(idTutor, this.state.idTask );
+        for (let i = 1; i < this.state.pictos.length; i++) {
+            let formDataSubTasks = new FormData();
+            formDataSubTasks.append("id_task", this.state.idTask);
+            formDataSubTasks.append("text", "");
+            formDataSubTasks.append("path", this.state.pictos[i].img.substring(36));
+            formDataSubTasks.append("id_tutor", idTutor);
+            formDataSubTasks.append("orden", i);
 
-    addTask(event){
+            fetch('https://pictoteask.000webhostapp.com/addSubTask.php', {
+                method: "POST",
+                body: formDataSubTasks
+            }).then(response => response.json())
+                .then(subtask => {
+                    if (!subtask.error) {
+                        console.log(subtask);
+                    }
+                    else {
+                        this.setState({ errorAlert: true });
+                    }
+                });
+
+        }
+    }
+    addTask(event) {
         event.preventDefault();
         let enlace = 0;
         if (this.state.pictos.length > 1) enlace = 1;
         let auth = new Auth();
         let formDataTasks = new FormData();
-        formDataTasks.append("Tini", this.state.timeini);
-        formDataTasks.append("Tfin", this.state.timefin);
-        formDataTasks.append("Path_picto", this.state.pictos[0]);
+
+        formDataTasks.append("Tini", '00:00:00');
+        formDataTasks.append("Tfin", '00:00:00');
+        formDataTasks.append("Path_picto", this.state.pictos[0].img.substring(36));
         formDataTasks.append("Tutor", auth.token.id_tutor);
         formDataTasks.append("Nino", 32);
         formDataTasks.append("Text", "");
-        formDataTasks.append("Dia", "2000-01-01");
+        formDataTasks.append("Dia", "2000-01-15");
         formDataTasks.append("Tipo", "tarea");
         formDataTasks.append("Enlace", enlace);
 
@@ -115,7 +142,9 @@ class AddTask extends React.Component {
         }).then(response => response.json())
             .then(task => {
                 if (!task.error) {
-                    console.log(task);
+                    this.setState({idTask: task.task.id_tarea});
+                    if (enlace == 1)
+                        this.addSubTasks(auth.token.id_tutor);
                     this.props.history.push({ pathname: '/kidspage' });
                 }
                 else {
@@ -149,7 +178,7 @@ class AddTask extends React.Component {
                                     <Row className="myrow2">
 
                                         <b>Hora inicio:</b>
-                                        <TimePicker showSecond={true} onChange={this.onChangeI} className="time-picker"
+                                        <TimePicker onChange={this.onChangeI} className="time-picker"
                                             value={this.state.timeini}
                                         />
                                     </Row>
@@ -157,7 +186,7 @@ class AddTask extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker showSecond={true} onChange={this.onChangeF} className="time-picker"
+                                        <TimePicker onChange={this.onChangeF} className="time-picker"
                                             value={this.state.timefin}
                                         />
                                     </Row>
