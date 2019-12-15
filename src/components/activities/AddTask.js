@@ -1,92 +1,18 @@
 import React from 'react'
-import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button, Card, CardImg, CardBody, CardTitle, Fade, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Jumbotron, Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { withRouter } from 'react-router-dom'
 import TimePicker from 'react-time-picker';
 import '../kidprofile/groups.css'
-import '../story/story.css'
 import './activities.css'
-import { FaArrowLeft } from 'react-icons/fa';
-import Pictogram from '../pictogram/Pictogram';
-
 class AddTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: '00:00:00',
-            currentSelected: {},
-            addNewPictoView: false,
-            pictos: [],
-            estrellas: []
-        }
-        this.selectImageCard = this.selectImageCard.bind(this);
-        this.createNewPictogram = this.createNewPictogram.bind(this);
-        this.addNewPicto = this.addNewPicto.bind(this);
-        this.closeAddModal = this.closeAddModal.bind(this);
-        this.getImageSelected = this.getImageSelected.bind(this);
-    }
-    addNewPicto() {
-        this.state.pictos.push(this.state.currentSelected);
-        this.setState({ addNewPictoView: false });
-        if (this.state.estrellas.length === 0)
-            this.state.estrellas.push("fav");
-        else
-            this.state.estrellas.push("nofav");
-    }
-
-    getImageSelected(imageSelected) {
-        this.setState({ currentSelected: imageSelected });
-    }
-
-    closeAddModal() {
-        this.setState({ currentSelected: {}, addNewPictoView: false });
-    }
-
-    createNewPictogram() {
-        this.setState({ addNewPictoView: true });
-    }
-
-    getImagesSearched(listImages) {
-        this.setState({ imagesSearched: listImages });
-    }
-
-    createImageCards(listPaths) {
-        if (listPaths.length === 0) {
-            let columnaAdd = <div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{ width: "175px" }}><CardImg className="imgNew" top src="images/botonNew.svg" /><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
-            return [<Row>{columnaAdd}</Row>];
-        }
-        let listImageRows = [];
-        let pathstar;
-        for (let i=0; i< listPaths.length;i++){
-            if(this.state.estrellas[i] == "fav") pathstar = "../images/estrella.png";
-            else pathstar = "../images/estrella1.png";
-            listImageRows.push(
-                <div>
-                    <Card onClick={this.selectImageCard} style={{ width: "175px" }}><CardImg top src={listPaths[i].img} /><CardBody><h5><CardTitle>{listPaths[i].name}</CardTitle></h5></CardBody></Card>
-                    <Button type="button" className="botonestrella"><img src={pathstar} width="20px" /></Button>
-                </div>
-            );
-        }
-        console.log(this.state);
-        let columnaAdd = <div><Card onClick={this.createNewPictogram} className="cardNew" style={{ width: "175px" }}><CardImg className="imgNew" top src="images/botonNew.svg" /><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>;
-        listImageRows.push(<Row>{columnaAdd}</Row>);
-        return listImageRows;
-    }
-
-    selectImageCard(e) {
-        if (this.state.currentSelected !== e.currentTarget) {
-            if (this.state.currentSelected.className !== undefined) {
-                let currentSelect = this.state.currentSelected;
-                currentSelect.className = "card";
-            }
-            e.currentTarget.className = "card border border-primary";
-            let imageSelected = { name: e.currentTarget.childNodes[1].children[0].innerHTML, img: e.currentTarget.childNodes[0].src };
-            this.props.imageSelected(imageSelected);
-            this.setState({ currentSelected: e.currentTarget });
+            time: '00:00',
         }
     }
-
+    
     render() {
-        const imageCards = this.createImageCards(this.state.pictos);
         return (
             <Container>
                 <Col md={5} className="mx-auto">
@@ -131,17 +57,28 @@ class AddTask extends React.Component {
                                 </Col>
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
-                                        <Fade in={true}>
-                                            {imageCards}
-                                            <Modal isOpen={this.state.addNewPictoView} toggle={this.closeAddModal}>
-                                                <ModalHeader toggle={this.closeAddModal}>Añadir pictograma</ModalHeader>
-                                                <ModalBody><Pictogram getImageSelected={this.getImageSelected} /></ModalBody>
-                                                <ModalFooter><Button color="success" onClick={this.addNewPicto}>Guardar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
-                                            </Modal>
-                                        </Fade>
+                                        <div className="hora">
+                                            <img className="img-thumbnail foto" src="../images/lavar_los_dientes.png" width="80px" />
+                                            <Button type="button"  className=" botonestrella"><img src="../images/estrella.png" width="20px" /></Button>
+                                        </div>
                                     </Row>
                                 </Col>
-
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <div className="hora">
+                                            <img className="img-thumbnail foto" src="../images/cepillo_y_pasta_de_dientes.png" width="80px" />
+                                            <Button type="button" className="botonestrella"><img src="../images/estrella1.png" width="20px" /></Button>
+                                        </div>
+                                    </Row>
+                                </Col>
+                                <Col md={12} className="mx-auto">
+                                    <Row className="myrow2">
+                                        <picture>
+                                            <img src="../images/botonNew.svg" className="group-image" /> Añadir Picto
+                                                </picture>
+                                    </Row>
+                                </Col>
+                                
                                 <Container>
 
                                     <Button className="btnactiv" color="primary" size="lg" block>Crear</Button>
