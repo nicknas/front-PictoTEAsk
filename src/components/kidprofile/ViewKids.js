@@ -32,10 +32,17 @@ class ViewKids extends React.Component {
 
     goGroups(event) {
 
-        event.preventDefault();
-        let { from, history } = this.props;
+			event.preventDefault();
+			let { from, history, location } = this.props;
 
-        history.push(from);
+			history.push({
+				pathname: from,
+				'state': {
+					'from': {'pathname': location.pathname },
+					'data': this.props.listKids
+				}
+			});
+
     }
 
     goCreateKid(event) {

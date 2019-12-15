@@ -80,6 +80,7 @@ class KidsPage extends React.Component {
 						from="/groupspage"
 						from2="/associatekid"
 						parent={this}
+						location={this.props.location}
 						history={this.props.history}
 						listKids={this.state.listKids}
 						deleteKid={this.deleteKid} />

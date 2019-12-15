@@ -218,12 +218,10 @@ class MonthCalendar extends React.Component {
 		if (!moment) return
 		let {parent} = this.props
 
-		if (!parent.props.location.state) {
-			parent.props.location.state = {from: {}}
-		}
-
+		parent.props.location.state = parent.props.location.state || {from: {}}
 		parent.props.location.state.data = moment
-		parent.props.location.state.from.pathname = '/calendar'
+		parent.props.location.state.from.pathname = parent.props.location.pathname
+
 		parent.setState({selected: 0})
 	}
 

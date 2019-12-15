@@ -60,25 +60,21 @@ class App extends React.Component {
 			groupSelectedId: "",
 			groupSelectedName: "",
 			listKidsGroup: [],
-			listGroups: [],
 		};
 		this.setKidsGroup = this.setKidsGroup.bind(this);
 		this.setGroupSelected = this.setGroupSelected.bind(this);
-		this.setListGroup = this.setListGroup.bind(this);
 	}
 
 	setKidsGroup(listKidsGroup){
 		this.setState({ listKidsGroup });
 	}
 
-	setListGroup(listGroups){
-		this.setState({ listGroups: listGroups });
-	}
 	setGroupSelected(groupSelectedId, groupSelectedName){
 
 		this.setState({groupSelectedId: groupSelectedId});
 		this.setState({groupSelectedName: groupSelectedName});
 	}
+
 	render() {
 		return (
 				<Router>
@@ -102,13 +98,20 @@ class App extends React.Component {
 							<ViewGame/>
 						</PrivateRoute>
 						<PrivateRoute path="/groupspage">
-							<GroupsPage listGroups={this.state.listGroups} setGroupSelected={this.setGroupSelected} setListGroup={this.setListGroup} listKids={this.state.listKids}/>
+							<GroupsPage setGroupSelected={this.setGroupSelected} />
 						</PrivateRoute>
 						<PrivateRoute path="/creategroup">
 							<CreateGroup setListGroup={this.setListGroup}/>
 						</PrivateRoute>
 						<PrivateRoute path="/viewgroup">
-							<ViewGroup groupSelectedId={this.state.groupSelectedId} listKids={this.state.listKids} groupSelectedId={this.state.groupSelectedId} groupSelectedName={this.state.groupSelectedName} listGroups={this.state.listGroups} listKidsGroup={this.state.listKidsGroup} setKidsGroup={this.setKidsGroup} groupSelectedName={this.state.groupSelectedName}/>
+							<ViewGroup
+								groupSelectedId={this.state.groupSelectedId}
+								groupSelectedId={this.state.groupSelectedId}
+								groupSelectedName={this.state.groupSelectedName}
+								listGroups={this.state.listGroups}
+								listKidsGroup={this.state.listKidsGroup}
+								setKidsGroup={this.setKidsGroup}
+								groupSelectedName={this.state.groupSelectedName}/>
 						</PrivateRoute>
 						<PrivateRoute path="/createkid">
 							<CreateKid/>

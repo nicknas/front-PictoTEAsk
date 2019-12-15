@@ -17,6 +17,7 @@ class ViewGroups extends React.Component {
             groupToDelete: "",
             groupToAdd: ""
         };
+			console.log(this.props.listGroups)
         this.input = React.createRef();
         this.openDeleteModal = this.openDeleteModal.bind(this);
         this.deleteGroup = this.deleteGroup.bind(this);
@@ -27,14 +28,12 @@ class ViewGroups extends React.Component {
 
     }
 
-    
 
     goGroup(event) {
         event.preventDefault();
         let id = event.currentTarget.getAttribute('id');
-        
         let name = event.currentTarget.getAttribute('name');
-  
+
         let { from3, history } = this.props;
         this.props.goToGroup(id, name);
         history.replace(from3);
@@ -95,7 +94,7 @@ class ViewGroups extends React.Component {
                             </picture>
                         </Row>
                         <Container>
-                            <Row class="mx-auto">
+                            <Row className="mx-auto">
                                 <Col md={6} className="btncol">
                                     <Button type="submit" color="primary"
                                         className="btn-block btnwhite tx-tfm" onClick={this.gokids}>Niños</Button>
@@ -108,7 +107,7 @@ class ViewGroups extends React.Component {
                             <Row>
                                 <Container className='group-list'>
                                     <h5>Grupos</h5>
-                                    {this.props.listGroups.map((item) => 
+                                    {this.props.listGroups.map((item) =>
 
                                         <Row id={item.id} key={item.id} name={item.name} className="myrow" onClick={(event) => this.goGroup(event)}>
                                             <Col md={10} >
@@ -127,7 +126,7 @@ class ViewGroups extends React.Component {
                                                 <ModalFooter  ><Button id={item.id} key={item.id} color="danger" onClick={(event) => this.deleteGroup(event)}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                                             </Modal>
                                         </Row>
-                                        
+
                                     )}
                                     <Row onClick={this.goCreateGroup}>
                                         <Col>

@@ -1,27 +1,41 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import Auth from '../../auth';
-import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
+import {
+	Container,
+	Row,
+	Col,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Button,
+	Alert
+} from 'reactstrap';
+
 const enlace = 'https://pictoteask.000webhostapp.com'
 class CreateGroup extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state ={
             errorAlert: false
         }
-      
+
         this.createGroup = this.createGroup.bind(this);
         this.input = React.createRef();
         this.goBack = this.goBack.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
     }
+
     onDismiss(){
         this.setState({errorAlert:false});
     }
+
     goBack() {
         this.props.history.push({ pathname: '/groupspage' });
     }
+
     createGroup(event) {
         event.preventDefault();
         let auth = new Auth();
@@ -48,8 +62,16 @@ class CreateGroup extends React.Component {
                             for (let i = 0; i < data.Grupos.length; i++) {
                                 listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
                             }
-                            this.props.setListGroup(listGroups);
-                            this.props.history.push({ pathname: '/groupspage' });
+
+														this.props.history.push({
+															pathname: '/groupspage',
+															'state': {
+																'from': {'pathname': this.props.location.pathname },
+																'data': listGroups
+															}
+														})
+
+
                         });
                 }
                 else {
@@ -57,7 +79,7 @@ class CreateGroup extends React.Component {
                 }
             }
             );
-        
+
     }
     render() {
         return (
