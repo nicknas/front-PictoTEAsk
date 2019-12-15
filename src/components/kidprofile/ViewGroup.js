@@ -29,6 +29,7 @@ class ViewGroup extends React.Component {
 				if (!state.data.group) {
         	this.props.history.push("/kidspage");
 				}
+				this.kids = []
 
 				this.group = state.data.group || {}
 
@@ -230,7 +231,7 @@ class ViewGroup extends React.Component {
 
     componentDidMount() {
 
-        if (this.group.name) {
+        if (this.group.name && this.kids.length) {
             let auth = new Auth();
             let listKids = [];
             let formData = new FormData()
