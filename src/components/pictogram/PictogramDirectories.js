@@ -56,7 +56,7 @@ class PictogramDirectories extends React.Component {
 
         this.props.listDirectories.forEach((row) => {
             if (row.name === "común") {
-                carpetas.push(<li><Card onClick={this.goToFolder} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col></Row></Card></li>);
+                carpetas.push(<li><Card onClick={this.goToFolder} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col></Col></Row></Card></li>);
             }
             else {
                 carpetas.push(<li><Card onClick={this.goToFolder} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/folder.jpg" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col><img onClick={this.openDeleteModal} className="imgPapelera" src="images/papelera.png" alt=""/></Col></Row></Card></li>);

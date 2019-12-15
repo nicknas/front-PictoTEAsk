@@ -56,7 +56,7 @@ class StoryList extends React.Component {
         this.props.listStories.forEach((row) => {
             cuentos.push(<li><Card key={row.name} id={row.id} onClick={this.goToStory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}}><Row className="no-gutters"><Col><CardImg className="imgCard" src="images/iconoCuento.png" alt="..."/></Col><Col><CardBody><CardTitle className="nombreCarpeta"><h5>{row.name}</h5></CardTitle></CardBody></Col><Col><img onClick={this.openDeleteModal} className="imgPapelera" src="images/papelera.png" alt=""/></Col></Row></Card></li>);
         });
-        cuentos.push(<li><Card onClick={this.addStory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}} className="cardNew"><Row className="no-gutters"><Col style={{width: "100%"}}><CardImg className="imgNew" src="images/botonNew.svg" alt="..."/></Col><Col><CardBody><CardTitle><h5 className="nombreCarpeta">Nuevo cuento</h5></CardTitle></CardBody></Col></Row></Card></li>);
+        cuentos.push(<li><Card onClick={this.addStory} style={{maxWidth: "600px", marginTop: "10px", marginBottom: "10px"}} className="cardNew"><Row className="no-gutters"><Col style={{width: "100%"}}><CardImg className="imgNew" src="images/botonNew.svg" alt="..."/></Col><Col><CardBody><CardTitle><h5 className="nombreCarpeta">Nuevo cuento</h5></CardTitle></CardBody></Col><Col></Col></Row></Card></li>);
         return cuentos;
     }
 

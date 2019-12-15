@@ -2,6 +2,7 @@ import React from 'react'
 import {Container, Row, Col, Fade, Button, Badge} from 'reactstrap'
 import PictogramDirectories from './PictogramDirectories';
 import PictogramDirectory from './PictogramDirectory';
+import Auth from '../../auth';
 
 class Pictogram extends React.Component {
     constructor(props) {
@@ -10,9 +11,9 @@ class Pictogram extends React.Component {
             listDirectories: [], 
             viewDirectories: true, 
             imageSelected: {}, 
-            directorySelected: {name: "", pictos: []},
-            idTutor: 7
+            directorySelected: {name: "", pictos: []}
         };
+        this.auth = new Auth();
         this.getImageSelected = this.getImageSelected.bind(this);
         this.addNewPicto = this.addNewPicto.bind(this);
         this.selectDirectory = this.selectDirectory.bind(this);
@@ -30,7 +31,7 @@ class Pictogram extends React.Component {
         let directorySelected = this.state.directorySelected;  
         let formDataAddToFolder = new FormData(); 
         formDataAddToFolder.append("carpeta", directorySelected.name);
-        formDataAddToFolder.append("idTutor", 7);
+        formDataAddToFolder.append("idTutor", this.auth.token.id_tutor);
         formDataAddToFolder.append("path", picto.img.replace('https://pictoteask.000webhostapp.com/', ''));
         let addToFolderRequest = new Request('https://pictoteask.000webhostapp.com/addToFolder.php', {method: 'POST', body: formDataAddToFolder});
         fetch(addToFolderRequest)
@@ -46,8 +47,9 @@ class Pictogram extends React.Component {
     addNewDirectory(nameDirectory) {
         let listDirectories = this.state.listDirectories;
         let formDataAddFolder = new FormData();
+        
         formDataAddFolder.append("carpeta", nameDirectory);
-        formDataAddFolder.append("idTutor", 7);
+        formDataAddFolder.append("idTutor", this.auth.token.id_tutor);
         let addFolderRequest = new Request('https://pictoteask.000webhostapp.com/createFolderPicts.php', {method: "POST", body: formDataAddFolder});
         fetch(addFolderRequest)
             .then(response => response.json())
@@ -62,7 +64,7 @@ class Pictogram extends React.Component {
     deleteDirectory(nameDirectory) {
         let formDataDeleteFolder = new FormData(); 
         formDataDeleteFolder.append("carpeta", nameDirectory);
-        formDataDeleteFolder.append("idTutor", 7);
+        formDataDeleteFolder.append("idTutor", this.auth.token.id_tutor);
         let addToFolderRequest = new Request('https://pictoteask.000webhostapp.com/deleteFolder.php', {method: 'POST', body: formDataDeleteFolder});
         fetch(addToFolderRequest)
             .then((response) => {
@@ -76,7 +78,7 @@ class Pictogram extends React.Component {
 
     goBackToDirectories() {
         let formDataDirectories = new FormData();
-        formDataDirectories.append("idTutor", 7);
+        formDataDirectories.append("idTutor", this.auth.token.id_tutor);
         let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
         fetch(request)
             .then((response) => response.json())
@@ -95,7 +97,7 @@ class Pictogram extends React.Component {
         directory.name = nameDirectory;
         let formDataDirectory = new FormData(); 
         if (directory.name !== "común") {
-            formDataDirectory.append("idTutor", 7);
+            formDataDirectory.append("idTutor", this.auth.token.id_tutor);
             formDataDirectory.append("carpeta", directory.name);
         }
         let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectory});
@@ -120,7 +122,7 @@ class Pictogram extends React.Component {
 
     componentDidMount() {
         let formDataDirectories = new FormData();
-        formDataDirectories.append("idTutor", 7);
+        formDataDirectories.append("idTutor", this.auth.token.id_tutor);
         let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
         fetch(request)
             .then((response) => response.json())
