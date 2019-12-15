@@ -36,6 +36,10 @@ class ViewGroup extends React.Component {
 					this.kids = state.data.kids || []
 				}
 
+			if (!this.kids.length) {
+        	this.props.history.push("/kidspage");
+			}
+
         this.state = {
 						listKidsGroup: [],
             deleteModalOpened: false,
@@ -141,12 +145,14 @@ class ViewGroup extends React.Component {
         let idKid = "";
         let existe = false;
         let alreadyin = false;
+
         for (let i = 0; i < this.kids.length; i++) {
             if (this.kids[i].name == this.state.kidToAdd) {
                 idKid = this.kids[i].id;
                 existe = true;
             }
         }
+
         for (let i = 0; i < this.state.listKidsGroup.length; i++) {
             if (this.state.listKidsGroup[i].name == this.state.kidToAdd) {
                 idKid = this.state.listKidsGroup[i].id;
@@ -201,7 +207,7 @@ class ViewGroup extends React.Component {
 
                 }
                 else {
-                    console.log(data.error_msg);
+
                     if(data.error_msg == "Ya se encuentra en el grupo"){
 											this.setState({
 												errorAlert: true,

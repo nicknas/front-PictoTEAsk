@@ -19,6 +19,15 @@ class CreateGroup extends React.Component {
 
     constructor(props) {
         super(props);
+
+				let state = this.props.location.state || {from: {}, data: {}}
+
+				this.kids = state.data || []
+
+				if (state.from.pathname == '/groupspage') {
+					this.kids = state.data || []
+				}
+
         this.state ={
             errorAlert: false
         }
@@ -59,7 +68,7 @@ class CreateGroup extends React.Component {
                 if (!data.error) {
                     let listGroups = [];
                     let formData = new FormData()
-                    formData.append('Tutor', 7);
+                    formData.append('Tutor', auth.token.id_tutor);
                     fetch(`${enlace}/getGrupoTutor.php`, {
                         method: 'POST',
                         body: formData
@@ -67,14 +76,17 @@ class CreateGroup extends React.Component {
                         .then((data) => {
 
                             for (let i = 0; i < data.Grupos.length; i++) {
-                                listGroups.push({ name: data.Grupos[i][2], id: data.Grupos[i][0] });
+															listGroups.push({
+																name: data.Grupos[i].nombre,
+																id: data.Grupos[i].id_group
+															});
                             }
 
 														this.props.history.push({
 															pathname: '/groupspage',
 															'state': {
 																'from': {'pathname': this.props.location.pathname },
-																'data': listGroups
+																'data': this.kids
 															}
 														})
 
@@ -109,7 +121,7 @@ class CreateGroup extends React.Component {
                             <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
                                 Ya existe un grupo con ese nombre, prueba con otro distinto
                             </Alert>
-                            
+
                             <Form onSubmit={this.createGroup}>
                                 <FormGroup>
                                     <Label >Nombre del grupo*</Label>
