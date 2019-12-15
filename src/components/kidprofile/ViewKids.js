@@ -53,6 +53,19 @@ class ViewKids extends React.Component {
         history.push(from2);
     }
 
+		onClick(kid) {
+			let { history, location } = this.props;
+
+			history.push({
+				pathname: '/calendar',
+				'state': {
+					'from': {'pathname': location.pathname },
+					'data': kid
+				}
+			});
+
+		}
+
     closeDeleteModal() {
 			this.setState({
 				kidToDelete: "",
@@ -111,7 +124,7 @@ class ViewKids extends React.Component {
 
                                     {this.props.listKids.map((row) =>
                                         <Row key={row.id} className="myrow">
-                                            <Col style={{'cursor': 'pointer'}} md={10} >
+																					<Col onClick={() => this.onClick(row)} style={{'cursor': 'pointer'}} md={10} >
 																							<picture>
 																								<img
 																									src="images/defaultProfile.jpg"

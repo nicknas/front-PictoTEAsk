@@ -18,6 +18,17 @@ class CalendarPage extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.kid = {}
+		let state = this.props.location.state || {from: {}}
+
+		if (state.from.pathname == '/kidspage' || state.from.pathname == '/') {
+			this.kid = state.data || {}
+		}
+
+		if (!this.kid.id) {
+			this.props.history.push('/kidspage')
+		}
+
 		this.component = [
 				<DayCalendar parent={this} />,
 				<WeekCalendar parent={this} />,
@@ -65,7 +76,7 @@ class CalendarPage extends React.Component {
 					</ButtonGroup>
 				</div>
 				<div className="calendar-container">
-					{this.component[this.state.selected]}
+					{ this.kid.id && (this.component[this.state.selected])}
 				</div>
 			</div>
 		)

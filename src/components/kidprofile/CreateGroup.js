@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 
 const enlace = 'https://pictoteask.000webhostapp.com'
+
 class CreateGroup extends React.Component {
 
     constructor(props) {
@@ -33,7 +34,13 @@ class CreateGroup extends React.Component {
     }
 
     goBack() {
-        this.props.history.push({ pathname: '/groupspage' });
+				this.props.history.push({
+					pathname: '/groupspage',
+					'state': {
+						'from': {'pathname': this.props.location.pathname },
+						'data': this.props.location.state.data
+					}
+				})
     }
 
     createGroup(event) {

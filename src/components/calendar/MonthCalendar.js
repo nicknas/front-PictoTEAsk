@@ -107,7 +107,7 @@ class MonthCalendar extends React.Component {
 		for (let i=0; i<req; i++) {
 
 			let formData = new FormData()
-			formData.append('id_nino', 28)
+			formData.append('id_nino', this.props.parent.kid.id)
 			formData.append('date', date.add(up, 'day').format('YYYY-MM-DD'))
 			up = 1
 

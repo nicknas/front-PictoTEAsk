@@ -8,7 +8,7 @@ const enlace = 'https://pictoteask.000webhostapp.com'
 class GroupsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.goToGroup = this.goToGroup.bind(this);
+
         this.deleteGroup = this.deleteGroup.bind(this);
 				this.listKids = []
 
@@ -18,17 +18,14 @@ class GroupsPage extends React.Component {
 
     }
 
-    goToGroup(id, name) {
-        this.props.setGroupSelected(id, name);
-    }
-
     componentDidMount() {
 
 				let state = this.props.location.state || {from: {}}
 
 				if (state.from.pathname == '/' ||
 			  	state.from.pathname == '/kidspage' ||
-			    state.from.pathname == '/creategroup') {
+					state.from.pathname == '/creategroup' ||
+					state.from.pathname == '/viewgroup') {
 
 					this.listKids = state.data || []
 				}
@@ -101,10 +98,11 @@ class GroupsPage extends React.Component {
 						from="/kidspage"
 						from2="/creategroup"
 						from3="/viewgroup"
+						parent={this}
 						history={this.props.history}
-						setGroupSelected={this.props.setGroupSelected}
+						location={this.props.location}
 						listGroups={this.state.listGroups}
-						goToGroup={this.goToGroup} deleteGroup={this.deleteGroup} />
+						deleteGroup={this.deleteGroup} />
         );
     }
 

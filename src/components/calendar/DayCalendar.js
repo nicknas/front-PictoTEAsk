@@ -72,7 +72,7 @@ class DayCalendar extends React.Component {
 
 	request(cb) {
 		let formData = new FormData()
-		formData.append('id_nino', 28)
+		formData.append('id_nino', this.props.parent.kid.id)
 		formData.append('date', this.moment.format('YYYY-MM-DD'))
 
 		fetch(`${api}/getTaskDate.php`, {

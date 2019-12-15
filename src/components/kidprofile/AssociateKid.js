@@ -42,7 +42,6 @@ class AssociateKid extends React.Component {
         }).then(response => response.json())
             .then(association => {
                 if (!association.error) {
-                    console.log(association)
                     this.props.history.push({ pathname: '/kidspage' });
                 }
                 else{

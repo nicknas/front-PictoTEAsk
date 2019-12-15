@@ -1,15 +1,43 @@
 import React from 'react'
-import './groups.css'
-import { Container, Row, Col, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
-import { withRouter } from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import {
+	Container,
+	Row,
+	Col,
+	Label,
+	Input,
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	Alert
+} from 'reactstrap';
+
 import Auth from '../../auth';
+
+import './groups.css'
 
 const enlace = 'https://pictoteask.000webhostapp.com'
 
 class ViewGroup extends React.Component {
     constructor(props) {
         super(props);
+
+				let state = this.props.location.state || {from: {}, data: {}}
+
+				if (!state.data.group) {
+        	this.props.history.push("/kidspage");
+				}
+
+				this.group = state.data.group || {}
+
+				if (state.from.pathname == '/groupspage') {
+					this.kids = state.data.kids || []
+				}
+
         this.state = {
+						listKidsGroup: [],
             deleteModalOpened: false,
             kidToAdd: "",
             kidToDelete: "",
@@ -37,7 +65,7 @@ class ViewGroup extends React.Component {
         let formData = new FormData()
         formData.append('Tutor', auth.token.id_tutor);
         formData.append('Nino', this.state.kidToDelete);
-        formData.append('Grupo', this.props.groupSelectedId);
+        formData.append('Grupo', this.group.id);
         fetch(`${enlace}/delRelacionGroup.php`, {
             method: 'POST',
             body: formData
@@ -47,17 +75,19 @@ class ViewGroup extends React.Component {
                 let formData = new FormData()
                 formData.append('Tutor', auth.token.id_tutor);
 
-                formData.append('Nombre_grupo', this.props.groupSelectedName);
+                formData.append('Nombre_grupo', this.group.name);
                 fetch(`${enlace}/getNinosGrupo.php`, {
                     method: 'POST',
                     body: formData
                 }).then(res => res.json())
                     .then((data) => {
                         for (let i = 0; i < data.kids.length; i++) {
-                            listKids.push({ name: data.kids[i].nick, id: data.kids[i].id_kid });
+													listKids.push({
+														name: data.kids[i].nick,
+														id: data.kids[i].id_kid });
 
                         }
-                        this.props.setKidsGroup(listKids);
+												this.setState({listKidsGroup: listKids});
 
                     });
             })
@@ -93,26 +123,33 @@ class ViewGroup extends React.Component {
 
         this.props.history.push('/kidspage');
     }
+
     goGroups(event) {
         event.preventDefault();
-        let listKids = [];
-        this.props.setKidsGroup(listKids);
-        this.props.history.push('/groupspage');
+
+				this.props.history.push({
+					pathname: '/groupspage',
+					'state': {
+						'from': {'pathname': this.props.location.pathname },
+						'data': this.kids
+					}
+				});
+
     }
 
     saveNewKid() {
         let idKid = "";
         let existe = false;
         let alreadyin = false;
-        for (let i = 0; i < this.props.listKids.length; i++) {
-            if (this.props.listKids[i].name == this.state.kidToAdd) {
-                idKid = this.props.listKids[i].id;
+        for (let i = 0; i < this.kids.length; i++) {
+            if (this.kids[i].name == this.state.kidToAdd) {
+                idKid = this.kids[i].id;
                 existe = true;
             }
         }
-        for (let i = 0; i < this.props.listKidsGroup.length; i++) {
-            if (this.props.listKidsGroup[i].name == this.state.kidToAdd) {
-                idKid = this.props.listKidsGroup[i].id;
+        for (let i = 0; i < this.state.listKidsGroup.length; i++) {
+            if (this.state.listKidsGroup[i].name == this.state.kidToAdd) {
+                idKid = this.state.listKidsGroup[i].id;
                 alreadyin = true;
             }
         }
@@ -123,13 +160,12 @@ class ViewGroup extends React.Component {
             this.closeAddModal();
         }
 
-        
 
         let auth = new Auth();
         let formDataGroup = new FormData();
         formDataGroup.append("id_kid", idKid);
         formDataGroup.append("id_tutor", auth.token.id_tutor);
-        formDataGroup.append("id_group", this.props.groupSelectedId);
+        formDataGroup.append("id_group", this.group.id);
 
         fetch('https://pictoteask.000webhostapp.com/addKidToGroup.php', {
             method: "POST",
@@ -140,31 +176,44 @@ class ViewGroup extends React.Component {
                     let listKids = [];
                     let formData = new FormData()
                     formData.append('Tutor', auth.token.id_tutor);
-        
-                    formData.append('Nombre_grupo', this.props.groupSelectedName);
+
+                    formData.append('Nombre_grupo', this.group.name);
                     fetch(`${enlace}/getNinosGrupo.php`, {
                         method: 'POST',
                         body: formData
                     }).then(res => res.json())
                     .then((data) => {
                         for (let i = 0; i < data.kids.length; i++) {
-                            listKids.push({ name: data.kids[i].nick, id: data.kids[i].id_kid });
+													listKids.push({
+														name: data.kids[i].nick,
+														id: data.kids[i].id_kid
+													});
 
                         }
-                        this.props.setKidsGroup(listKids);
-                        this.setState({ addModalOpened: false, kidToAdd: "", errorAlert: false});
-                        
+											this.setState({
+												listKidsGroup: listKids,
+												addModalOpened: false,
+												kidToAdd: "",
+												errorAlert: false
+											});
+
                     });
-                        
+
                 }
                 else {
                     console.log(data.error_msg);
                     if(data.error_msg == "Ya se encuentra en el grupo"){
-                        this.setState({ errorAlert: true, error_msg: "El niño con ese nick ya se encuentra dentro del grupo"});
+											this.setState({
+												errorAlert: true,
+												error_msg: "El niño con ese nick ya se encuentra dentro del grupo"
+											});
 
                     }
                     else{
-                        this.setState({ errorAlert: true, error_msg: "El nick del niño que has introducido no existe en tu lista de niños asociados"});
+											this.setState({
+												errorAlert: true,
+												error_msg: "El nick del niño que has introducido no existe en tu lista de niños asociados"
+											});
                     }
                 }
             }
@@ -175,26 +224,26 @@ class ViewGroup extends React.Component {
 
     componentDidMount() {
 
-        if (this.props.groupSelectedName == "") {
-            this.props.history.push('/kidspage');
-        }
-        else {
+        if (this.group.name) {
             let auth = new Auth();
             let listKids = [];
             let formData = new FormData()
             formData.append('Tutor', auth.token.id_tutor);
 
-            formData.append('Nombre_grupo', this.props.groupSelectedName);
+            formData.append('Nombre_grupo', this.group.name);
             fetch(`${enlace}/getNinosGrupo.php`, {
                 method: 'POST',
                 body: formData
             }).then(res => res.json())
                 .then((data) => {
                     for (let i = 0; i < data.kids.length; i++) {
-                        listKids.push({ name: data.kids[i].nick, id: data.kids[i].id_kid });
+											listKids.push({
+												name: data.kids[i].nick,
+												id: data.kids[i].id_kid
+											});
 
                     }
-                    this.props.setKidsGroup(listKids);
+                    this.setState({listKidsGroup: listKids});
 
                 });
         }
@@ -214,7 +263,7 @@ class ViewGroup extends React.Component {
                             </picture>
                         </Row>
                         <Container>
-                            <Row class="mx-auto">
+                            <Row className="mx-auto">
                                 <Col md={6} className="btncol">
                                     <Button type="submit" color="primary"
                                         className="btn-block btnwhite tx-tfm" onClick={this.gokids}>Niños</Button>
@@ -226,19 +275,21 @@ class ViewGroup extends React.Component {
                             </Row>
                             <Row>
                                 <Container className='group-list'>
-                                    <h5>{this.props.groupSelectedName}</h5>
+                                    <h5>{this.group.name}</h5>
 
-                                    {this.props.listKidsGroup.map((item) =>
+                                    {this.state.listKidsGroup.map((item) =>
 
                                         <Row id={item.id} key={item.id} className="myrow">
                                             <Col md={10} >
                                                 <picture>
-                                                    <img src="../images/defaultProfile.jpg" className="group-image" />{item.name}
+																									<img
+																										src="images/defaultProfile.jpg"
+																										className="group-image" />{item.name}
                                                 </picture>
                                             </Col>
                                             <Col md={2} >
-                                                <picture onClick={(event) => this.openDeleteModal(event, item.id)}>
-                                                    <img src="../images/papelera.png" width="25px" />
+                                                <picture style={{'cursor': 'pointer'}} onClick={(event) => this.openDeleteModal(event, item.id)}>
+                                                    <img src="images/papelera.png" width="25px" />
                                                 </picture>
                                             </Col>
                                             <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
@@ -251,8 +302,8 @@ class ViewGroup extends React.Component {
                                     )}
                                     <Row onClick={this.openAddModal}>
                                         <Col>
-                                            <picture>
-                                                <img src="../images/botonNew.svg" className="group-image" /> <font color="#3E8EDE">Añadir niño</font>
+                                            <picture style={{'cursor': 'pointer'}}>
+                                                <img src="images/botonNew.svg" className="group-image" /> <font color="#3E8EDE">Añadir niño</font>
                                             </picture>
                                         </Col>
 

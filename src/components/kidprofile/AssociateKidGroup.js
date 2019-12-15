@@ -23,9 +23,7 @@ class AssociateKidGroup extends React.Component {
             method: "POST",
             body: formDataGroup
         }).then(response => response.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
-        
+
         this.props.history.push({ pathname: '/associatekidgroup', param: this.input.current.value });
     }
     render() {
