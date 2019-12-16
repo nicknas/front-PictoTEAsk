@@ -26,7 +26,7 @@ class EditStoryCalendar extends React.Component {
         let formDataEditStory = new FormData();
         formDataEditStory.append("Tini", this.state.timeIni.concat(":00"));
         formDataEditStory.append("Tfin", this.state.timeFin.concat(":00"));
-        formDataEditStory.append("Path_picto", 'picts/shared/cuento.jpg');
+        formDataEditStory.append("Path_picto", '/picts/shared/cuento.jpg');
         formDataEditStory.append("Tutor", this.auth.token.id_tutor);
         formDataEditStory.append("Nino", this.params.kid.id); //Deber recibirlo por props
         formDataEditStory.append("Text", this.state.selectedOption.label);

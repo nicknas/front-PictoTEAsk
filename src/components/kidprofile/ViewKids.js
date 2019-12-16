@@ -53,18 +53,18 @@ class ViewKids extends React.Component {
         history.push(from2);
     }
 
-		onClick(kid) {
-			let { history, location } = this.props;
+	onClick(kid) {
+		let { history, location } = this.props;
 
-			history.push({
-				pathname: '/calendar',
-				'state': {
-					'from': {'pathname': location.pathname },
-					'data': kid
-				}
-			});
+		history.push({
+			pathname: '/calendar',
+			'state': {
+				'from': {'pathname': location.pathname },
+				'data': kid
+			}
+		});
 
-		}
+	}
 
     closeDeleteModal() {
 			this.setState({

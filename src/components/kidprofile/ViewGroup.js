@@ -257,6 +257,18 @@ class ViewGroup extends React.Component {
 
     }
 
+    goToCalendar = (kid) => {
+        let { history, location } = this.props;
+
+		history.push({
+			pathname: '/calendar',
+			'state': {
+				'from': {'pathname': location.pathname },
+				'data': kid
+			}
+		});
+    }
+
 
 
     render() {
@@ -287,7 +299,7 @@ class ViewGroup extends React.Component {
                                     {this.state.listKidsGroup.map((item) =>
 
                                         <Row id={item.id} key={item.id} className="myrow btc-select">
-                                            <Col md={10} >
+                                            <Col onClick={this.goToCalendar(item)} md={10} >
                                                 <picture>
 																									<img
 																										src="images/defaultProfile.jpg"

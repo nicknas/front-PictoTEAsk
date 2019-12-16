@@ -4,6 +4,7 @@ import StoryList from './StoryList';
 import { Link, withRouter } from 'react-router-dom';
 import StoryContent from './StoryContent';
 import Auth from '../../auth';
+import {FaArrowLeft} from 'react-icons/fa';
 
 class Story extends React.Component {
     constructor(props) {
@@ -173,9 +174,10 @@ class Story extends React.Component {
 
                 <center>
                     <Row className="mx-auto">
-                        <Col md={{ size: 4, offset: 4 }} >
-                            <br />
-                            <ul className="list-group list-group-horizontal" style={{ width: 25 + 'em' }}>
+                    <Col md={{ size: 4, offset: 3}} >
+								<br/>
+								<ul className="list-group list-group-horizontal" style={{ width: 25 + 'em' }}>
+									<Link to="/" type="button" className="btn btn-primary list-group-item list-group-item-action"><FaArrowLeft/></Link>
                                 <Button onClick={this.goToCalendar} color="primary" className="list-group-item list-group-item-action">Calendarios</Button>
                                 <Link type="button" className="list-group-item list-group-item-action">Valoraciones</Link>
                                 <Link to="/stories" type="button" className="list-group-item list-group-item-action grupo bot active">Cuentos</Link>

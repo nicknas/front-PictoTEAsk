@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {
 	Container,
 	Row,
@@ -7,6 +7,8 @@ import {
 	Button,
 	ButtonGroup
 } from 'reactstrap'
+
+import {FaArrowLeft} from 'react-icons/fa';
 
 import DayCalendar from './DayCalendar'
 import MonthCalendar from './MonthCalendar'
@@ -29,12 +31,13 @@ class CalendarPage extends React.Component {
 			|| state.from.pathname == '/seetask'
 			|| state.from.pathname == '/addGame'
 			|| state.from.pathname == '/addtask'
-			|| state.from.pathname == '/stories') {
+			|| state.from.pathname == '/stories'
+			|| state.from.pathname == '/viewgroup') {
 			this.kid = state.data || {}
 		}
 
 		if (!this.kid.id) {
-			this.props.history.push('/kidspage')
+			this.props.history.push('/')
 		}
 
 		this.component = [
@@ -78,9 +81,10 @@ class CalendarPage extends React.Component {
 					</Row>
 					<center>
 						<Row className="mx-auto">
-							<Col md={{ size: 4, offset: 4 }} >
-								<br />
+							<Col md={{ size: 4, offset: 3}} >
+								<br/>
 								<ul className="list-group list-group-horizontal" style={{ width: 25 + 'em' }}>
+									<Link to="/" type="button" className="btn btn-primary list-group-item list-group-item-action"><FaArrowLeft/></Link>
 									<Button color="primary" className="list-group-item list-group-item-action  grupo bot active">Calendarios</Button>
 									<Button className="list-group-item list-group-item-action">Valoraciones</Button>
 									<Button onClick={this.goToStories} color="primary" className="list-group-item list-group-item-action">Cuentos</Button>
