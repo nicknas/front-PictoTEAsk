@@ -18,14 +18,15 @@ class AddTask extends React.Component {
 
         this.state = {
             idTask: 0,
-            timeini: '00:00',
-            timefin: '00:00',
+            timeini: "",
+            timefin: "",
             currentSelected: {},
             addNewPictoView: false,
             pictos: [],
             estrellas: [],
             errorAlert: false
         }
+        this.params = this.props.location.state.data;
         this.selectImageCard = this.selectImageCard.bind(this);
         this.createNewPictogram = this.createNewPictogram.bind(this);
         this.addNewPicto = this.addNewPicto.bind(this);
@@ -35,8 +36,31 @@ class AddTask extends React.Component {
         this.addSubTasks = this.addSubTasks.bind(this);
     }
 
-    onChangeI = timeini => this.setState({ timeini })
-    onChangeF = timefin => this.setState({ timefin })
+    onChangeI = time => {
+        if (time > this.state.timefin) {
+            this.setState({timeini: this.state.timefin});
+        }
+        else {
+            this.setState({timeini: time});
+        }
+    }
+    onChangeF = time => {
+        if (time > this.state.timeini) {
+            this.setState({timefin: time});
+        }
+        else {
+            this.setState({timefin: this.state.timeini});
+        }
+    }
+    goBackToCalendar = () => {
+        this.props.history.push({
+            pathname: '/calendar',
+            'state': {
+                'from': {'pathname': this.props.location.pathname },
+                'data': this.params.kid
+            }
+        });
+    }
     addNewPicto() {
         this.state.pictos.push(this.state.currentSelected);
         console.log(this.state);
@@ -114,7 +138,7 @@ class AddTask extends React.Component {
             let formDataSubTasks = new FormData();
             formDataSubTasks.append("id_task", this.state.idTask);
             formDataSubTasks.append("text", "");
-            formDataSubTasks.append("path", this.state.pictos[i].img.substring(36));
+            formDataSubTasks.append("path", this.state.pictos[i].img.replace('https://pictoteask2.000webhostapp.com', ''));
             formDataSubTasks.append("id_tutor", idTutor);
             formDataSubTasks.append("orden", i);
 
@@ -142,11 +166,11 @@ class AddTask extends React.Component {
 
         formDataTasks.append("Tini", this.state.timeini.concat(":00"));
         formDataTasks.append("Tfin", this.state.timefin.concat(":00"));
-        formDataTasks.append("Path_picto", this.state.pictos[0].img.substring(36));
+        formDataTasks.append("Path_picto", this.state.pictos[0].img.replace('https://pictoteask2.000webhostapp.com', ''));
         formDataTasks.append("Tutor", auth.token.id_tutor);
-        formDataTasks.append("Nino", 32); //Deber recibirlo por props
+        formDataTasks.append("Nino", this.params.kid.id); //Deber recibirlo por props
         formDataTasks.append("Text", "");
-        formDataTasks.append("Dia", "2000-01-19");//Deber recibirlo por props
+        formDataTasks.append("Dia", this.params.moment.format("YYYY-MM-DD"));//Deber recibirlo por props
         formDataTasks.append("Tipo", "tarea");
         formDataTasks.append("Enlace", enlace);
 
@@ -229,7 +253,7 @@ class AddTask extends React.Component {
 
                                     <Button onClick={(event) => this.addTask(event)} className="btnactiv" color="primary" size="lg" block>Crear</Button>
 
-                                    <Button className="btnactiv" onClick={this.goBackToCalendar} color="danger" size="lg" block>Cancelar</Button>
+                                    <Button color="danger" onClick={this.goBackToCalendar} style={{borderRadius: 50 + 'px'}} size="lg" block>Cancelar</Button>
 
                                 </Container>
                             </Container>
