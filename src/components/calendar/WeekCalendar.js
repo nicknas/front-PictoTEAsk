@@ -143,8 +143,12 @@ class WeekCalendar extends React.Component {
 				<CardBody>
 					{
 						this.state.tasks.map((item) => (
-							<div onClick={() => this.onClick(item.moment)}
-								style={{'cursor': 'pointer', 'clear': 'both', 'height': '95px'}} key={item.key}>
+							<div onClick={() => this.onClick(item.moment)} className="cursor-pointer calendar-select"
+								style={{
+									'clear': 'both',
+									'height': '80px',
+									'marginBottom': '5px',
+								}} key={item.key}>
 									<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.date}</CardText>
 									<div className="float-right">
 										<img className="img-thumbnail" src={item.image} width="80px"/>

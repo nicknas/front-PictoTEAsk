@@ -123,7 +123,7 @@ class ViewKids extends React.Component {
                                     <h5>Niños</h5>
 
                                     {this.props.listKids.map((row) =>
-                                        <Row key={row.id} className="myrow">
+                                        <Row key={row.id} className="myrow btc-select">
 																					<Col onClick={() => this.onClick(row)} style={{'cursor': 'pointer'}} md={10} >
 																							<picture>
 																								<img

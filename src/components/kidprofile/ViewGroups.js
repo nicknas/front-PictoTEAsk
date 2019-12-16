@@ -116,7 +116,11 @@ class ViewGroups extends React.Component {
                                     <h5>Grupos</h5>
                                     {this.props.listGroups.map((item) =>
 
-                                        <Row id={item.id} key={item.id} name={item.name} className="myrow" onClick={this.goGroup}>
+																			<Row
+																				id={item.id}
+																				key={item.id}
+																				name={item.name}
+																				className="myrow btc-select" onClick={this.goGroup}>
                                             <Col style={{'cursor': 'pointer'}} md={10} >
                                                 <picture>
                                                     <img src="images/defaultGroup.jpg" className="group-image" />{item.name}

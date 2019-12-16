@@ -1,3 +1,7 @@
+.btc-select:hover {
+  background-color: rgba(0,0,0, 0.05);
+}
+
 .btnblue{
     border-radius:5px;
     text-transform: none;
@@ -55,7 +59,7 @@
 }
 
 .myrow{
-    padding-bottom: 15px;
+    padding: 15px 0;
 }
 
 .time-picker{

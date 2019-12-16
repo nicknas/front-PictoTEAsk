@@ -42,6 +42,7 @@ class DayCalendar extends React.Component {
 
 		this.toggle = this.toggle.bind(this)
 		this.go     = this.go.bind(this)
+		this.edit   = this.edit.bind(this)
 		this.prev   = this.prev.bind(this)
 		this.next   = this.next.bind(this)
 
@@ -54,6 +55,10 @@ class DayCalendar extends React.Component {
 				tasks: tasks
 			})
 		})
+	}
+
+	edit(task) {
+		console.log(task)
 	}
 
 	go(pathname) {
@@ -117,6 +122,7 @@ class DayCalendar extends React.Component {
 				if (Tareas[i].path_picto) {
 					tasks.push({
 						key: i,
+						data: Tareas[i],
 						start: start ? 'images/estrella.png' : 'images/estrella1.png',
 						image: `${api}${Tareas[i].path_picto}`,
 						init: Tareas[i].hora_inicio,
@@ -146,7 +152,12 @@ class DayCalendar extends React.Component {
 				<CardBody>
 					{
 						this.state.tasks.map((item) => (
-							<div style={{'clear': 'both', 'height': '95px'}} key={item.key}>
+							<div onClick={() => this.edit(item) } className="cursor-pointer calendar-select"
+								style={{
+									'clear': 'both',
+									'height': '80px',
+									'marginBottom': '5px',
+								}} key={item.key}>
 								<CardText className="float-left" style={{'padding': '25px 0 0 0'}} >{item.init} - {item.end}</CardText>
 								<div className="float-right">
 									<img className="img-thumbnail" src={item.image} width="80px"/>

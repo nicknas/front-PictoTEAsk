@@ -286,7 +286,7 @@ class ViewGroup extends React.Component {
 
                                     {this.state.listKidsGroup.map((item) =>
 
-                                        <Row id={item.id} key={item.id} className="myrow">
+                                        <Row id={item.id} key={item.id} className="myrow btc-select">
                                             <Col md={10} >
                                                 <picture>
 																									<img
