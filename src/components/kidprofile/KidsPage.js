@@ -34,14 +34,17 @@ class KidsPage extends React.Component {
         fetch(request)
             .then((response) => { if (response.ok) return response.json(); })
             .then(data => {
-                for (let i = 0; i < data.kids.length; i++) {
-                    if (data.kids[i].state == "ACCEPTED") {
-                        listKids.push({
-                            id: data.kids[i].id_kid,
-                            name: data.kids[i].nick,
-                            state: data.kids[i].state
-                        });
+                if (!data.error) {
+                    for (let i = 0; i < data.kids.length; i++) {
+                        if (data.kids[i].state == "ACCEPTED") {
+                            listKids.push({
+                                id: data.kids[i].id_kid,
+                                name: data.kids[i].nick,
+                                state: data.kids[i].state
+                            });
+                        }
                     }
+                    this.getPending();
                 }
 
                 this.setState({ listKids })
@@ -72,21 +75,21 @@ class KidsPage extends React.Component {
             body: formDataDelKid
         }).then(response => response.json())
             .then((response) => {
-                if (response.error){
+                if (response.error) {
                     fetch(`${enlace}/delTutoria.php`, {
                         method: 'POST',
                         body: formDataDisassociateKid
                     }).then(response => response.json())
                         .then((response) => {
-                            if (response.error){
+                            if (response.error) {
                                 this.setState({ listKids: auxkids });
                             }
                         });
                 }
-                });
+            });
     }
 
-    statusKid(s,i){
+    statusKid(s, i) {
         let auth = new Auth();
         let formDataPenKid = new FormData();
         formDataPenKid.append('id_tutor', auth.token.id_tutor);
@@ -100,9 +103,9 @@ class KidsPage extends React.Component {
         }).then((response) => { if (response.ok) return response.json(); })
             .then((data) => {
                 if (!data.error) {
-                    
+
                 }
-                }
+            }
             );
     }
     getPending() {
@@ -140,8 +143,8 @@ class KidsPage extends React.Component {
                 history={this.props.history}
                 listKids={this.state.listKids}
                 deleteKid={this.deleteKid}
-                getPending={this.getPending} 
-                statusKid = {this.statusKid}/>
+                getPending={this.getPending}
+                statusKid={this.statusKid} />
         );
     }
 

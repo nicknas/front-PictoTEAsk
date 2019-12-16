@@ -101,6 +101,8 @@ class ViewKids extends React.Component {
     }
     statusKid(event, s, i) {
         this.props.statusKid(s, i);
+        this.getPending();
+        this.closePendingModal();
     }
     closePendingModal() {
         this.setState({ pendingModalOpened: false });
@@ -109,7 +111,6 @@ class ViewKids extends React.Component {
         this.setState({ pendingModalOpened: true });
     }
     getPending() {
-        this.props.getPending();
         let kids = this.props.parent.state.listKids;
         let modals = "";
         if (this.props.parent.state.listPending.length > 0) {
@@ -124,8 +125,10 @@ class ViewKids extends React.Component {
                 listview.push(
                     <div>
                         <a>¿Está seguro de que quiere asociar el niño {this.props.parent.state.listPending[i].nick} a {this.props.parent.state.listPending[i].nombre} ?</a>
-                        <Button color="primary" onClick={(event) => this.statusKid(event, "ACCEPTED", i)}>Asociar</Button>
-                        <Button color="danger" onClick={(event) => this.statusKid(event, "REFUSED", i)}>Denegar</Button>
+                        <center>
+                            <Button color="primary" onClick={(event) => this.statusKid(event, "ACCEPTED", i)}>Asociar</Button>
+                            <Button color="danger" onClick={(event) => this.statusKid(event, "REFUSED", i)}>Denegar</Button>
+                        </center>
                     </div>
                 );
             }
@@ -135,6 +138,15 @@ class ViewKids extends React.Component {
                 <ModalHeader toggle={this.openPendingModal}>Asociar niños</ModalHeader>
                 <ModalBody>{listview}</ModalBody>
                 <ModalFooter><Button color="secondary" onClick={this.closePendingModal}>Cancelar</Button></ModalFooter>
+            </Modal>);
+        }
+        else{
+            modals = (<Modal
+                isOpen={this.state.pendingModalOpened}
+                toggle={this.closePendingModal}>
+                <ModalHeader toggle={this.openPendingModal}>Asociar niños</ModalHeader>
+                <ModalBody>No hay niños pendientes de asociar</ModalBody>
+                <ModalFooter><Button color="secondary" onClick={this.closePendingModal}>Aceptar</Button></ModalFooter>
             </Modal>);
         }
 
@@ -195,6 +207,12 @@ class ViewKids extends React.Component {
                                             <picture style={{ 'cursor': 'pointer' }}>
                                                 <img src="../images/botonNew.svg" className="group-image" /> <font color="#3E8EDE">Añadir niño</font>
                                             </picture>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <br></br>
+                                            <center><Button color="primary" onClick={this.openPendingModal}>Niños pendientes de asociar</Button></center>
                                         </Col>
                                     </Row>
 
