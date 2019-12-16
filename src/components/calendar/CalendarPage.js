@@ -28,7 +28,8 @@ class CalendarPage extends React.Component {
 			|| state.from.pathname == '/viewGame' 
 			|| state.from.pathname == '/seetask'
 			|| state.from.pathname == '/addGame'
-			|| state.from.pathname == '/addtask') {
+			|| state.from.pathname == '/addtask'
+			|| state.from.pathname == '/stories') {
 			this.kid = state.data || {}
 		}
 
@@ -52,6 +53,16 @@ class CalendarPage extends React.Component {
 		this.setState({selected})
 	}
 
+	goToStories = () => {
+		this.props.history.push({
+            pathname: '/stories',
+            'state': {
+                'from': {'pathname': this.props.location.pathname },
+                'data': this.kid
+            }
+        });
+	}
+
 	render() {
 		return (
 			<div>
@@ -65,6 +76,18 @@ class CalendarPage extends React.Component {
 							</div>
 						</Col>
 					</Row>
+					<center>
+						<Row className="mx-auto">
+							<Col md={{ size: 4, offset: 4 }} >
+								<br />
+								<ul className="list-group list-group-horizontal" style={{ width: 25 + 'em' }}>
+									<Button color="primary" className="list-group-item list-group-item-action  grupo bot active">Calendarios</Button>
+									<Button className="list-group-item list-group-item-action">Valoraciones</Button>
+									<Button onClick={this.goToStories} color="primary" className="list-group-item list-group-item-action">Cuentos</Button>
+								</ul>
+							</Col>
+						</Row>
+               		</center>
 				</Container>
 				<div className="calendar-container">
 					<ButtonGroup>

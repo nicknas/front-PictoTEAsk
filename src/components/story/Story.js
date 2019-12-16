@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col, Fade, Button, Badge } from 'reactstrap'
 import StoryList from './StoryList';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import StoryContent from './StoryContent';
 import Auth from '../../auth';
 
@@ -19,6 +19,7 @@ class Story extends React.Component {
         this.goBackToStories = this.goBackToStories.bind(this);
         this.addNewStory = this.addNewStory.bind(this);
         this.deleteStory = this.deleteStory.bind(this);
+        this.params = this.props.location.state.data;
     }
 
 
@@ -121,6 +122,16 @@ class Story extends React.Component {
 
     }
 
+    goToCalendar = () => {
+        this.props.history.push({
+            pathname: '/calendar',
+            'state': {
+                'from': {'pathname': this.props.location.pathname },
+                'data': this.params
+            }
+        });
+    }
+
     componentDidMount() {
         let formDataGetStories = new FormData();
         formDataGetStories.append("id_tutor", this.auth.token.id_tutor);
@@ -165,7 +176,7 @@ class Story extends React.Component {
                         <Col md={{ size: 4, offset: 4 }} >
                             <br />
                             <ul className="list-group list-group-horizontal" style={{ width: 25 + 'em' }}>
-                                <Link to="/calendar" type="button" className="list-group-item list-group-item-action">Calendarios</Link>
+                                <Button onClick={this.goToCalendar} color="primary" className="list-group-item list-group-item-action">Calendarios</Button>
                                 <Link type="button" className="list-group-item list-group-item-action">Valoraciones</Link>
                                 <Link to="/stories" type="button" className="list-group-item list-group-item-action grupo bot active">Cuentos</Link>
                             </ul>
@@ -179,4 +190,4 @@ class Story extends React.Component {
     }
 }
 
-export default Story;
+export default withRouter(Story);

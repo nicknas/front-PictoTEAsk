@@ -13,9 +13,9 @@ class EditStoryCalendar extends React.Component {
         super(props);
         this.params = this.props.location.state.data;
         this.state = {
-            timeIni: this.params.task.timeIni,
-            timeFin: this.params.task.timeFni,
-            selectedOption: {value: this.params.task.enlace, label: this.params.task.text}
+            timeIni: this.params.task.hora_inicio,
+            timeFin: this.params.task.hora_fin,
+            selectedOption: {value: this.params.task.enlace, label: this.params.task.texto}
         }
 		console.log(this.props.location);
         this.auth = new Auth();
@@ -30,9 +30,9 @@ class EditStoryCalendar extends React.Component {
         formDataEditStory.append("Tutor", this.auth.token.id_tutor);
         formDataEditStory.append("Nino", this.params.kid.id); //Deber recibirlo por props
         formDataEditStory.append("Text", this.state.selectedOption.label);
-        formDataEditStory.append("Dia", this.params.task.date.format("YYYY-MM-DD"));//Deber recibirlo por props
+        formDataEditStory.append("Dia", this.params.task.dia);//Deber recibirlo por props
         formDataEditStory.append("Tipo", "cuento");
-        formDataEditStory.append("Task", this.params.task.id);
+        formDataEditStory.append("Tarea", this.params.task.id_tarea);
         formDataEditStory.append("Enlace", this.state.selectedOption.value);
 
         let addStoryRequest = new Request('https://pictoteask2.000webhostapp.com/updtTask.php', {method: "POST", body: formDataEditStory});
@@ -41,13 +41,7 @@ class EditStoryCalendar extends React.Component {
             .catch(error => console.error('Error:', error))
             .then((storyCalendar) => {
                 if (!storyCalendar.error) {
-                    this.props.history.push({
-                        pathname: '/calendar',
-                        'state': {
-                            'from': {'pathname': this.props.location.pathname },
-                            'data': this.params.kid
-                        }
-                    });
+                    this.goBackToViewStory();
                 }
             });
     }
@@ -139,10 +133,9 @@ class EditStoryCalendar extends React.Component {
                                     <Row className="myrow2">
                                         <b>Cuento:</b>
                                         <Select className="time-picker"
-                                            value={this.selectedOption}
+                                            value={this.state.selectedOption}
                                             onChange={this.handleChange}
                                             options={options}
-
                                         />
                                     </Row>
                                 </Col>

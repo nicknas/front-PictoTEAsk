@@ -26,10 +26,10 @@ class AddStoryCalendar extends React.Component {
         let formDataAddStory = new FormData();
         formDataAddStory.append("Tini", this.state.timeIni.concat(":00"));
         formDataAddStory.append("Tfin", this.state.timeFin.concat(":00"));
-        formDataAddStory.append("Path_picto", 'picts/shared/cuento.jpg');
+        formDataAddStory.append("Path_picto", '/picts/shared/cuento.jpg');
         formDataAddStory.append("Tutor", this.auth.token.id_tutor);
         formDataAddStory.append("Nino", this.params.kid.id); //Deber recibirlo por props
-        formDataAddStory.append("Text", "");
+        formDataAddStory.append("Text", this.state.selectedOption.label);
         formDataAddStory.append("Dia", this.params.moment.format("YYYY-MM-DD"));//Deber recibirlo por props
         formDataAddStory.append("Tipo", "cuento");
         formDataAddStory.append("Enlace", this.state.selectedOption.value);

@@ -47,7 +47,22 @@ class ViewStoryCalendar extends React.Component {
 
     deleteStoryCalendar = () => {
         let formDataDeleteStory = new FormData();
-        formDataDeleteStory.append();
+        formDataDeleteStory.append("Task", this.params.task.id_tarea);
+        let deleteTaskRequest = new Request('https://pictoteask2.000webhostapp.com/delTask.php', {method: 'POST', body: formDataDeleteStory});
+        fetch(deleteTaskRequest)
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error))
+            .then((task) => {
+                if (!task.error) {
+                    this.props.history.push({
+                        pathname: '/calendar',
+                        'state': {
+                            'from': {'pathname': this.props.location.pathname },
+                            'data': this.params.kid
+                        }
+                    });
+                }
+            });
     }
 
     render() {
@@ -75,7 +90,7 @@ class ViewStoryCalendar extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Título:</b>
-                                        
+                                        {this.params.task.texto}
                                             
                                     </Row>
                                 </Col>
@@ -86,14 +101,14 @@ class ViewStoryCalendar extends React.Component {
 
                                         <b>Hora inicio:</b>
                                        
-                                        {this.state.initTime}
+                                        {this.params.task.hora_inicio}
                                         
                                     </Row>
                                 </Col>
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        {this.state.endTime}
+                                        {this.params.task.hora_fin}
                                         
                                     </Row>
                                 </Col>
@@ -108,7 +123,7 @@ class ViewStoryCalendar extends React.Component {
                                 </Container>
                                 <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
                                     <ModalHeader toggle={this.closeDeleteModal}>Borrar cuento</ModalHeader>
-                                    <ModalBody>¿Está seguro de que quiere borrar la tarea {this.params.task.text}?</ModalBody>
+                                    <ModalBody>¿Está seguro de que quiere borrar el cuento {this.params.task.texto}?</ModalBody>
                                     <ModalFooter><Button color="danger" onClick={this.deleteStoryCalendar}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                                 </Modal>
                             </Container>
