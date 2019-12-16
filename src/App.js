@@ -28,6 +28,7 @@ import EditGame from './components/activities/EditGame'
 import CalendarPage from './components/calendar/CalendarPage'
 import AddStoryCalendar from './components/story/AddStoryCalendar'
 import ViewStoryCalendar from './components/story/ViewStoryCalendar'
+import EditStoryCalendar from './components/story/EditStoryCalendar'
 
 
 const auth = 'https://pictoteask.000webhostapp.com'
@@ -114,6 +115,9 @@ class App extends React.Component {
 						</PrivateRoute>
 						<PrivateRoute path="/viewStoryCalendar">
 							<ViewStoryCalendar />
+						</PrivateRoute>
+						<PrivateRoute path="/editStoryCalendar">
+							<EditStoryCalendar />
 						</PrivateRoute>
 						<PrivateRoute path="/">
 							<KidsPage />

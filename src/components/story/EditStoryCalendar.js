@@ -8,33 +8,34 @@ import Auth from '../../auth';
 
 const options = [];
 
-class AddStoryCalendar extends React.Component {
+class EditStoryCalendar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            timeIni: "",
-            timeFin: "",
-            selectedOption: null
-        }
         this.params = this.props.location.state.data;
+        this.state = {
+            timeIni: this.params.task.timeIni,
+            timeFin: this.params.task.timeFni,
+            selectedOption: {value: this.params.task.enlace, label: this.params.task.text}
+        }
 		console.log(this.props.location);
         this.auth = new Auth();
-        this.addStory = this.addStory.bind(this);
+        this.editStory = this.editStory.bind(this);
     }
 
-    addStory() {
-        let formDataAddStory = new FormData();
-        formDataAddStory.append("Tini", this.state.timeIni.concat(":00"));
-        formDataAddStory.append("Tfin", this.state.timeFin.concat(":00"));
-        formDataAddStory.append("Path_picto", 'picts/shared/cuento.jpg');
-        formDataAddStory.append("Tutor", this.auth.token.id_tutor);
-        formDataAddStory.append("Nino", this.params.kid.id); //Deber recibirlo por props
-        formDataAddStory.append("Text", "");
-        formDataAddStory.append("Dia", this.params.moment.format("YYYY-MM-DD"));//Deber recibirlo por props
-        formDataAddStory.append("Tipo", "cuento");
-        formDataAddStory.append("Enlace", this.state.selectedOption.value);
+    editStory() {
+        let formDataEditStory = new FormData();
+        formDataEditStory.append("Tini", this.state.timeIni.concat(":00"));
+        formDataEditStory.append("Tfin", this.state.timeFin.concat(":00"));
+        formDataEditStory.append("Path_picto", 'picts/shared/cuento.jpg');
+        formDataEditStory.append("Tutor", this.auth.token.id_tutor);
+        formDataEditStory.append("Nino", this.params.kid.id); //Deber recibirlo por props
+        formDataEditStory.append("Text", this.state.selectedOption.label);
+        formDataEditStory.append("Dia", this.params.task.date.format("YYYY-MM-DD"));//Deber recibirlo por props
+        formDataEditStory.append("Tipo", "cuento");
+        formDataEditStory.append("Task", this.params.task.id);
+        formDataEditStory.append("Enlace", this.state.selectedOption.value);
 
-        let addStoryRequest = new Request('https://pictoteask.000webhostapp.com/addTask.php', {method: "POST", body: formDataAddStory});
+        let addStoryRequest = new Request('https://pictoteask.000webhostapp.com/updtTask.php', {method: "POST", body: formDataEditStory});
         fetch(addStoryRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -58,6 +59,7 @@ class AddStoryCalendar extends React.Component {
         else {
             this.setState({timeIni: time});
         }
+        
     }
 
     handleTimeChangeFin = time => {
@@ -76,12 +78,16 @@ class AddStoryCalendar extends React.Component {
         );
     };
 
-    goBackToCalendar = () => {
+    goBackToViewStory = () => {
         this.props.history.push({
-            pathname: '/calendar',
+            pathname: '/viewStoryCalendar',
             'state': {
-                'from': {'pathname': this.props.location.pathname },
-                'data': this.params.kid
+                from: {'pathname': this.props.location.pathname },
+                data: {
+                    kid: this.params.kid,
+                    task: this.params.task
+                }
+
             }
         });
     }
@@ -104,10 +110,11 @@ class AddStoryCalendar extends React.Component {
                 }
             });
     }
+
     render() {
-        let stateButton = <Button disabled className="mybtn" style={{borderRadius: 50 + 'px'}} color="success" onClick={this.addStory} size="lg" block>Crear</Button>;
+        let stateButton = <Button disabled className="mybtn" style={{borderRadius: 50 + 'px'}} color="success" onClick={this.editStory} size="lg" block>Guardar</Button>;
         if (this.state.selectedOption != null && this.state.timeFin.length != 0 && this.state.timeIni.length != 0) {
-            stateButton = <Button active className="mybtn" style={{borderRadius: 50 + 'px'}} color="success" onClick={this.addStory} size="lg" block>Crear</Button>;
+            stateButton = <Button active className="mybtn" style={{borderRadius: 50 + 'px'}} color="success" onClick={this.editStory} size="lg" block>Guardar</Button>;
         }
         return (
             <Container>
@@ -123,7 +130,7 @@ class AddStoryCalendar extends React.Component {
                         <div className="myform form">
                             <div className="logo mb-3">
                                 <Col md={12} className="text-center">
-                                    <h1>Añadir cuento</h1>
+                                    <h1>Editar cuento</h1>
                                 </Col>
                             </div>
                             
@@ -163,7 +170,7 @@ class AddStoryCalendar extends React.Component {
                                 <Container>
                                     
                                     {stateButton}
-                                    <Button color="danger" onClick={this.goBackToCalendar} style={{borderRadius: 50 + 'px'}} size="lg" block>Cancelar</Button>
+                                    <Button color="danger" onClick={this.goBackToViewStory} style={{borderRadius: 50 + 'px'}} size="lg" block>Cancelar</Button>
 
                                 </Container>
                             </Container>
@@ -180,4 +187,4 @@ class AddStoryCalendar extends React.Component {
         );
     }
 }
-export default withRouter(AddStoryCalendar);
+export default withRouter(EditStoryCalendar);

@@ -60,15 +60,39 @@ class DayCalendar extends React.Component {
 	edit(task) {
 		if (task.data.tipo == 'tarea') {
 			this.props.parent.props.history.push({
-						pathname: '/seetask',
-						state: {
-							from: this.props.parent.props.location.pathname,
-							data: {
-								kid: this.props.parent.kid,
-								task: task.data
-							}
-						}
-			})
+				pathname: '/seetask',
+				state: {
+					from: this.props.parent.props.location.pathname,
+					data: {
+						kid: this.props.parent.kid,
+							task: task.data
+					}
+				}
+			});
+		}
+		else if (task.data.tipo == 'cuento') {
+			this.props.parent.props.history.push({
+				pathname: '/viewStoryCalendar',
+				state: {
+					from: this.props.parent.props.location.pathname,
+					data: {
+						kid: this.props.parent.kid,
+						task: task.data
+					}
+				}
+			});
+		}
+		else {
+			this.props.parent.props.history.push({
+				pathname: '/viewGame',
+				state: {
+					from: this.props.parent.props.location.pathname,
+					data: {
+						kid: this.props.parent.kid,
+						task: task.data
+					}
+				}
+			});
 		}
 	}
 
@@ -185,7 +209,8 @@ class DayCalendar extends React.Component {
 						<DropdownMenu>
 							<DropdownItem onClick={() => this.go('/addtask')}>Añadir tarea</DropdownItem>
 							<DropdownItem onClick={() => this.go('/addStoryCalendar')} >Añadir cuento</DropdownItem>
-							<DropdownItem disabled>Añadir juego</DropdownItem>
+							<DropdownItem onClick={() => this.go('/addGame')} >Añadir juego</DropdownItem>
+							
 						</DropdownMenu>
 					</ButtonDropdown>
 				</CardFooter>

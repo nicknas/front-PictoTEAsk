@@ -82,7 +82,7 @@ class StoryList extends React.Component {
                 <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
                     <ModalHeader toggle={this.closeDeleteModal}>Borrar cuento</ModalHeader>
                     <ModalBody>¿Está seguro de que quiere borrar el cuento {this.state.storyToDelete.name}?</ModalBody>
-                    <ModalFooter><Button color="danger" onClick={this.deleteStory}>Borrar</Button><Button color="secondary" onClick={this.closeAddModal}>Cancelar</Button></ModalFooter>
+                    <ModalFooter><Button color="danger" onClick={this.deleteStory}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
                 </Modal>
             </Fade>
         );

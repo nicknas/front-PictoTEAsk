@@ -1,24 +1,55 @@
 import React from 'react'
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { withRouter, Link } from 'react-router-dom'
 import './story.css'
 
 class ViewStoryCalendar extends React.Component {
     constructor(props) {
         super(props);
+        this.params = this.props.location.state.data;
         this.state = {
-            time: '00:00',
-            selectedOption: null
+            deleteModalOpened: false
         }
-        this.handleChange = this.handleChange.bind(this);
+        console.log(this.props.location)
     }
 
-    handleChange = selectedOption => {
-        this.setState(
-            { selectedOption }
+    goBackToCalendar = () => {
+        this.props.history.push({
+            pathname: '/calendar',
+            'state': {
+                'from': {'pathname': this.props.location.pathname },
+                'data': this.params.kid
+            }
+        });
+    }
 
-        );
-    };
+    goToEditStory = () => {
+        this.props.history.push({
+            pathname: '/editStoryCalendar',
+            'state': {
+                from: {'pathname': this.props.location.pathname },
+                data: {
+                    kid: this.params.kid,
+                    task: this.params.task
+                }
+
+            }
+        });
+    }
+
+    closeDeleteModal = () => {
+        this.setState({deleteModalOpened: false});
+    }
+
+    openDeleteModal = () => {
+        this.setState({deleteModalOpened: true});
+    }
+
+    deleteStoryCalendar = () => {
+        let formDataDeleteStory = new FormData();
+        formDataDeleteStory.append();
+    }
+
     render() {
 
         return (
@@ -45,7 +76,6 @@ class ViewStoryCalendar extends React.Component {
                                     <Row className="myrow2">
                                         <b>Título:</b>
                                         
-                                        {this.state.game}
                                             
                                     </Row>
                                 </Col>
@@ -71,11 +101,16 @@ class ViewStoryCalendar extends React.Component {
 
                                 <Container>
 
-                                    <Button color="success" size="lg" block>Editar</Button>
-                                    <Button color="danger" size="lg" block>Eliminar</Button>
-                                    <Link to="/calendar" className="btn btn-lg btn-secondary btn-block">Cancelar</Link>
+                                    <Button onClick={this.goToEditStory} color="success" size="lg" block>Editar</Button>
+                                    <Button color="danger" onClick={this.openDeleteModal} size="lg" block>Eliminar</Button>
+                                    <Button color="danger" onClick={this.goBackToCalendar} style={{borderRadius: 50 + 'px'}} size="lg" block>Cancelar</Button>
 
                                 </Container>
+                                <Modal isOpen={this.state.deleteModalOpened} toggle={this.closeDeleteModal}>
+                                    <ModalHeader toggle={this.closeDeleteModal}>Borrar cuento</ModalHeader>
+                                    <ModalBody>¿Está seguro de que quiere borrar la tarea {this.params.task.text}?</ModalBody>
+                                    <ModalFooter><Button color="danger" onClick={this.deleteStoryCalendar}>Borrar</Button><Button color="secondary" onClick={this.closeDeleteModal}>Cancelar</Button></ModalFooter>
+                                </Modal>
                             </Container>
                             
                         </div>

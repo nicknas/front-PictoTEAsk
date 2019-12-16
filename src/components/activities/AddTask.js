@@ -47,6 +47,16 @@ class AddTask extends React.Component {
             this.state.estrellas.push("nofav");
     }
 
+    goBackToCalendar = () => {
+        this.props.history.push({
+            pathname: '/calendar',
+            'state': {
+                'from': {'pathname': this.props.location.pathname },
+                'data': this.props.location.state.data.kid
+            }
+        });
+    }
+
     getImageSelected(imageSelected) {
         this.setState({ currentSelected: imageSelected });
     }
@@ -219,7 +229,7 @@ class AddTask extends React.Component {
 
                                     <Button onClick={(event) => this.addTask(event)} className="btnactiv" color="primary" size="lg" block>Crear</Button>
 
-                                    <Button className="btnactiv" color="danger" size="lg" block>Cancelar</Button>
+                                    <Button className="btnactiv" onClick={this.goBackToCalendar} color="danger" size="lg" block>Cancelar</Button>
 
                                 </Container>
                             </Container>
