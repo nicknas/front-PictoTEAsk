@@ -12,7 +12,7 @@ import {
 import './calendar.css'
 import 'animate.css/animate.css'
 
-const api = 'https://pictoteask.000webhostapp.com'
+const api = 'https://pictoteask2.000webhostapp.com'
 
 class MonthCalendar extends React.Component {
 

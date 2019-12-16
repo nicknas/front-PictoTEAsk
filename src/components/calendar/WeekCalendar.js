@@ -14,7 +14,7 @@ import {
 
 import './calendar.css'
 
-const api = 'https://pictoteask.000webhostapp.com'
+const api = 'https://pictoteask2.000webhostapp.com'
 
 class WeekCalendar extends React.Component {
 

@@ -1,4 +1,4 @@
-const auth = 'https://pictoteask.000webhostapp.com'
+const auth = 'https://pictoteask2.000webhostapp.com'
 
 class Auth {
   isAuthenticated = false

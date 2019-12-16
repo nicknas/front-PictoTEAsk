@@ -30,10 +30,10 @@ class SearchPictogram extends React.Component {
         let listElements = [];
         let formDataFolders = new FormData();
         formDataFolders.append("palabra", this.state.searchValue);
-        let foldersRequest = new Request('https://pictoteask.000webhostapp.com/search.php', {method: 'POST', body: formDataFolders});
+        let foldersRequest = new Request('https://pictoteask2.000webhostapp.com/search.php', {method: 'POST', body: formDataFolders});
         fetch(foldersRequest).then(response => response.json()).then(response => {
             for (let i = 0; i < response.sources.length; i++) {
-                listElements.push({name: response.sources[i].nombre, img: 'https://pictoteask.000webhostapp.com/' + response.sources[i].path});
+                listElements.push({name: response.sources[i].nombre, img: 'https://pictoteask2.000webhostapp.com/' + response.sources[i].path});
             }
             this.props.images(listElements);
         });            

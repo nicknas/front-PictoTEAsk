@@ -36,7 +36,7 @@ class AssociateKid extends React.Component {
         formDataKidTutor.append("nick", this.refs.nick.value);
         formDataKidTutor.append("id_tutor", auth.token.id_tutor);
 
-        fetch('https://pictoteask.000webhostapp.com/addKidToTutor.php', {
+        fetch('https://pictoteask2.000webhostapp.com/addKidToTutor.php', {
             method: "POST",
             body: formDataKidTutor,
         }).then(response => response.json())

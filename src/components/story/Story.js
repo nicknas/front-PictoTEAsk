@@ -27,8 +27,8 @@ class Story extends React.Component {
         let formDataAddPicto = new FormData();
         formDataAddPicto.append("id_tutor", this.auth.token.id_tutor);
         formDataAddPicto.append("id_cuento", storySelected.id);
-        formDataAddPicto.append("path", picto.img.replace('https://pictoteask.000webhostapp.com', ''));
-        let addPictoRequest = new Request('https://pictoteask.000webhostapp.com/addPage.php', { method: 'POST', body: formDataAddPicto });
+        formDataAddPicto.append("path", picto.img.replace('https://pictoteask2.000webhostapp.com', ''));
+        let addPictoRequest = new Request('https://pictoteask2.000webhostapp.com/addPage.php', { method: 'POST', body: formDataAddPicto });
         fetch(addPictoRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -43,7 +43,7 @@ class Story extends React.Component {
         let formDataAddStory = new FormData();
         formDataAddStory.append("id_tutor", this.auth.token.id_tutor);
         formDataAddStory.append("nombre", nameStory);
-        let addStoryRequest = new Request('https://pictoteask.000webhostapp.com/createStory.php', { method: 'POST', body: formDataAddStory });
+        let addStoryRequest = new Request('https://pictoteask2.000webhostapp.com/createStory.php', { method: 'POST', body: formDataAddStory });
         fetch(addStoryRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -57,7 +57,7 @@ class Story extends React.Component {
         let formDataDeleteStory = new FormData();
         formDataDeleteStory.append("id_tutor", this.auth.token.id_tutor);
         formDataDeleteStory.append("id_cuento", idStory);
-        let deleteStoryRequest = new Request('https://pictoteask.000webhostapp.com/deleteStory.php', { method: 'POST', body: formDataDeleteStory });
+        let deleteStoryRequest = new Request('https://pictoteask2.000webhostapp.com/deleteStory.php', { method: 'POST', body: formDataDeleteStory });
         fetch(deleteStoryRequest)
             .then(response => response.json())
             .catch(error => console.error("Error:", error))
@@ -72,7 +72,7 @@ class Story extends React.Component {
         let formDataGetStories = new FormData();
         formDataGetStories.append("id_tutor", this.auth.token.id_tutor);
         let listStories = [];
-        let getStoriesRequest = new Request('https://pictoteask.000webhostapp.com/getStoriesTutor.php', { method: 'POST', body: formDataGetStories });
+        let getStoriesRequest = new Request('https://pictoteask2.000webhostapp.com/getStoriesTutor.php', { method: 'POST', body: formDataGetStories });
         fetch(getStoriesRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -93,7 +93,7 @@ class Story extends React.Component {
         let story = { name: storyName, id: storyId, pictos: [] }
         let formDataGetPictosStory = new FormData();
         formDataGetPictosStory.append("id_cuento", story.id);
-        let getPictosStoryRequest = new Request('https://pictoteask.000webhostapp.com/getPagesStory.php', { method: 'POST', body: formDataGetPictosStory });
+        let getPictosStoryRequest = new Request('https://pictoteask2.000webhostapp.com/getPagesStory.php', { method: 'POST', body: formDataGetPictosStory });
         fetch(getPictosStoryRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -104,12 +104,12 @@ class Story extends React.Component {
 
                         let formDataGetPictoStory = new FormData();
                         formDataGetPictoStory.append("id_pagina", id);
-                        let getPictoStoryRequest = new Request('https://pictoteask.000webhostapp.com/getPagesStory.php', { method: 'POST', body: formDataGetPictoStory });
+                        let getPictoStoryRequest = new Request('https://pictoteask2.000webhostapp.com/getPagesStory.php', { method: 'POST', body: formDataGetPictoStory });
                         fetch(getPictoStoryRequest)
                             .then(response => response.json())
                             .catch(error => console.error('Error:', error))
                             .then((picto) => {
-                                story.pictos.push({ img: 'https://pictoteask.000webhostapp.com' + picto.page.path });
+                                story.pictos.push({ img: 'https://pictoteask2.000webhostapp.com' + picto.page.path });
                                 this.setState({ viewStories: false, storySelected: story });
                             });
                     });
@@ -125,7 +125,7 @@ class Story extends React.Component {
         let formDataGetStories = new FormData();
         formDataGetStories.append("id_tutor", this.auth.token.id_tutor);
         let listStories = [];
-        let getStoriesRequest = new Request('https://pictoteask.000webhostapp.com/getStoriesTutor.php', { method: 'POST', body: formDataGetStories });
+        let getStoriesRequest = new Request('https://pictoteask2.000webhostapp.com/getStoriesTutor.php', { method: 'POST', body: formDataGetStories });
         fetch(getStoriesRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))

@@ -48,7 +48,7 @@ class CreateKid extends React.Component {
         formDataKids.append("Nick", this.refs.nick.value);
         formDataKids.append("FechaNacimiento", "2000-01-01");
 
-        fetch('https://pictoteask.000webhostapp.com/registroNino.php', {
+        fetch('https://pictoteask2.000webhostapp.com/registroNino.php', {
             method: "POST",
             body: formDataKids
         }).then(response => response.json())

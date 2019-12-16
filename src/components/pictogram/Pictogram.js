@@ -32,8 +32,8 @@ class Pictogram extends React.Component {
         let formDataAddToFolder = new FormData(); 
         formDataAddToFolder.append("carpeta", directorySelected.name);
         formDataAddToFolder.append("idTutor", this.auth.token.id_tutor);
-        formDataAddToFolder.append("path", picto.img.replace('https://pictoteask.000webhostapp.com/', ''));
-        let addToFolderRequest = new Request('https://pictoteask.000webhostapp.com/addToFolder.php', {method: 'POST', body: formDataAddToFolder});
+        formDataAddToFolder.append("path", picto.img.replace('https://pictoteask2.000webhostapp.com/', ''));
+        let addToFolderRequest = new Request('https://pictoteask2.000webhostapp.com/addToFolder.php', {method: 'POST', body: formDataAddToFolder});
         fetch(addToFolderRequest)
             .then((response) => {
                 return response.json();
@@ -50,7 +50,7 @@ class Pictogram extends React.Component {
         
         formDataAddFolder.append("carpeta", nameDirectory);
         formDataAddFolder.append("idTutor", this.auth.token.id_tutor);
-        let addFolderRequest = new Request('https://pictoteask.000webhostapp.com/createFolderPicts.php', {method: "POST", body: formDataAddFolder});
+        let addFolderRequest = new Request('https://pictoteask2.000webhostapp.com/createFolderPicts.php', {method: "POST", body: formDataAddFolder});
         fetch(addFolderRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -65,7 +65,7 @@ class Pictogram extends React.Component {
         let formDataDeleteFolder = new FormData(); 
         formDataDeleteFolder.append("carpeta", nameDirectory);
         formDataDeleteFolder.append("idTutor", this.auth.token.id_tutor);
-        let addToFolderRequest = new Request('https://pictoteask.000webhostapp.com/deleteFolder.php', {method: 'POST', body: formDataDeleteFolder});
+        let addToFolderRequest = new Request('https://pictoteask2.000webhostapp.com/deleteFolder.php', {method: 'POST', body: formDataDeleteFolder});
         fetch(addToFolderRequest)
             .then((response) => {
                 return response.json();
@@ -79,7 +79,7 @@ class Pictogram extends React.Component {
     goBackToDirectories() {
         let formDataDirectories = new FormData();
         formDataDirectories.append("idTutor", this.auth.token.id_tutor);
-        let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
+        let request = new Request('https://pictoteask2.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
         fetch(request)
             .then((response) => response.json())
             .catch(error => console.error('Error:', error))
@@ -100,19 +100,19 @@ class Pictogram extends React.Component {
             formDataDirectory.append("idTutor", this.auth.token.id_tutor);
             formDataDirectory.append("carpeta", directory.name);
         }
-        let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectory});
+        let request = new Request('https://pictoteask2.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectory});
         fetch(request)
             .then((response) => response.json())
             .catch(error => console.error('Error:', error))
             .then((folder) => {
                 if (directory.name === "común") {
                     for (let i = 0; i < 10; i++) {
-                        directory.pictos.push({name: folder.sources[i].nombre, img: 'https://pictoteask.000webhostapp.com/' + folder.sources[i].path});
+                        directory.pictos.push({name: folder.sources[i].nombre, img: 'https://pictoteask2.000webhostapp.com/' + folder.sources[i].path});
                     }
                 }
                 else {
                     folder.sources.forEach((row) => {
-                        directory.pictos.push({name: row.nombre, img: 'https://pictoteask.000webhostapp.com/' + row.path});
+                        directory.pictos.push({name: row.nombre, img: 'https://pictoteask2.000webhostapp.com/' + row.path});
                     });
                 }
                     
@@ -123,7 +123,7 @@ class Pictogram extends React.Component {
     componentDidMount() {
         let formDataDirectories = new FormData();
         formDataDirectories.append("idTutor", this.auth.token.id_tutor);
-        let request = new Request('https://pictoteask.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
+        let request = new Request('https://pictoteask2.000webhostapp.com/readFolderPicts.php', {method: "POST", body: formDataDirectories});
         fetch(request)
             .then((response) => response.json())
             .catch(error => console.error('Error:', error))

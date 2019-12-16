@@ -35,7 +35,7 @@ class EditStoryCalendar extends React.Component {
         formDataEditStory.append("Task", this.params.task.id);
         formDataEditStory.append("Enlace", this.state.selectedOption.value);
 
-        let addStoryRequest = new Request('https://pictoteask.000webhostapp.com/updtTask.php', {method: "POST", body: formDataEditStory});
+        let addStoryRequest = new Request('https://pictoteask2.000webhostapp.com/updtTask.php', {method: "POST", body: formDataEditStory});
         fetch(addStoryRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))
@@ -95,7 +95,7 @@ class EditStoryCalendar extends React.Component {
     componentDidMount() {
         let formDataGetStories = new FormData();
         formDataGetStories.append("id_tutor", this.auth.token.id_tutor);
-        let getStoriesRequest = new Request('https://pictoteask.000webhostapp.com/getStoriesTutor.php', { method: 'POST', body: formDataGetStories });
+        let getStoriesRequest = new Request('https://pictoteask2.000webhostapp.com/getStoriesTutor.php', { method: 'POST', body: formDataGetStories });
         fetch(getStoriesRequest)
             .then(response => response.json())
             .catch(error => console.error('Error:', error))

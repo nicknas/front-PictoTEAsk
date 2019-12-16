@@ -13,7 +13,7 @@ import {
 	Alert
 } from 'reactstrap';
 
-const enlace = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask2.000webhostapp.com'
 
 class CreateGroup extends React.Component {
 
@@ -60,7 +60,7 @@ class CreateGroup extends React.Component {
 
         formDataGroup.append("Nombre_grupo", this.input.current.value);
 
-        fetch('https://pictoteask.000webhostapp.com/addGrupo.php', {
+        fetch('https://pictoteask2.000webhostapp.com/addGrupo.php', {
             method: "POST",
             body: formDataGroup
         }).then(response => response.json())

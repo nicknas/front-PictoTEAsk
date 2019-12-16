@@ -118,7 +118,7 @@ class AddTask extends React.Component {
             formDataSubTasks.append("id_tutor", idTutor);
             formDataSubTasks.append("orden", i);
 
-            fetch('https://pictoteask.000webhostapp.com/addSubTask.php', {
+            fetch('https://pictoteask2.000webhostapp.com/addSubTask.php', {
                 method: "POST",
                 body: formDataSubTasks
             }).then(response => response.json())
@@ -151,7 +151,7 @@ class AddTask extends React.Component {
         formDataTasks.append("Enlace", enlace);
 
 
-        fetch('https://pictoteask.000webhostapp.com/addTask.php', {
+        fetch('https://pictoteask2.000webhostapp.com/addTask.php', {
             method: "POST",
             body: formDataTasks
         }).then(response => response.json())

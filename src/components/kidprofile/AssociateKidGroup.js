@@ -19,7 +19,7 @@ class AssociateKidGroup extends React.Component {
         formDataKidGroup.append("id_group", 7);
         formDataKidGroup.append("id_kid", this.input.current.value);
 
-        fetch('https://pictoteask.000webhostapp.com/addKidToGroup.php', {
+        fetch('https://pictoteask2.000webhostapp.com/addKidToGroup.php', {
             method: "POST",
             body: formDataGroup
         }).then(response => response.json())

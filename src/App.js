@@ -31,7 +31,7 @@ import ViewStoryCalendar from './components/story/ViewStoryCalendar'
 import EditStoryCalendar from './components/story/EditStoryCalendar'
 
 
-const auth = 'https://pictoteask.000webhostapp.com'
+const auth = 'https://pictoteask2.000webhostapp.com'
 
 function PrivateRoute({ children, ...rest}) {
 

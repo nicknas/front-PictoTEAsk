@@ -3,7 +3,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom';
 import Auth from '../../auth';
 import ViewGroups from './ViewGroups'
-const enlace = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask2.000webhostapp.com'
 
 class GroupsPage extends React.Component {
     constructor(props) {

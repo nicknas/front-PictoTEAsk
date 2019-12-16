@@ -5,7 +5,7 @@ import ViewKids from './ViewKids'
 import Auth from '../../auth'
 import { domainToASCII } from 'url';
 
-const enlace = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask2.000webhostapp.com'
 
 class KidsPage extends React.Component {
     constructor(props) {

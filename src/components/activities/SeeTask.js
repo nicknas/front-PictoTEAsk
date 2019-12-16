@@ -7,7 +7,7 @@ import './activities.css'
 import '../kidprofile/groups.css'
 import Pictogram from '../pictogram/Pictogram';
 
-const enlace = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask2.000webhostapp.com'
 
 class SeeTask extends React.Component {
     constructor(props) {
@@ -154,7 +154,7 @@ class SeeTask extends React.Component {
         formDataTasks.append("path", subt.path_pictrograma);
         formDataTasks.append("orden", subt.orden);
 
-        fetch('https://pictoteask.000webhostapp.com/updtSubTask.php', {
+        fetch('https://pictoteask2.000webhostapp.com/updtSubTask.php', {
             method: "POST",
             body: formDataTasks
         }).then(response => response.json())
@@ -184,7 +184,7 @@ class SeeTask extends React.Component {
         formDataTasks.append("Enlace", this.state.enlace);
 
 
-        fetch('https://pictoteask.000webhostapp.com/updtTask.php', {
+        fetch('https://pictoteask2.000webhostapp.com/updtTask.php', {
             method: "POST",
             body: formDataTasks
         }).then(response => response.json())
@@ -205,7 +205,7 @@ class SeeTask extends React.Component {
 
         formDataTasks.append("id_subtask", id);
 
-        fetch('https://pictoteask.000webhostapp.com/delSubTask.php', {
+        fetch('https://pictoteask2.000webhostapp.com/delSubTask.php', {
             method: "POST",
             body: formDataTasks
         }).then(response => response.json())
@@ -227,7 +227,7 @@ class SeeTask extends React.Component {
 
         formDataTasks.append("Task", this.task.idTask);
 
-        fetch('https://pictoteask.000webhostapp.com/delTask.php', {
+        fetch('https://pictoteask2.000webhostapp.com/delTask.php', {
             method: "POST",
             body: formDataTasks
         }).then(response => response.json())

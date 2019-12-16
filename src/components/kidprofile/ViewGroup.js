@@ -18,7 +18,7 @@ import Auth from '../../auth';
 
 import './groups.css'
 
-const enlace = 'https://pictoteask.000webhostapp.com'
+const enlace = 'https://pictoteask2.000webhostapp.com'
 
 class ViewGroup extends React.Component {
     constructor(props) {
@@ -174,7 +174,7 @@ class ViewGroup extends React.Component {
         formDataGroup.append("id_tutor", auth.token.id_tutor);
         formDataGroup.append("id_group", this.group.id);
 
-        fetch('https://pictoteask.000webhostapp.com/addKidToGroup.php', {
+        fetch('https://pictoteask2.000webhostapp.com/addKidToGroup.php', {
             method: "POST",
             body: formDataGroup
         }).then(response => response.json())
