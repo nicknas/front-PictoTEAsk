@@ -13,8 +13,8 @@ class EditStoryCalendar extends React.Component {
         super(props);
         this.params = this.props.location.state.data;
         this.state = {
-            timeIni: this.params.task.hora_inicio,
-            timeFin: this.params.task.hora_fin,
+            timeIni: this.params.task.hora_inicio.substr(0, 5),
+            timeFin: this.params.task.hora_fin.substr(0, 5),    
             selectedOption: {value: this.params.task.enlace, label: this.params.task.texto}
         }
 		console.log(this.props.location);
