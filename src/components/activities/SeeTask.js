@@ -35,21 +35,24 @@ class SeeTask extends React.Component {
             this.setState({ timeini: this.state.timefin });
         }
         else {
-            this.setState({ timeini: time });
+            this.setState({ timeini: time.concat(":00") });
         }
     }
     onChangeF = time => {
         if (time > this.state.timeini) {
-            this.setState({ timefin: time });
+            this.setState({ timefin: time.concat(":00") });
         }
         else {
             this.setState({ timefin: this.state.timeini });
         }
     }
+    getTask(){
+        
+    }
     getSubTasks() {
         let listasubtareas = [];
         let formDataTasks = new FormData();
-        formDataTasks.append("id_task", this.state.idTask);
+        formDataTasks.append("id_task", this.params.task.id_tarea);
 
         let request = new Request(`${enlace}/getSubTask.php`,
             {
@@ -60,7 +63,6 @@ class SeeTask extends React.Component {
         fetch(request)
             .then((response) => { if (response.ok) return response.json(); })
             .then(data => {
-                console.log("Data", data);
                 if (!data.error) {
                     for (let i = 0; i < data.subtareas.length; i++) {
                         listasubtareas.push({
@@ -97,12 +99,11 @@ class SeeTask extends React.Component {
         this.setState({ tipo: this.params.task.tipo });
         this.setState({ enlace: this.params.task.enlace });
 
-        if (this.state.enlace == 1) this.getSubTasks();
+        if (this.params.task.enlace == 1) this.getSubTasks();
 
     }
     addNewPicto() {
         this.state.pictos.push(this.state.currentSelected);
-        console.log(this.state);
         this.setState({ addNewPictoView: false });
     }
 
@@ -124,15 +125,13 @@ class SeeTask extends React.Component {
 
     createImageCards(listPaths) {
         let listImageRows = [];
-        console.log("listapaths", listPaths);
         listImageRows.push(<div><Card style={{ width: "175px" }}><CardImg top src={enlace.concat(this.state.picto)} /></Card></div>);
         if (listPaths.length !== 0) {
             for (let i = 0; i < listPaths.length; i++) {
-                console.log("Imagenesubtareas", enlace.concat(listPaths[i].path_pictrograma));
                 listImageRows.push(
                     <div>
                         <Card style={{ width: "175px" }}><CardImg top src={enlace.concat(listPaths[i].path_pictrograma)} /></Card>
-                        <Button variant="danger">Eliminar</Button>
+                        <Button onClick={(event) => this.delSubTask(event,listPaths[i].id_subtarea)} color="danger">Eliminar</Button>
                     </div>
                 );
             }
@@ -165,9 +164,8 @@ class SeeTask extends React.Component {
             body: formDataTasks
         }).then(response => response.json())
             .then(task => {
-                console.log(task);
                 if (!task.error) {
-                    console.log(task);
+                   
                 }
                 else {
                     this.setState({ errorAlert: true });
@@ -177,17 +175,16 @@ class SeeTask extends React.Component {
     editTask(event) {
         event.preventDefault();
         let formDataTasks = new FormData();
-
         formDataTasks.append("Tini", this.state.timeini);
         formDataTasks.append("Tfin", this.state.timefin);
-        formDataTasks.append("Path_picto", this.state.picto);
-        formDataTasks.append("Task", this.state.idTask);
-        formDataTasks.append("Tutor", this.state.id_tutor);
+        formDataTasks.append("Path_picto", this.params.task.path_picto);
+        formDataTasks.append("Tarea", this.params.task.id_tarea);
+        formDataTasks.append("Tutor", this.params.task.id_tutor);
         formDataTasks.append("Nino", this.params.kid.id); //Deber recibirlo por props
-        formDataTasks.append("Text", this.state.texto);
-        formDataTasks.append("Dia", this.params.moment.format("YYYY-MM-DD"));//Deber recibirlo por props
-        formDataTasks.append("Tipo", this.state.tipo);
-        formDataTasks.append("Enlace", this.state.enlace);
+        formDataTasks.append("Text", this.params.task.texto);
+        formDataTasks.append("Dia", this.params.dia);//Deber recibirlo por props
+        formDataTasks.append("Tipo", this.params.task.tipo);
+        formDataTasks.append("Enlace", this.params.task.enlace);
 
 
         fetch('https://pictoteask2.000webhostapp.com/updtTask.php', {
@@ -195,18 +192,20 @@ class SeeTask extends React.Component {
             body: formDataTasks
         }).then(response => response.json())
             .then(task => {
-                console.log(task);
                 if (!task.error) {
-                    if (enlace == 1)
+                    if (this.params.task.enlace == 1)
                         for (let i = 0; i < this.state.subtareas.length; i++)
                             this.editSubTask(this.state.subtareas[i]);
+                    
+                    this.goBackToCalendar();
                 }
                 else {
                     this.setState({ errorAlert: true });
                 }
             });
     }
-    delSubtask(id) {
+    delSubTask(event,id) {
+        event.preventDefault();
         let formDataTasks = new FormData();
 
         formDataTasks.append("id_subtask", id);
@@ -216,9 +215,8 @@ class SeeTask extends React.Component {
             body: formDataTasks
         }).then(response => response.json())
             .then(task => {
-                console.log(task);
                 if (!task.error) {
-                    console.log("Subtarea Eliminada", this.state);
+                    this.goBackToCalendar();
                 }
                 else {
                     this.setState({ errorAlert: true });
@@ -227,23 +225,20 @@ class SeeTask extends React.Component {
     }
     delTask(event) {
         event.preventDefault();
-        let enlace = 0;
-        if (this.state.pictos.length > 1) enlace = 1;
         let formDataTasks = new FormData();
 
-        formDataTasks.append("Task", this.task.idTask);
+        formDataTasks.append("Task", this.params.task.id_tarea);
 
         fetch('https://pictoteask2.000webhostapp.com/delTask.php', {
             method: "POST",
             body: formDataTasks
         }).then(response => response.json())
             .then(task => {
-                console.log(task);
                 if (!task.error) {
-                    if (enlace == 1)
+                    if (this.params.task.enlace == 1)
                         for (let i = 0; i < this.state.subtareas.length; i++)
-                            this.delSubTasks(this.state.subtareas[i].id_subtarea);
-                    this.props.history.push({ pathname: '/kidspage' });
+                            this.delSubTask(event,this.state.subtareas[i].id_subtarea);
+                    this.goBackToCalendar();
                 }
                 else {
                     this.setState({ errorAlert: true });

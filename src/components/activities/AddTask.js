@@ -13,13 +13,10 @@ class AddTask extends React.Component {
     constructor(props) {
         super(props);
 
-
-			console.log(this.props.location)
-
         this.state = {
             idTask: 0,
-            timeini: "",
-            timefin: "",
+            timeini: "00:00",
+            timefin: "00:00",
             currentSelected: {},
             addNewPictoView: false,
             pictos: [],
@@ -52,18 +49,8 @@ class AddTask extends React.Component {
             this.setState({timefin: this.state.timeini});
         }
     }
-    goBackToCalendar = () => {
-        this.props.history.push({
-            pathname: '/calendar',
-            'state': {
-                'from': {'pathname': this.props.location.pathname },
-                'data': this.params.kid
-            }
-        });
-    }
     addNewPicto() {
         this.state.pictos.push(this.state.currentSelected);
-        console.log(this.state);
         this.setState({ addNewPictoView: false });
         if (this.state.estrellas.length === 0)
             this.state.estrellas.push("fav");
@@ -132,8 +119,6 @@ class AddTask extends React.Component {
         }
     }
     addSubTasks(idTutor) {
-        console.log(this.state);
-        console.log(idTutor, this.state.idTask );
         for (let i = 1; i < this.state.pictos.length; i++) {
             let formDataSubTasks = new FormData();
             formDataSubTasks.append("id_task", this.state.idTask);
@@ -148,7 +133,6 @@ class AddTask extends React.Component {
             }).then(response => response.json())
                 .then(subtask => {
                     if (!subtask.error) {
-                        console.log(subtask);
                     }
                     else {
                         this.setState({ errorAlert: true });
@@ -180,12 +164,11 @@ class AddTask extends React.Component {
             body: formDataTasks
         }).then(response => response.json())
             .then(task => {
-                console.log(task);
                 if (!task.error) {
                     this.setState({idTask: task.task.id_tarea});
                     if (enlace == 1)
                         this.addSubTasks(auth.token.id_tutor);
-                    this.props.history.push({ pathname: '/kidspage' });
+                    this.goBackToCalendar();
                 }
                 else {
                     this.setState({ errorAlert: true });
@@ -214,11 +197,9 @@ class AddTask extends React.Component {
                             <Container>
 
                                 <Col md={12} className="mx-auto">
-
                                     <Row className="myrow2">
-
                                         <b>Hora inicio:</b>
-                                        <TimePicker onChange={this.onChangeI} className="time-picker"
+                                        <TimePicker  format={"HH:mm:ss"} onChange={this.onChangeI} className="time-picker"
                                             value={this.state.timeini}
                                         />
                                     </Row>
@@ -226,7 +207,7 @@ class AddTask extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker onChange={this.onChangeF} className="time-picker"
+                                        <TimePicker  format={"HH:mm:ss"} onChange={this.onChangeF} className="time-picker"
                                             value={this.state.timefin}
                                         />
                                     </Row>
