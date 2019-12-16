@@ -58,7 +58,18 @@ class DayCalendar extends React.Component {
 	}
 
 	edit(task) {
-		console.log(task)
+		if (task.data.tipo == 'tarea') {
+			this.props.parent.props.history.push({
+						pathname: '/seetask',
+						state: {
+							from: this.props.parent.props.location.pathname,
+							data: {
+								kid: this.props.parent.kid,
+								task: task.data
+							}
+						}
+			})
+		}
 	}
 
 	go(pathname) {
