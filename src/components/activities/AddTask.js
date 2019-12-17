@@ -199,7 +199,7 @@ class AddTask extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora inicio:</b>
-                                        <TimePicker  format={"HH:mm:ss"} onChange={this.onChangeI} className="time-picker"
+                                        <TimePicker  format={"HH:mm"} onChange={this.onChangeI} className="time-picker"
                                             value={this.state.timeini}
                                         />
                                     </Row>
@@ -207,7 +207,7 @@ class AddTask extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker  format={"HH:mm:ss"} onChange={this.onChangeF} className="time-picker"
+                                        <TimePicker  format={"HH:mm"} onChange={this.onChangeF} className="time-picker"
                                             value={this.state.timefin}
                                         />
                                     </Row>

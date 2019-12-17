@@ -101,14 +101,14 @@ class ViewStoryCalendar extends React.Component {
 
                                         <b>Hora inicio:</b>
                                        
-                                        {this.params.task.hora_inicio}
+                                        {this.params.task.hora_inicio.substr(0,5)}
                                         
                                     </Row>
                                 </Col>
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        {this.params.task.hora_fin}
+                                        {this.params.task.hora_fin.substr(0,5)}
                                         
                                     </Row>
                                 </Col>

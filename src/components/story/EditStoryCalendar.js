@@ -6,7 +6,6 @@ import './story.css';
 import Select from 'react-select';
 import Auth from '../../auth';
 
-const options = [];
 
 class EditStoryCalendar extends React.Component {
     constructor(props) {
@@ -16,7 +15,9 @@ class EditStoryCalendar extends React.Component {
             timeIni: this.params.task.hora_inicio.substr(0, 5),
             timeFin: this.params.task.hora_fin.substr(0, 5),    
             selectedOption: {value: this.params.task.enlace, label: this.params.task.texto}
+            
         }
+        this.options = [];
 		console.log(this.props.location);
         this.auth = new Auth();
         this.editStory = this.editStory.bind(this);
@@ -41,13 +42,23 @@ class EditStoryCalendar extends React.Component {
             .catch(error => console.error('Error:', error))
             .then((storyCalendar) => {
                 if (!storyCalendar.error) {
-                    this.goBackToViewStory();
+                    this.props.history.push({
+                        pathname: '/viewStoryCalendar',
+                        'state': {
+                            from: {'pathname': this.props.location.pathname },
+                            data: {
+                                kid: this.params.kid,
+                                task: storyCalendar.task
+                            }
+            
+                        }
+                    });
                 }
             });
     }
 
     handleTimeChangeIni = time => {
-        if (time > this.state.timeFin) {
+        if (time > this.state.timeFin && this.state.timeFin != "") {
             this.setState({timeIni: this.state.timeFin});
         }
         else {
@@ -96,7 +107,7 @@ class EditStoryCalendar extends React.Component {
             .then((stories) => {
                 if (!stories.error) {
                     stories.stories.forEach((story) => {
-                        options.push({ label: story.nombre, value: story.id_cuento});
+                        this.options.push({ label: story.nombre, value: story.id_cuento});
                     });
                 }
                 else {
@@ -135,7 +146,7 @@ class EditStoryCalendar extends React.Component {
                                         <Select className="time-picker"
                                             value={this.state.selectedOption}
                                             onChange={this.handleChange}
-                                            options={options}
+                                            options={this.options}
                                         />
                                     </Row>
                                 </Col>
@@ -144,7 +155,7 @@ class EditStoryCalendar extends React.Component {
                                     <Row className="myrow2">
 
                                         <b>Hora inicio:</b>
-                                        <TimePicker className="time-picker" onChange={this.handleTimeChangeIni}
+                                        <TimePicker format={"HH:mm"} className="time-picker" onChange={this.handleTimeChangeIni}
                                             value={this.state.timeIni}
                                         />
                                     </Row>
@@ -152,7 +163,7 @@ class EditStoryCalendar extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker className="time-picker" onChange={this.handleTimeChangeFin}
+                                        <TimePicker format={"HH:mm"} className="time-picker" onChange={this.handleTimeChangeFin}
 
                                             value={this.state.timeFin}
                                         />

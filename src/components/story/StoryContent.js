@@ -8,7 +8,6 @@ class StoryContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {currentSelected: {}, addNewPictoView: false};
-        this.selectImageCard = this.selectImageCard.bind(this);
         this.createNewPictogram = this.createNewPictogram.bind(this);
         this.returnToStories = this.returnToStories.bind(this);
         this.addNewPicto = this.addNewPicto.bind(this);
@@ -52,7 +51,7 @@ class StoryContent extends React.Component {
         listPaths.forEach((row, i) => {
             let listImageCols = [];
             row.forEach((col) => {
-                listImageCols.push(<div className="col- columna"><Card onClick={this.selectImageCard} style={{width: "175px"}}><CardImg top src={col.img}/></Card></div>);
+                listImageCols.push(<div className="col- columna"><Card style={{width: "175px"}}><CardImg top src={col.img}/></Card></div>);
             });
             if (i === (listPaths.length - 1) && listImageCols.length < 3) {
                 listImageCols.push(<div className="col- columna"><Card onClick={this.createNewPictogram} className="cardNew" style={{width: "175px"}}><CardImg className="imgNew" top src="images/botonNew.svg"/><CardBody><h5><CardTitle>Añadir pictograma</CardTitle></h5></CardBody></Card></div>);
@@ -69,19 +68,6 @@ class StoryContent extends React.Component {
             
         }); 
         return listImageRows;
-    }
-
-    selectImageCard(e) {
-        if (this.state.currentSelected !== e.currentTarget) {
-            if (this.state.currentSelected.className !== undefined) {
-                let currentSelect = this.state.currentSelected;
-                currentSelect.className = "card";
-            }
-            e.currentTarget.className = "card border border-primary";
-            let imageSelected = {name: e.currentTarget.childNodes[1].children[0].innerHTML, img: e.currentTarget.childNodes[0].src};
-            this.props.imageSelected(imageSelected);
-            this.setState({currentSelected: e.currentTarget});
-        }
     }
 
     listToMatrix(list, elementsPerSubArray) {

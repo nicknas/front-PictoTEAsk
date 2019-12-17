@@ -6,8 +6,6 @@ import './story.css';
 import Select from 'react-select';
 import Auth from '../../auth';
 
-const options = [];
-
 class AddStoryCalendar extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +14,7 @@ class AddStoryCalendar extends React.Component {
             timeFin: "",
             selectedOption: null
         }
+        this.options = [];
         this.params = this.props.location.state.data;
 		console.log(this.props.location);
         this.auth = new Auth();
@@ -52,7 +51,7 @@ class AddStoryCalendar extends React.Component {
     }
 
     handleTimeChangeIni = time => {
-        if (time > this.state.timeFin) {
+        if (time > this.state.timeFin && this.state.timeFin != "") {
             this.setState({timeIni: this.state.timeFin});
         }
         else {
@@ -96,7 +95,7 @@ class AddStoryCalendar extends React.Component {
             .then((stories) => {
                 if (!stories.error) {
                     stories.stories.forEach((story) => {
-                        options.push({ label: story.nombre, value: story.id_cuento});
+                        this.options.push({ label: story.nombre, value: story.id_cuento});
                     });
                 }
                 else {
@@ -134,7 +133,7 @@ class AddStoryCalendar extends React.Component {
                                         <Select className="time-picker"
                                             value={this.selectedOption}
                                             onChange={this.handleChange}
-                                            options={options}
+                                            options={this.options}
 
                                         />
                                     </Row>
@@ -144,7 +143,7 @@ class AddStoryCalendar extends React.Component {
                                     <Row className="myrow2">
 
                                         <b>Hora inicio:</b>
-                                        <TimePicker className="time-picker" onChange={this.handleTimeChangeIni}
+                                        <TimePicker format={"HH:mm"} className="time-picker" onChange={this.handleTimeChangeIni}
                                             value={this.state.timeIni}
                                         />
                                     </Row>
@@ -152,7 +151,7 @@ class AddStoryCalendar extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker className="time-picker" onChange={this.handleTimeChangeFin}
+                                        <TimePicker format={"HH:mm"} className="time-picker" onChange={this.handleTimeChangeFin}
 
                                             value={this.state.timeFin}
                                         />

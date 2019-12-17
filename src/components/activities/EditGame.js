@@ -38,7 +38,7 @@ class AddGame extends React.Component {
             formDataTasks.append("Path_picto", "/picts/shared/juego.jpg");
             formDataTasks.append("Tutor", auth.token.id_tutor);
             formDataTasks.append("Nino", this.params.kid.id);
-            formDataTasks.append("Text", "");
+            formDataTasks.append("Text", this.state.selectedOption.label);
             formDataTasks.append("Dia", this.params.moment.format("YYYY-MM-DD"));
             formDataTasks.append("Tipo", "juego");
             formDataTasks.append("Enlace", enlace);
