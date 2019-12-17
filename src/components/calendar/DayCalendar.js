@@ -89,7 +89,8 @@ class DayCalendar extends React.Component {
 					from: this.props.parent.props.location.pathname,
 					data: {
 						kid: this.props.parent.kid,
-						task: task.data
+						task: task.data,
+						moment: this.moment
 					}
 				}
 			});

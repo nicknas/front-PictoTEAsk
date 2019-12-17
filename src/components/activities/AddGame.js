@@ -1,9 +1,10 @@
 import React from 'react'
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Alert } from 'reactstrap';
 import { withRouter } from 'react-router-dom'
 import TimePicker from 'react-time-picker';
 import '../kidprofile/groups.css'
 import Select from 'react-select';
+import Auth from '../../auth';
 
 const options = [
     { value: 'adivinapicto', label: 'Adivina el picto' },
@@ -14,10 +15,20 @@ class AddGame extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: "",
-            selectedOption: null
+            idTask: 0,
+            initialTime: "00:00",
+            endTime: "00:00",
+            selectedOption: null,
+            errorAlert: false,
+            error_msg:""
         }
+        this.params = "";
         this.handleChange = this.handleChange.bind(this);
+        this.addGame = this.addGame.bind(this);
+        this.onDismiss = this.onDismiss.bind(this);
+    }
+    onDismiss() {
+        this.setState({ errorAlert: false, error_msg: "" });
     }
 
     handleChange = selectedOption => {
@@ -26,6 +37,91 @@ class AddGame extends React.Component {
 
         );
     };
+    goBackToCalendar = () => {
+        this.props.history.push({
+            pathname: '/calendar',
+            'state': {
+                'from': {'pathname': this.props.location.pathname },
+                'data': this.props.location.state.data.kid
+            }
+        });
+    }
+
+    handleChangeIni = time => {
+        
+            
+        
+        
+            this.setState({initialTime: time});
+        
+    }
+
+    handleChangeEnd = time => {
+        
+            this.setState({endTime: time});
+       
+    }
+    addGame(event) {
+        event.preventDefault();
+
+        if (this.state.selectedOption != null && this.state.initialTime < this.state.endTime) {
+            let enlace = 99901;
+            let auth = new Auth();
+            let formDataTasks = new FormData();
+
+            formDataTasks.append("Tini", this.state.initialTime.concat(":00"));
+            formDataTasks.append("Tfin", this.state.endTime.concat(":00"));
+            formDataTasks.append("Path_picto", "/picts/shared/juego.jpg");
+            formDataTasks.append("Tutor", auth.token.id_tutor);
+            formDataTasks.append("Nino", this.params.kid.id);
+            formDataTasks.append("Text", "");
+            formDataTasks.append("Dia", this.params.moment.format("YYYY-MM-DD"));
+            formDataTasks.append("Tipo", "juego");
+            formDataTasks.append("Enlace", enlace);
+
+
+            fetch('https://pictoteask2.000webhostapp.com/addTask.php', {
+                method: "POST",
+                body: formDataTasks
+            }).then(response => response.json())
+                .then(task => {
+                   
+                    if (!task.error) {
+                        this.setState({ idTask: task.task.id_tarea });
+                        this.props.history.push({
+                            pathname: '/calendar',
+                            'state': {
+                                'from': {'pathname': this.props.location.pathname },
+                                'data': this.params.kid
+                            }
+                        });
+                    }
+                    else {
+                        this.setState({ errorAlert: true, error_msg: "Ya hay una tarea en esas horas" });
+                        
+                    }
+                });
+
+        }
+        else {
+            if(this.state.initialTime >= this.state.endTime){
+                this.setState({ errorAlert: true,  error_msg: "La hora de fin debe ser mayor que la hora de inicio" });
+            }
+            else{
+                this.setState({ errorAlert: true,  error_msg: "Debes seleccionar un juego" });
+            }
+        }
+
+    }
+
+    componentDidMount() {
+        if(typeof this.props.location.state == 'undefined'){
+            this.props.history.push("/calendar");
+        }
+        else{
+            this.params = this.props.location.state.data;
+        }
+    }
     render() {
 
         return (
@@ -45,7 +141,7 @@ class AddGame extends React.Component {
                                     <h1>Añadir juego</h1>
                                 </Col>
                             </div>
-                            
+
                             <Container>
 
                                 <Col md={12} className="mx-auto">
@@ -53,17 +149,18 @@ class AddGame extends React.Component {
                                     <Row className="myrow2">
 
                                         <b>Hora inicio:</b>
-                                        <TimePicker className="time-picker"
-                                            value={this.state.time}
+                                        <TimePicker  format={"HH:mm"} onChange={this.handleChangeIni} className="time-picker"
+            
+                                            value={this.state.initialTime}
                                         />
                                     </Row>
                                 </Col>
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker className="time-picker"
+                                        <TimePicker  format={"HH:mm"} className="time-picker" onChange={this.handleChangeEnd}
 
-                                            value={this.state.time}
+                                            value={this.state.endTime}
                                         />
                                     </Row>
                                 </Col>
@@ -78,16 +175,18 @@ class AddGame extends React.Component {
                                         />
                                     </Row>
                                 </Col>
-
+                                <Alert color="danger" isOpen={this.state.errorAlert} toggle={this.onDismiss}>
+                                    {this.state.error_msg}
+                            </Alert>
                                 <Container>
 
-                                    <Button className="btnactiv" color="primary" size="lg" block>Crear</Button>
+                                    <Button onClick={this.addGame} className="btnactiv" color="primary" size="lg" block>Crear</Button>
 
-                                    <Button className="btnactiv" color="secondary" size="lg" block>Cancelar</Button>
+                                    <Button onClick={this.goBackToCalendar} className="btnactiv" color="secondary" size="lg" block>Cancelar</Button>
 
                                 </Container>
                             </Container>
-                            
+
                         </div>
 
 
