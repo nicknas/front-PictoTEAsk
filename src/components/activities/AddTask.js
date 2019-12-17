@@ -15,8 +15,8 @@ class AddTask extends React.Component {
 
         this.state = {
             idTask: 0,
-            timeini: "00:00",
-            timefin: "00:00",
+            timeini: "",
+            timefin: "",
             currentSelected: {},
             addNewPictoView: false,
             pictos: [],
@@ -34,7 +34,7 @@ class AddTask extends React.Component {
     }
 
     onChangeI = time => {
-        if (time > this.state.timefin) {
+        if (time > this.state.timefin && this.state.timefin != "") {
             this.setState({timeini: this.state.timefin});
         }
         else {
@@ -199,7 +199,7 @@ class AddTask extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora inicio:</b>
-                                        <TimePicker  format={"HH:mm"} onChange={this.onChangeI} className="time-picker"
+                                        <TimePicker  format={"HH:mm"}  className="time-picker" onChange={this.onChangeI}
                                             value={this.state.timeini}
                                         />
                                     </Row>
@@ -207,7 +207,7 @@ class AddTask extends React.Component {
                                 <Col md={12} className="mx-auto">
                                     <Row className="myrow2">
                                         <b>Hora fin:</b>
-                                        <TimePicker  format={"HH:mm"} onChange={this.onChangeF} className="time-picker"
+                                        <TimePicker  format={"HH:mm"} className="time-picker" onChange={this.onChangeF}
                                             value={this.state.timefin}
                                         />
                                     </Row>
