@@ -62,6 +62,7 @@ class ViewGroup extends React.Component {
         this.deleteKid = this.deleteKid.bind(this);
         this.openDeleteModal = this.openDeleteModal.bind(this);
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
+        this.goToCalendar = this.goToCalendar.bind(this);
     }
 
     deleteKid() {
@@ -257,17 +258,17 @@ class ViewGroup extends React.Component {
 
     }
 
-    goToCalendar = (kid) => {
-        let { history, location } = this.props;
+    goToCalendar(kid) {
+			let { history, location } = this.props;
 
-		history.push({
-			pathname: '/calendar',
-			'state': {
-				'from': {'pathname': location.pathname },
-				'data': kid
-			}
-		});
-    }
+			history.push({
+				pathname: '/calendar',
+				'state': {
+					'from': {'pathname': location.pathname },
+					'data': kid
+				}
+			})
+		}
 
 
 
@@ -298,8 +299,8 @@ class ViewGroup extends React.Component {
 
                                     {this.state.listKidsGroup.map((item) =>
 
-                                        <Row id={item.id} key={item.id} className="myrow btc-select">
-                                            <Col onClick={this.goToCalendar(item)} md={10} >
+																			<Row onClick={() => this.goToCalendar(item)} id={item.id} key={item.id} className="myrow btc-select">
+                                            <Col md={10} >
                                                 <picture>
 																									<img
 																										src="images/defaultProfile.jpg"

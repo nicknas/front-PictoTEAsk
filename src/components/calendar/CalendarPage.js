@@ -23,18 +23,23 @@ class CalendarPage extends React.Component {
 		this.kid = {}
 		let state = this.props.location.state || {from: {}}
 
-		if (state.from.pathname == '/kidspage' 
-			|| state.from.pathname == '/' 
-			|| state.from.pathname == '/addStoryCalendar' 
-			|| state.from.pathname == '/viewStoryCalendar' 
-			|| state.from.pathname == '/viewGame' 
+		console.log(state)
+
+		if (state.from.pathname == '/kidspage'
+			|| state.from.pathname == '/'
+			|| state.from.pathname == '/addStoryCalendar'
+			|| state.from.pathname == '/viewStoryCalendar'
+			|| state.from.pathname == '/viewGame'
 			|| state.from.pathname == '/seetask'
+			|| state.from.pathname == '/editGame'
 			|| state.from.pathname == '/addGame'
 			|| state.from.pathname == '/addtask'
 			|| state.from.pathname == '/stories'
 			|| state.from.pathname == '/viewgroup') {
 			this.kid = state.data || {}
 		}
+
+		console.log(this.kid)
 
 		if (!this.kid.id) {
 			this.props.history.push('/')
